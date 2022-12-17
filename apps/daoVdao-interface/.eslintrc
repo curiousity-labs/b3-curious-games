@@ -25,7 +25,6 @@
         }
     },
     "plugins": [
-        "react",
         "react-hooks",
         "@typescript-eslint",
         "prettier"
@@ -39,6 +38,8 @@
             "warn",
             "single"
         ],
-        "no-duplicate-imports": "error"
+        "no-duplicate-imports": "error",
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": "off"
     }
 }

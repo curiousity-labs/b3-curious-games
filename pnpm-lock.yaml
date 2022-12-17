@@ -15,6 +15,7 @@ importers:
       '@chakra-ui/anatomy': ^2.1.0
       '@chakra-ui/icons': ^2.0.10
       '@chakra-ui/react': ^2.3.4
+      '@decent-org/fractal-ui': ^0.1.6
       '@emotion/react': ^11.10.4
       '@emotion/styled': ^11.10.4
       '@rainbow-me/rainbowkit': ^0.7.4
@@ -53,6 +54,7 @@ importers:
       '@chakra-ui/anatomy': 2.1.0
       '@chakra-ui/icons': 2.0.14_react@18.2.0
       '@chakra-ui/react': 2.4.4_przcunyodmsiq2duiyjrphchze
+      '@decent-org/fractal-ui': 0.1.6_esfrlvvs52uqdysw5zco4wkcqy
       '@emotion/react': 11.10.5_kzbn2opkn2327fwg5yzwzya5o4
       '@emotion/styled': 11.10.5_qvatmowesywn4ye42qoh247szu
       '@rainbow-me/rainbowkit': 0.7.4_nmtadt3pxtdvkmebnbcrvtusle
@@ -1485,6 +1487,18 @@ packages:
   /@cush/relative/1.0.0:
     resolution: {integrity: sha512-RpfLEtTlyIxeNPGKcokS+p3BZII/Q3bYxryFRglh5H3A3T8q9fsLYm72VYAMEOOIBLEa8o93kFLiBDUWKrwXZA==}
     dev: true
+
+  /@decent-org/fractal-ui/0.1.6_esfrlvvs52uqdysw5zco4wkcqy:
+    resolution: {integrity: sha512-jBz5TU7223JM6MC+iDtk7WQ6wCTveGHlzyFAOhBdBZu6eYEJXvOTgLEpaf9NQchgh755i00KF9HjM/tdGn0hCw==}
+    peerDependencies:
+      '@chakra-ui/react': ^2.3.4
+      react: ^16 || ^17 || ^18
+      react-dom: ^16 || ^17 || ^18
+    dependencies:
+      '@chakra-ui/react': 2.4.4_przcunyodmsiq2duiyjrphchze
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /@emotion/babel-plugin/11.10.5:
     resolution: {integrity: sha512-xE7/hyLHJac7D2Ve9dKroBBZqBT7WuPQmWcq7HSGb84sUuP4mlOWoB8dvVfD9yk5DHkU1m6RW7xSoDtnQHNQeA==}
