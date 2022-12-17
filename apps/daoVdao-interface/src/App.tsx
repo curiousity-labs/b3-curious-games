@@ -332,10 +332,15 @@ function App() {
           return (
             <HStack key={i} gap="0">
               {row.map((square) => {
+                // @todo should only be green when its thats team turn
                 return <Center key={square.location} bg={square.color} w={24} h={24} sx={{
                   '&': {
                     'WebkitMarginStart': '0px !important',
                     'marginInlineStart': '0px'
+                  },
+                  '&:hover': {
+                    border: square.Piece ? '4px' : '2px',
+                    borderColor: square.Piece ? 'green.500' : 'grayscale.200'
                   }
                 }
                 }>
