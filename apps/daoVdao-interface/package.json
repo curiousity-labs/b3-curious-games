@@ -9,7 +9,6 @@
     "@decent-org/fractal-ui": "^0.1.6",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@rainbow-me/rainbowkit": "^0.7.4",
     "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
     "ethers": "^5.7.1",

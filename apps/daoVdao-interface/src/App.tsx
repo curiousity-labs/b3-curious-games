@@ -1,4 +1,4 @@
-import { Box, Center, Flex, HStack, VStack } from '@chakra-ui/react'
+import { Box, Center, HStack, VStack } from '@chakra-ui/react'
 
 const rowLoc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 const colLoc = ['1', '2', '3', '4', '5', '6', '7', '8']
