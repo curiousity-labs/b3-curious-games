@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { Chess } from '../features/Chess';
+import { Battleship } from '../features/Battleship';
 
 export function Pages() {
   return (
@@ -7,7 +8,7 @@ export function Pages() {
       <Route index element={<div /> } />
       <Route path="chess" element={<Chess /> } />
       {/* @todo update route for game number */}
-      <Route path="battleship" element={<div /> } />
+      <Route path="battleship" element={<Battleship /> } />
     </Routes>
   )
 }

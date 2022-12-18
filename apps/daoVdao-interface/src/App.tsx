@@ -4,13 +4,10 @@ import { Pages } from './pages'
 
 function App() {
   return (
-    <VStack minH="100vh">
+    <VStack>
       {/* HEADER */}
-      <Box></Box>
       {/* MAIN CONTENT */}
-      <Box flexGrow={1}>
-        <Pages />
-      </Box>
+      <Pages />
     </VStack>
   )
 }
