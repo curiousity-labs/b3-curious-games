@@ -12,6 +12,7 @@ contract Battleship {
      */
     event GameCreated(address team1, address team2);
 
+
     /**
      * @notice This will keep history of moves taken
      * @notice This should filtered and used by front-end to update hit/misses
@@ -25,6 +26,16 @@ contract Battleship {
      * @notice This should be updated with winner when game is over
      */
     address game_winner = address(0);
+
+    /**
+     * 
+     */
+    address team1 = address(0);
+
+    /**
+     * 
+     */
+    address team2 = address(0);
 
     /**
      * tracks team one data
@@ -49,19 +60,27 @@ contract Battleship {
     function forfeitMatch() public {}
 
     /**
-     *
+     * @dev This should set the game in standby mode by allowing for the pieces to be set by the individual tems
      */
-    function initilizeGame() public {}
+    function initilizeGame(address _team1, address _team2) public {
+      team1 = _team1;
+      team2 = _team2;
+      emit GameCreated(_team1, _team2);
+    }
 
     /**
      *
      */
-    function playerOneSetPieces() public {}
+    function playerOneSetPieces() public view {
+      require(team1 != address(0) && team1 == msg.sender);
+    }
 
     /**
      *
      */
-    function playerTwoSetPieces() public {}
+    function playerTwoSetPieces() public view {
+      require(team2 != address(0) && team2 == msg.sender);
+    }
 
     /**
      *
