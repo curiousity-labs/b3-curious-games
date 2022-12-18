@@ -1,4 +1,4 @@
-import { Box, Center, Flex, HStack } from '@chakra-ui/react'
+import { Box, Center, HStack } from '@chakra-ui/react'
 import { BSquare } from './types'
 import { colLoc, rowLoc } from './constants'
 
