@@ -15,7 +15,7 @@
     "framer-motion": "^7.3.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.1",
+    "react-router-dom": "^6.5.0",
     "typescript": "^4.8.3",
     "wagmi": "^0.7.15",
     "web-vitals": "^2.1.4"
