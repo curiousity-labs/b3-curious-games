@@ -60,9 +60,9 @@ contract Battleship {
     function forfeitMatch() public {}
 
     /**
-     * @dev This should set the game in standby mode by allowing for the pieces to be set by the individual tems
+     * sets up game
      */
-    function initilizeGame(address _team1, address _team2) public {
+    constructor(address _team1, address _team2) {
       team1 = _team1;
       team2 = _team2;
       emit GameCreated(_team1, _team2);
