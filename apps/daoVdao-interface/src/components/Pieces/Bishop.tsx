@@ -11,7 +11,7 @@ export const Bishop = createIcon({
           <path d="M15 32.6c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z" />
           <path d="M25 8.6a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z" />
         </g>
-        <path d="M17.5 26.6h10m-12.5 4h15m-7.5-14.5v5M20 18.6h5" stroke="#fff" strokeLinejoin="miter" />
+        <path d="M17.5 26.6h10m-12.5 4h15m-7.5-14.5v5M20 18.6h5" stroke="#fabd2eff" strokeLinejoin="miter" />
       </g>
     </svg>
   ),

@@ -59,7 +59,7 @@ function App() {
 
     return {
       location: location,
-      color: isOffColorSquare ? 'black.300' : 'grayscale.white'
+      color: isOffColorSquare ? 'black.400' : 'grayscale.400'
     }
   })).reverse()
 
@@ -190,8 +190,8 @@ function App() {
     // @todo Most data will come from contracts and only need to be formated
     // @todo don't forget to add listerners for updates
     const team: Team = { 
-      color: 'gold.500',
-      name:'Decent DAO',
+      color: 'grayscale.white',
+      name:'Fractal DAO',
       isFirst: true,
     }
 

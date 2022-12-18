@@ -15,7 +15,7 @@ export const Queen = createIcon({
         <circle cx="31" cy="9" r="2" fill="currentColor" />
         <circle cx="39" cy="12" r="2" fill="currentColor" />
         <path d="M11 38.5a35 35 1 0 0 23 0" fill="none" strokeLinecap="butt" />
-        <g fill="none" stroke="#fff">
+        <g fill="none" stroke="#fabd2eff">
           <path d="M11 29a35 35 1 0 1 23 0M12.5 31.5h20M11.5 34.5a35 35 1 0 0 22 0M10.5 37.5a35 35 1 0 0 24 0" fill="currentColor" />
         </g>
       </g>
