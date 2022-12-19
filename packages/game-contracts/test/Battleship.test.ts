@@ -44,19 +44,13 @@ describe("Battleship", () => {
     // it("Should be ready to play", async () => {})
   })
 
-  describe("Setup | REVERT Cases", async () => {
-    it("Should deploy Battleship contract | Creates game", async () => {
-      const contract = battleshipContract.connect(account1)
-      const gameCreatedEvent = await contract.queryFilter(battleshipContract.filters.GameCreated())
-      expect(gameCreatedEvent[0].args[0] === account1.address)
-    })
-
-    it("Should revert if team 2 attempts to set team 1 pieces", async () => {
+  describe("Setup | REVERT", async () => {
+    it("Should revert if another account attempts to set team 1", async () => {
       const contract = battleshipContract.connect(account2)
       await expect(contract.setTeamOnePieces(mockTeamOnePieces)).to.be.revertedWith(ERROR_TEAM_ONE_ONLY)
     })
 
-    it("Should revert if team 2 attempts to set team 1 pieces", async () => {
+    it("Should revert if another account attempts to set team 2", async () => {
       const contract = battleshipContract.connect(account1)
       await expect(contract.setTeamTwoPieces(mockTeamOnePieces)).to.be.revertedWith(ERROR_TEAM_TWO_ONLY)
     })
