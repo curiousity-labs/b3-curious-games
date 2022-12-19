@@ -20,5 +20,4 @@ export const shipLocationsTwo: BytesLike[][] = [
 export const ERROR_TEAM_ONE_ONLY = "Team One Only"
 export const ERROR_TEAM_TWO_ONLY = "Team Two Only"
 export const ERROR_TEAM_PIECES_SET = "Pieces already set"
-export const ERROR_TEAM_5_PIECES_REQUIRED = "Must have 5 pieces"
 export const ERROR_TEAM_INCORRECT_PIECES = "Incorrect pieces"

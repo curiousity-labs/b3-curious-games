@@ -87,11 +87,16 @@ contract Battleship {
         emit GameCreated(team1, team2);
     }
 
+
+    modifier teamOneSet() {
+        require(team_one_ship_locations.length == 0, "Pieces already set");
+        _;
+    }
+
     /**
      *
      */
     modifier checkPieces(bytes2[][] memory targets) {
-        require(targets.length == 5, "Must have 5 pieces");
         bool isPiecesValid = true;
         for (uint256 i = 0; i < targets.length; i++) {
             if (targets[i].length == targets.length + 1) {
@@ -100,11 +105,6 @@ contract Battleship {
             }
         }
         require(isPiecesValid, "Incorrect pieces");
-        _;
-    }
-
-    modifier teamOneSet() {
-        require(team_one_ship_locations.length == 0, "Pieces already set");
         _;
     }
 
