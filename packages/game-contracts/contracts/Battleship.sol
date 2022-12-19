@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.17;
 
 /**
  * @title onchain battleship
@@ -11,7 +11,11 @@ contract Battleship {
      * @param team2 address of team 2
      */
     event GameCreated(address team1, address team2);
-
+    /**
+     * @notice This event will only event fire twice per contract, when 2 events have been fired game can begin
+     * @param team address of team 1
+     */
+    event TeamReady(address team);
 
     /**
      * @notice This will keep history of moves taken
@@ -28,26 +32,26 @@ contract Battleship {
     address game_winner = address(0);
 
     /**
-     * 
+     *
      */
-    address team1 = address(0);
+    address public team1 = address(0);
 
     /**
-     * 
+     *
      */
-    address team2 = address(0);
+    address public team2 = address(0);
 
     /**
      * tracks team one data
      */
-    bytes[5][] team_one_ship_locations;
-    bytes[5][] team_one_ship_hits;
+    string[][] private team_one_ship_locations;
+    string[][] team_one_ship_hits;
 
     /**
      * tracks team two data
      */
-    bytes[5][] team_two_ship_locations;
-    bytes[5][] team_two_ship_hits;
+    string[][] private team_two_ship_locations;
+    string[][] team_two_ship_hits;
 
     /**
      *
@@ -63,23 +67,48 @@ contract Battleship {
      * sets up game
      */
     constructor(address _team1, address _team2) {
-      team1 = _team1;
-      team2 = _team2;
-      emit GameCreated(_team1, _team2);
+        team1 = _team1;
+        team2 = _team2;
+        emit GameCreated(_team1, _team2);
     }
 
     /**
      *
      */
-    function playerOneSetPieces() public view {
-      require(team1 != address(0) && team1 == msg.sender);
+    modifier checkPieces(string[][] memory targets) {
+        require(targets.length == 5, "Must have 5 pieces");
+        bool isPiecesSet = true;
+        for (uint256 i = 0; i < targets.length; i++) {
+            if (targets[i].length == targets.length + 1) {
+                isPiecesSet = false;
+            }
+        }
+        require(isPiecesSet, "Incorrect pieces");
+        _;
     }
 
     /**
      *
      */
-    function playerTwoSetPieces() public view {
-      require(team2 != address(0) && team2 == msg.sender);
+    function setTeamOnePieces(
+        string[][] memory targets
+    ) external checkPieces(targets) {
+        require(team1 == msg.sender, "Team One Only");
+
+        team_one_ship_locations = targets;
+        emit TeamReady(msg.sender);
+    }
+
+    /**
+     *
+     */
+    function setTeamTwoPieces(
+        string[][] memory targets
+    ) external checkPieces(targets) {
+        require(msg.sender == team2, "Team Two Only");
+
+        team_two_ship_locations = targets;
+        emit TeamReady(team2);
     }
 
     /**
