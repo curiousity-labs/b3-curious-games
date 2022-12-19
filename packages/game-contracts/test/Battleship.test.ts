@@ -7,8 +7,8 @@ import {
   ERROR_TEAM_ONE_ONLY,
   ERROR_TEAM_PIECES_SET,
   ERROR_TEAM_TWO_ONLY,
-  shipLocationsOne,
-  shipLocationsTwo,
+  shipLocationsOneBytes,
+  shipLocationsTwpBytes,
 } from "./helpers/data/battleship"
 
 describe("Battleship", () => {
@@ -35,14 +35,14 @@ describe("Battleship", () => {
 
     it("Set team 1 pieces", async () => {
       const contract = battleshipContract.connect(account1)
-      await expect(await contract.setTeamOnePieces(shipLocationsOne))
+      await expect(await contract.setTeamOnePieces(shipLocationsOneBytes))
         .to.emit(contract, "TeamReady")
         .withArgs(account1.address)
     })
 
     it("Set team 2 pieces", async () => {
       const contract = battleshipContract.connect(account2)
-      await expect(contract.setTeamTwoPieces(shipLocationsTwo))
+      await expect(contract.setTeamTwoPieces(shipLocationsTwpBytes))
         .to.emit(contract, "TeamReady")
         .withArgs(account2.address)
     })
@@ -53,28 +53,28 @@ describe("Battleship", () => {
   describe("Setup | REVERT", async () => {
     it("Should revert if another account attempts to set team 1", async () => {
       const contract = battleshipContract.connect(account2)
-      await expect(contract.setTeamOnePieces(shipLocationsOne)).to.be.revertedWith(
+      await expect(contract.setTeamOnePieces(shipLocationsOneBytes)).to.be.revertedWith(
         ERROR_TEAM_ONE_ONLY
       )
     })
 
     it("Should revert if another account attempts to set team 2", async () => {
       const contract = battleshipContract.connect(account1)
-      await expect(contract.setTeamTwoPieces(shipLocationsOne)).to.be.revertedWith(
+      await expect(contract.setTeamTwoPieces(shipLocationsOneBytes)).to.be.revertedWith(
         ERROR_TEAM_TWO_ONLY
       )
     })
 
     it("Should revert if team 1 is already set", async () => {
       const contract = battleshipContract.connect(account1)
-      await contract.setTeamOnePieces(shipLocationsOne)
-      await expect(contract.setTeamOnePieces(shipLocationsOne)).to.be.revertedWith(ERROR_TEAM_PIECES_SET)
+      await contract.setTeamOnePieces(shipLocationsOneBytes)
+      await expect(contract.setTeamOnePieces(shipLocationsOneBytes)).to.be.revertedWith(ERROR_TEAM_PIECES_SET)
     })
 
     it("Should revert if team 2 is already set", async () => {
       const contract = battleshipContract.connect(account2)
-      await contract.setTeamTwoPieces(shipLocationsTwo)
-      await expect(contract.setTeamTwoPieces(shipLocationsTwo)).to.be.revertedWith(ERROR_TEAM_PIECES_SET)
+      await contract.setTeamTwoPieces(shipLocationsTwpBytes)
+      await expect(contract.setTeamTwoPieces(shipLocationsTwpBytes)).to.be.revertedWith(ERROR_TEAM_PIECES_SET)
     })
 
   })
