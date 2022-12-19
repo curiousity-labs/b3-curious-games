@@ -66,10 +66,10 @@ contract Battleship {
     /**
      * sets up game
      */
-    constructor(address _team1, address _team2) {
-        team1 = _team1;
+    constructor(address _team2) {
+        team1 = msg.sender;
         team2 = _team2;
-        emit GameCreated(_team1, _team2);
+        emit GameCreated(team1, team2);
     }
 
     /**
@@ -93,8 +93,8 @@ contract Battleship {
     function setTeamOnePieces(
         string[][] memory targets
     ) external checkPieces(targets) {
-        require(team1 == msg.sender, "Team One Only");
-
+        require(team_one_ship_locations.length == 0, "Pieces already set");
+        require(msg.sender == team1, "Team One Only");
         team_one_ship_locations = targets;
         emit TeamReady(msg.sender);
     }
@@ -105,8 +105,8 @@ contract Battleship {
     function setTeamTwoPieces(
         string[][] memory targets
     ) external checkPieces(targets) {
+        require(team_two_ship_locations.length == 0, "Pieces already set");
         require(msg.sender == team2, "Team Two Only");
-
         team_two_ship_locations = targets;
         emit TeamReady(team2);
     }

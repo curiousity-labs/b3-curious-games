@@ -3,7 +3,13 @@ import { ethers } from "hardhat"
 import { Battleship } from "../typechain-types/Battleship"
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 import { expect } from "chai"
-import { ERROR_TEAM_ONE_ONLY, ERROR_TEAM_TWO_ONLY, mockTeamOnePieces, mockTeamTwoPieces } from "./helpers/data/battleship"
+import {
+  ERROR_TEAM_ONE_ONLY,
+  ERROR_TEAM_PIECES_SET,
+  ERROR_TEAM_TWO_ONLY,
+  shipLocationsOne,
+  shipLocationsTwo,
+} from "./helpers/data/battleship"
 
 describe("Battleship", () => {
   let battleshipContract: Battleship
@@ -12,11 +18,10 @@ describe("Battleship", () => {
   let account2: SignerWithAddress
 
   beforeEach(async () => {
-    [account1, account2] = await ethers.getSigners();
+    ;[account1, account2] = await ethers.getSigners()
 
     // Deploys and initializes game with teams
     battleshipContract = await new Battleship__factory(account1).deploy(
-      account1.address,
       account2.address
     )
   })
@@ -30,16 +35,17 @@ describe("Battleship", () => {
 
     it("Set team 1 pieces", async () => {
       const contract = battleshipContract.connect(account1)
-      const response = await contract.setTeamOnePieces(mockTeamOnePieces)
-      await expect(response).to.emit(contract, "TeamReady").withArgs(account1.address)
+      await expect(await contract.setTeamOnePieces(shipLocationsOne))
+        .to.emit(contract, "TeamReady")
+        .withArgs(account1.address)
     })
-
 
     it("Set team 2 pieces", async () => {
       const contract = battleshipContract.connect(account2)
-      await expect(contract.setTeamTwoPieces(mockTeamTwoPieces)).to.emit(contract, "TeamReady").withArgs(account2.address)
+      await expect(contract.setTeamTwoPieces(shipLocationsTwo))
+        .to.emit(contract, "TeamReady")
+        .withArgs(account2.address)
     })
-
 
     // it("Should be ready to play", async () => {})
   })
@@ -47,17 +53,30 @@ describe("Battleship", () => {
   describe("Setup | REVERT", async () => {
     it("Should revert if another account attempts to set team 1", async () => {
       const contract = battleshipContract.connect(account2)
-      await expect(contract.setTeamOnePieces(mockTeamOnePieces)).to.be.revertedWith(ERROR_TEAM_ONE_ONLY)
+      await expect(contract.setTeamOnePieces(shipLocationsOne)).to.be.revertedWith(
+        ERROR_TEAM_ONE_ONLY
+      )
     })
 
     it("Should revert if another account attempts to set team 2", async () => {
       const contract = battleshipContract.connect(account1)
-      await expect(contract.setTeamTwoPieces(mockTeamOnePieces)).to.be.revertedWith(ERROR_TEAM_TWO_ONLY)
+      await expect(contract.setTeamTwoPieces(shipLocationsOne)).to.be.revertedWith(
+        ERROR_TEAM_TWO_ONLY
+      )
     })
 
-    // it("Should revert if team 2 is already set", async () => {})
-    // it("Should revert if team 1 is already set", async () => {})
-    // it("Should revert if team 1 attempts to set team 2 pieces", async () => {})
+    it("Should revert if team 1 is already set", async () => {
+      const contract = battleshipContract.connect(account1)
+      await contract.setTeamOnePieces(shipLocationsOne)
+      await expect(contract.setTeamOnePieces(shipLocationsOne)).to.be.revertedWith(ERROR_TEAM_PIECES_SET)
+    })
+
+    it("Should revert if team 2 is already set", async () => {
+      const contract = battleshipContract.connect(account2)
+      await contract.setTeamTwoPieces(shipLocationsTwo)
+      await expect(contract.setTeamTwoPieces(shipLocationsTwo)).to.be.revertedWith(ERROR_TEAM_PIECES_SET)
+    })
+
   })
 
   // describe("Game Play", async () => {
