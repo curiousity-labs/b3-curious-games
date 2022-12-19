@@ -31,32 +31,47 @@ contract Battleship {
      */
     address game_winner = address(0);
 
-    /**
-     *
-     */
     address public team1 = address(0);
-
-    /**
-     *
-     */
     address public team2 = address(0);
 
-    /**
-     * tracks team one data
-     */
-    string[][] private team_one_ship_locations;
-    string[][] team_one_ship_hits;
+    bytes2[][] private team_one_ship_locations;
+    bytes2[] team_one_targets;
 
-    /**
-     * tracks team two data
-     */
-    string[][] private team_two_ship_locations;
-    string[][] team_two_ship_hits;
+    bytes2[][] private team_two_ship_locations;
+    bytes2[] team_two_targets;
+
+    modifier turnCheck() {
+        require(
+            msg.sender != team2 &&
+                team_one_targets.length == 0 &&
+                team_two_targets.length == 0,
+            "Team 2 first"
+        );
+        require(
+            msg.sender == team2 &&
+                team_two_targets.length == team_one_targets.length,
+            "Not your turn"
+        );
+        _;
+    }
 
     /**
      *
      */
-    function takeTurn() public {}
+    function takeTurn(bytes2 target) external turnCheck {
+        require(msg.sender == team1 || msg.sender == team2, "Your not playing");
+        if (msg.sender == team1) {
+            bool hasTargeted = false;
+            for (uint256 i = 0; i < team_one_targets.length; i++) {
+                if (team_one_targets[i] == target) {
+                    hasTargeted = true;
+                }
+            }
+            team_one_targets.push(target);
+        } else {
+            team_two_targets.push(target);
+        }
+    }
 
     /**
      *
@@ -75,15 +90,21 @@ contract Battleship {
     /**
      *
      */
-    modifier checkPieces(string[][] memory targets) {
+    modifier checkPieces(bytes2[][] memory targets) {
         require(targets.length == 5, "Must have 5 pieces");
-        bool isPiecesSet = true;
+        bool isPiecesValid = true;
         for (uint256 i = 0; i < targets.length; i++) {
             if (targets[i].length == targets.length + 1) {
-                isPiecesSet = false;
+                isPiecesValid = false;
+                break;
             }
         }
-        require(isPiecesSet, "Incorrect pieces");
+        require(isPiecesValid, "Incorrect pieces");
+        _;
+    }
+
+    modifier teamOneSet() {
+        require(team_one_ship_locations.length == 0, "Pieces already set");
         _;
     }
 
@@ -91,21 +112,24 @@ contract Battleship {
      *
      */
     function setTeamOnePieces(
-        string[][] memory targets
-    ) external checkPieces(targets) {
-        require(team_one_ship_locations.length == 0, "Pieces already set");
+        bytes2[][] memory targets
+    ) external teamOneSet checkPieces(targets) {
         require(msg.sender == team1, "Team One Only");
         team_one_ship_locations = targets;
         emit TeamReady(msg.sender);
+    }
+
+    modifier teamTwoSet() {
+        require(team_two_ship_locations.length == 0, "Pieces already set");
+        _;
     }
 
     /**
      *
      */
     function setTeamTwoPieces(
-        string[][] memory targets
-    ) external checkPieces(targets) {
-        require(team_two_ship_locations.length == 0, "Pieces already set");
+        bytes2[][] memory targets
+    ) external teamTwoSet checkPieces(targets) {
         require(msg.sender == team2, "Team Two Only");
         team_two_ship_locations = targets;
         emit TeamReady(team2);

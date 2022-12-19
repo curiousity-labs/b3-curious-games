@@ -1,18 +1,21 @@
-export const shipLocationsOne: string[][] = [
-  ["c:4", "d:4", "e:4", "f:4", "g:4"],
-  ["a:2", "a:3", "a:4", "a:5"],
-  ["a:10", "b:10", "c:10"],
-  ["h:6", "h:7"],
-  ["g:2"]
-]
+import { BytesLike } from "ethers"
+import { formatBytes4String } from "../methods/data"
 
-export const shipLocationsTwo: string[][] = [
-  ["j:1", "j:2", "j:3", "j:4", "j:5"],
-  ["b:2", "c:2", "d:2", "e:2"],
-  ["e:5", "e:6", "e:7"],
-  ["c:10", "d:10"],
-  ["a:1"]
-]
+export const shipLocationsOne: BytesLike[][] = [
+  ["c4", "d4", "e4", "f4", "g4"],
+  ["a2", "a3", "a4", "a5"],
+  ["a10", "b10", "c10"],
+  ["h6", "h7"],
+  ["g2"]
+].map(loc => loc.map(str => formatBytes4String(str)))
+
+export const shipLocationsTwo: BytesLike[][] = [
+  ["j1", "j2", "j3", "j4", "j5"],
+  ["b2", "c2", "d2", "e2"],
+  ["e5", "e6", "e7"],
+  ["c10", "d10"],
+  ["a1"]
+].map(loc => loc.map(str => formatBytes4String(str)))
 
 export const ERROR_TEAM_ONE_ONLY = "Team One Only"
 export const ERROR_TEAM_TWO_ONLY = "Team Two Only"
