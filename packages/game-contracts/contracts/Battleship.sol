@@ -41,17 +41,23 @@ contract Battleship {
     bytes2[] team_two_targets;
 
     modifier turnCheck() {
-        require(
-            msg.sender != team2 &&
-                team_one_targets.length == 0 &&
-                team_two_targets.length == 0,
-            "Team 2 first"
-        );
-        require(
+        if(
+            msg.sender != team2 && team_two_targets.length == 0
+        ) {
+          revert("Team 2 first");
+        }
+        if (
             msg.sender == team2 &&
-                team_two_targets.length == team_one_targets.length,
-            "Not your turn"
-        );
+            team_two_targets.length != team_one_targets.length
+        ) {
+            revert("Not your turn Team 2");
+        }
+        if (
+            msg.sender == team1 &&
+            team_two_targets.length == team_one_targets.length
+        ) {
+            revert("Not your turn Team 1");
+        }
         _;
     }
 
@@ -86,7 +92,6 @@ contract Battleship {
         team2 = _team2;
         emit GameCreated(team1, team2);
     }
-
 
     modifier teamOneSet() {
         require(team_one_ship_locations.length == 0, "Pieces already set");
