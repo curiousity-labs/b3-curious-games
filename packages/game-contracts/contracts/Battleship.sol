@@ -53,6 +53,10 @@ contract Battleship {
         emit GameCreated(team1, team2);
     }
 
+    /**
+     * Sets ship locations for each team
+     * @notice emits event 'TeamReady'
+     */
     function checkAndSetPieces(
         bytes4[15] memory targets,
         address team
@@ -70,6 +74,9 @@ contract Battleship {
     }
 
     /**
+     * Sets locations for team 1 ships
+     * @param targets byte array of ship locations
+     * @notice Team 1 Only | Team Pieces not already set
      *
      */
     function setTeamOnePieces(bytes4[15] memory targets) external piecesSet {
@@ -78,6 +85,9 @@ contract Battleship {
     }
 
     /**
+     * Sets locations for team 2 ships
+     * @param targets byte array of ship locations
+     * @notice Team 2 Only | Team Pieces not already set
      *
      */
     function setTeamTwoPieces(bytes4[15] memory targets) external piecesSet {
