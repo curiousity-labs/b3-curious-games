@@ -23,7 +23,9 @@ contract Battleship {
      * @param team address of team whose turn was taken
      * @param target target location of attempted hit
      */
-    event TurnFinished(address team, bytes target, bool isSuccessful);
+    event TurnFinished(address team, bytes4 target, bool isSuccessful);
+
+    event GameFinished(address winner);
 
     /**
      * @dev Set to 0x0000~ while game is active. game is over when winner is set
@@ -33,15 +35,20 @@ contract Battleship {
 
     address public team1 = address(0);
     address public team2 = address(0);
+    address public currentTurn = address(0);
 
     /**
      * unit8 0 | undefined: nothing
      * unit8 1 : ship
-     * unit8 2 : hit
      */
-    mapping(address => mapping(bytes4 => uint8)) ships;
-    mapping(address => bool) teamReady;
-    mapping(address => uint8) hits;
+    struct TeamHits {
+        uint8 hitCount;
+        mapping(bytes4 => uint8) targeted;
+    }
+
+    mapping(address => mapping(bytes4 => uint8)) private locations;
+    mapping(address => TeamHits) teamHits;
+    mapping(address => bool) private teamReady;
 
     /**
      * initilizes game between two addresses
@@ -62,7 +69,7 @@ contract Battleship {
         address team
     ) private {
         for (uint256 i; i < targets.length; i++) {
-            ships[team][targets[i]] = 1;
+            locations[team][targets[i]] = 1;
         }
         teamReady[team] = true;
         emit TeamReady(team);
@@ -93,6 +100,47 @@ contract Battleship {
     function setTeamTwoPieces(bytes4[15] memory targets) external piecesSet {
         require(msg.sender == team2, "Team Two Only");
         checkAndSetPieces(targets, msg.sender);
+    }
+
+    modifier gameOver() {
+        require(game_winner == address(0), "Game is Over");
+        _;
+    }
+
+    function targetSpot(bytes4 target, address defTeam) private gameOver {
+        if (locations[defTeam][target] == 1 && teamHits[msg.sender].targeted[target] == 0) {
+            uint8 raisedHit = ++teamHits[msg.sender].hitCount;
+            teamHits[msg.sender].hitCount = raisedHit;
+            teamHits[msg.sender].targeted[target] = 1;
+            if (raisedHit == 15) {
+                game_winner = msg.sender;
+                emit GameFinished(msg.sender);
+            } else {
+                emit TurnFinished(msg.sender, target, true);
+            }
+        } else {
+            emit TurnFinished(msg.sender, target, false);
+        }
+
+        currentTurn = defTeam;
+    }
+
+    modifier checkTurn() {
+        if (
+            currentTurn == msg.sender ||
+            (currentTurn == address(0) && msg.sender == team2)
+        ) {
+            _;
+        }
+    }
+
+    function takeTurn(bytes4 target) external checkTurn {
+        require(msg.sender == team1 || msg.sender == team2, "Must be Playing");
+        if (msg.sender == team1) {
+            targetSpot(target, team2);
+        } else {
+            targetSpot(target, team1);
+        }
     }
 
     /**

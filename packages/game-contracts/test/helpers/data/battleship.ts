@@ -16,10 +16,10 @@ export const shipLocationsTwo: string[][] = [
   ["c10", "d10"],
   ["a1"]
 ]
-export const shipLocationsTwpBytes = formatMappedStrs(shipLocationsTwo).flat()
+export const shipLocationsTwoBytes = formatMappedStrs(shipLocationsTwo).flat()
 
 export const ERROR_TEAM_ONE_ONLY = "Team One Only"
 export const ERROR_TEAM_TWO_ONLY = "Team Two Only"
 
 export const ERROR_PIECES_SET = "Pieces Set"
-export const ERROR_TEAM_INCORRECT_PIECES = "Incorrect pieces"
+export const ERROR_IS_PLAYING = "Must be Playing"
