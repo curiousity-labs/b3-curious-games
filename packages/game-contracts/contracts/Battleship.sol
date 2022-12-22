@@ -34,114 +34,59 @@ contract Battleship {
     address public team1 = address(0);
     address public team2 = address(0);
 
-    bytes2[][] private team_one_ship_locations;
-    bytes2[] team_one_targets;
-
-    bytes2[][] private team_two_ship_locations;
-    bytes2[] team_two_targets;
-
-    modifier turnCheck() {
-        if(
-            msg.sender != team2 && team_two_targets.length == 0
-        ) {
-          revert("Team 2 first");
-        }
-        if (
-            msg.sender == team2 &&
-            team_two_targets.length != team_one_targets.length
-        ) {
-            revert("Not your turn Team 2");
-        }
-        if (
-            msg.sender == team1 &&
-            team_two_targets.length == team_one_targets.length
-        ) {
-            revert("Not your turn Team 1");
-        }
-        _;
-    }
+    /**
+     * unit8 0 | undefined: nothing
+     * unit8 1 : ship
+     * unit8 2 : hit
+     */
+    mapping(address => mapping(bytes4 => uint8)) ships;
+    mapping(address => bool) teamReady;
+    mapping(address => uint8) hits;
 
     /**
-     *
+     * initilizes game between two addresses
      */
-    function takeTurn(bytes2 target) external turnCheck {
-        require(msg.sender == team1 || msg.sender == team2, "Your not playing");
-        if (msg.sender == team1) {
-            bool hasTargeted = false;
-            for (uint256 i = 0; i < team_one_targets.length; i++) {
-                if (team_one_targets[i] == target) {
-                    hasTargeted = true;
-                }
-            }
-            team_one_targets.push(target);
-        } else {
-            team_two_targets.push(target);
-        }
-    }
-
-    /**
-     *
-     */
-    function forfeitMatch() public {}
-
-    /**
-     * sets up game
-     */
+    // @todo create factory contract
     constructor(address _team2) {
         team1 = msg.sender;
         team2 = _team2;
         emit GameCreated(team1, team2);
     }
 
-    modifier teamOneSet() {
-        require(team_one_ship_locations.length == 0, "Pieces already set");
-        _;
-    }
-
-    /**
-     *
-     */
-    modifier checkPieces(bytes2[][] memory targets) {
-        bool isPiecesValid = true;
-        for (uint256 i = 0; i < targets.length; i++) {
-            if (targets[i].length == targets.length + 1) {
-                isPiecesValid = false;
-                break;
-            }
+    function checkAndSetPieces(
+        bytes4[15] memory targets,
+        address team
+    ) private {
+        for (uint256 i; i < targets.length; i++) {
+            ships[team][targets[i]] = 1;
         }
-        require(isPiecesValid, "Incorrect pieces");
+        teamReady[team] = true;
+        emit TeamReady(team);
+    }
+
+    modifier piecesSet() {
+        require(teamReady[msg.sender] == false, "Pieces Set");
         _;
     }
 
     /**
      *
      */
-    function setTeamOnePieces(
-        bytes2[][] memory targets
-    ) external teamOneSet checkPieces(targets) {
+    function setTeamOnePieces(bytes4[15] memory targets) external piecesSet {
         require(msg.sender == team1, "Team One Only");
-        team_one_ship_locations = targets;
-        emit TeamReady(msg.sender);
-    }
-
-    modifier teamTwoSet() {
-        require(team_two_ship_locations.length == 0, "Pieces already set");
-        _;
+        checkAndSetPieces(targets, msg.sender);
     }
 
     /**
      *
      */
-    function setTeamTwoPieces(
-        bytes2[][] memory targets
-    ) external teamTwoSet checkPieces(targets) {
+    function setTeamTwoPieces(bytes4[15] memory targets) external piecesSet {
         require(msg.sender == team2, "Team Two Only");
-        team_two_ship_locations = targets;
-        emit TeamReady(team2);
+        checkAndSetPieces(targets, msg.sender);
     }
 
     /**
      *
      */
-    function gameStart() public {}
+    // function forfeitMatch() public {}
 }

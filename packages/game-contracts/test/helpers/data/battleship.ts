@@ -7,7 +7,7 @@ export const shipLocationsOne: string[][] = [
   ["h6", "h7"],
   ["g2"]
 ]
-export const shipLocationsOneBytes = formatMappedStrs(shipLocationsOne)
+export const shipLocationsOneBytes = formatMappedStrs(shipLocationsOne).flat()
 
 export const shipLocationsTwo: string[][] = [
   ["j1", "j2", "j3", "j4", "j5"],
@@ -16,9 +16,10 @@ export const shipLocationsTwo: string[][] = [
   ["c10", "d10"],
   ["a1"]
 ]
-export const shipLocationsTwpBytes = formatMappedStrs(shipLocationsTwo)
+export const shipLocationsTwpBytes = formatMappedStrs(shipLocationsTwo).flat()
 
 export const ERROR_TEAM_ONE_ONLY = "Team One Only"
 export const ERROR_TEAM_TWO_ONLY = "Team Two Only"
-export const ERROR_TEAM_PIECES_SET = "Pieces already set"
+
+export const ERROR_PIECES_SET = "Pieces Set"
 export const ERROR_TEAM_INCORRECT_PIECES = "Incorrect pieces"

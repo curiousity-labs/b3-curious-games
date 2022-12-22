@@ -5,7 +5,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 import { expect } from "chai"
 import {
   ERROR_TEAM_ONE_ONLY,
-  ERROR_TEAM_PIECES_SET,
+  ERROR_PIECES_SET,
   ERROR_TEAM_TWO_ONLY,
   shipLocationsOneBytes,
   shipLocationsTwpBytes,
@@ -68,13 +68,13 @@ describe("Battleship", () => {
     it("Should revert if team 1 is already set", async () => {
       const contract = battleshipContract.connect(account1)
       await contract.setTeamOnePieces(shipLocationsOneBytes)
-      await expect(contract.setTeamOnePieces(shipLocationsOneBytes)).to.be.revertedWith(ERROR_TEAM_PIECES_SET)
+      await expect(contract.setTeamOnePieces(shipLocationsOneBytes)).to.be.revertedWith(ERROR_PIECES_SET)
     })
 
     it("Should revert if team 2 is already set", async () => {
       const contract = battleshipContract.connect(account2)
       await contract.setTeamTwoPieces(shipLocationsTwpBytes)
-      await expect(contract.setTeamTwoPieces(shipLocationsTwpBytes)).to.be.revertedWith(ERROR_TEAM_PIECES_SET)
+      await expect(contract.setTeamTwoPieces(shipLocationsTwpBytes)).to.be.revertedWith(ERROR_PIECES_SET)
     })
 
   })
