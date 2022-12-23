@@ -9,6 +9,9 @@ import {
   ERROR_TEAM_TWO_ONLY,
   shipLocationsOneBytes,
   shipLocationsTwoBytes,
+  fastForwardLastTurnTeamTwoLead,
+  fastForwardLastTurnTeamOneLead,
+  ERROR_NOT_TURN,
 } from "./helpers/data/battleship"
 
 describe("Battleship", () => {
@@ -113,120 +116,46 @@ describe("Battleship", () => {
     })
 
     it("should declare team 1 victor", async () => {
-      const signer2C = battleshipContract.connect(account2)
       const signer1C = battleshipContract.connect(account1)
+      const signer2C = battleshipContract.connect(account2)
 
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[1])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[2])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[3])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[4])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[5])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[6])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[7])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[8])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[9])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[10])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[11])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[12])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[13])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
+      await fastForwardLastTurnTeamOneLead(signer1C, signer2C);
       await expect(signer1C.takeTurn(shipLocationsTwoBytes[14])).to.emit(signer1C, "GameFinished").withArgs(account1.address)
     })
 
     it("should declare team 2 victor", async () => {
-      const signer2C = battleshipContract.connect(account2)
       const signer1C = battleshipContract.connect(account1)
+      const signer2C = battleshipContract.connect(account2)
 
-      await signer2C.takeTurn(shipLocationsOneBytes[0])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[1])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[2])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[3])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[4])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[5])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[6])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[7])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[8])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[9])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[10])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[11])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[12])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-      await signer2C.takeTurn(shipLocationsOneBytes[13])
-      await signer1C.takeTurn(shipLocationsTwoBytes[0])
-
-
+      await fastForwardLastTurnTeamTwoLead(signer1C, signer2C)
       await expect(signer2C.takeTurn(shipLocationsOneBytes[14])).to.emit(signer2C, "GameFinished").withArgs(account2.address)
     })
-    // it("should finish game by setting winner", async () => {})
     // it("should forfeit game by setting winner", async () => {})
   })
 
   describe("Game Play | REVERT", async () => {
+    let signer1C: Battleship;
+    let signer2C: Battleship;
 
     beforeEach(async () => {
-      const signer1C = battleshipContract.connect(account1)
+      signer1C = battleshipContract.connect(account1)
+      signer2C = battleshipContract.connect(account2)
+      
       await signer1C.setTeamOnePieces(shipLocationsOneBytes)
-
-      const signer2C = battleshipContract.connect(account2)
       await signer2C.setTeamTwoPieces(shipLocationsTwoBytes)
     })
 
-    // it('should revert if player 1 tries to go first', async () => {})
-    // it('should revert if its not player 1's turn', async () => {})
-    // it('should revert if its not player 2's turn', async () => {})
+    it('should revert if turn 1 tries to go first', async () => {
+      await expect(signer1C.takeTurn(shipLocationsTwoBytes[0])).to.be.revertedWith(ERROR_NOT_TURN)
+    })
+    it('should revert if its not team 2 turn', async () => {
+      await signer2C.takeTurn(shipLocationsOneBytes[12])
+      await expect(signer2C.takeTurn(shipLocationsOneBytes[0])).to.be.revertedWith(ERROR_NOT_TURN)
+    })
+    it('should revert if its not team 1 turn', async () => {
+      await signer2C.takeTurn(shipLocationsOneBytes[12])
+      await signer1C.takeTurn(shipLocationsTwoBytes[12])
+      await expect(signer1C.takeTurn(shipLocationsTwoBytes[0])).to.be.revertedWith(ERROR_NOT_TURN)
+    })
   })
 })

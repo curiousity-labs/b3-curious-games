@@ -136,15 +136,16 @@ contract Battleship {
 
     modifier checkTurn() {
         if (
-            currentTurn == msg.sender ||
             (currentTurn == address(0) && msg.sender == team2)
         ) {
             _;
+            return;
         }
+        require(currentTurn == msg.sender, "Not your turn");
+        _;
     }
 
     function takeTurn(bytes4 target) external checkTurn {
-        require(msg.sender == team1 || msg.sender == team2, "Must be Playing");
         if (msg.sender == team1) {
             targetSpot(target, team2);
         } else {
