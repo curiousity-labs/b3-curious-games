@@ -1,13 +1,29 @@
-# Sample Hardhat Project
+# Game Contracts
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+## Battleship.sol
+Contract to play a game of on-chain Battleship. This contract deploys directory for each game.
 
-Try running some of the following tasks:
+## BattleshipFactory.sol + BattleshipImpl.sol
+FactorContract and Implementation Contract to save gas cost when creating new games. Uses [OpenZepplein]()'s `Clones` contract.
+
+## Scripts
 
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+pnpm run test // run tests
+pnpm run compile // run hardhat compilier
+```
+
+## Local Development
+
+setup...
+
+```shall
+nvm use
+pnpm install
+```
+
+compile...
+
+```shell
+pnpm run compile
 ```
