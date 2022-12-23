@@ -162,56 +162,55 @@ describe("Battleship", () => {
       await expect(signer1C.takeTurn(shipLocationsTwoBytes[14])).to.emit(signer1C, "GameFinished").withArgs(account1.address)
     })
 
-    // it("should declare team 2 victor", async () => {
-    //   const signer2C = battleshipContract.connect(account2)
-    //   const signer1C = battleshipContract.connect(account1)
+    it("should declare team 2 victor", async () => {
+      const signer2C = battleshipContract.connect(account2)
+      const signer1C = battleshipContract.connect(account1)
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[1])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[0])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[2])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[1])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[3])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[2])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[4])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[3])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[5])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[4])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[6])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[5])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[7])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[6])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[8])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[7])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[9])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[8])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[10])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[9])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[11])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[10])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[12])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[11])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[13])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[12])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
-    //   await signer2C.takeTurn(shipLocationsOneBytes[14])
-    //   await signer1C.takeTurn(shipLocationsTwoBytes[0])
+      await signer2C.takeTurn(shipLocationsOneBytes[13])
+      await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
 
-    //   await expect(signer2C.takeTurn(shipLocationsOneBytes[15])).to.emit(signer2C, "GameFinished").withArgs(account2.address)
-    // })
-    // it("should declare team 2 victor", () => {})
+      await expect(signer2C.takeTurn(shipLocationsOneBytes[14])).to.emit(signer2C, "GameFinished").withArgs(account2.address)
+    })
     // it("should finish game by setting winner", async () => {})
     // it("should forfeit game by setting winner", async () => {})
   })

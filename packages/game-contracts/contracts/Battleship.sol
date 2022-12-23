@@ -50,6 +50,15 @@ contract Battleship {
     mapping(address => TeamHits) teamHits;
     mapping(address => bool) private teamReady;
 
+    // function getTeamHitCounts()
+    //     public
+    //     view
+    //     returns (uint8 team1Count, uint8 team2Count)
+    // {
+    //     team1Count = teamHits[team1].hitCount;
+    //     team2Count = teamHits[team2].hitCount;
+    // }
+
     /**
      * initilizes game between two addresses
      */
