@@ -2,10 +2,9 @@
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/proxy/Clones.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "./BattleshipImpl.sol";
 
-contract BattleshipFactory is Ownable {
+contract BattleshipFactory {
     mapping(uint => Battleship) BattleshipGames;
     uint gameId;
 
