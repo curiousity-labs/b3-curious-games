@@ -1,6 +1,4 @@
-import { Battleship__factory } from "./../typechain-types/factories/Battleship__factory"
 import { ethers } from "hardhat"
-import { Battleship } from "../typechain-types/Battleship"
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 import { expect } from "chai"
 import {
@@ -13,6 +11,7 @@ import {
   fastForwardLastTurnTeamOneLead,
   ERROR_NOT_TURN,
 } from "./helpers/data/battleship"
+import { Battleship, Battleship__factory } from '../typechain-types';
 
 describe("Battleship", () => {
   let battleshipContract: Battleship
