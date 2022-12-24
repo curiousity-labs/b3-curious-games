@@ -1,5 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+require('dotenv').config()
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -25,15 +26,15 @@ const config: HardhatUserConfig = {
       accounts: process.env.GOERLI_DEPLOYER_PRIVATE_KEY
         ? [process.env.GOERLI_DEPLOYER_PRIVATE_KEY]
         : [],
-    },
-    sepolia: {
-      chainId: 11155111,
-      url: process.env.SEPOLIA_PROVIDER || "",
-      accounts: process.env.SEPOLIA_DEPLOYER_PRIVATE_KEY
+      },
+      sepolia: {
+        chainId: 11155111,
+        url: process.env.SEPOLIA_PROVIDER || "",
+        accounts: process.env.SEPOLIA_DEPLOYER_PRIVATE_KEY
         ? [process.env.SEPOLIA_DEPLOYER_PRIVATE_KEY]
         : [],
-    },
-  }
-};
-
+      },
+    }
+  };
+  
 export default config;

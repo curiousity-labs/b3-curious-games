@@ -6,7 +6,8 @@
   "license": "ISC",
   "scripts": {
     "test": "REPORT_GAS=true npx hardhat test",
-    "compile": "npx hardhat compile"
+    "compile": "npx hardhat compile",
+    "deploy:bsfactory:goerli": "npx hardhat run ./scripts/deployBattleshipFactory.ts --network goerli"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
@@ -22,6 +23,7 @@
     "@types/mocha": "^10.0.1",
     "@types/node": "^16.11.60",
     "chai": "^4.3.7",
+    "dotenv": "^16.0.3",
     "ethers": "^5.7.1",
     "hardhat": "^2.12.4",
     "hardhat-gas-reporter": "^1.0.9",

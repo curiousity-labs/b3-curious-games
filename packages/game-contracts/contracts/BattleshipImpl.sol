@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 /**
  * @title onchain battleship
  */
-contract Battleship {
+contract BattleshipImpl {
     /**
      * @notice This will be used to track which addresses are parcipating
      * @param team1 address of team 1
