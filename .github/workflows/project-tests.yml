@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
 jobs:
-  contract-tests:
+  all-tests:
     name: Run all project tests
     runs-on: ubuntu-latest
     steps:
