@@ -5,7 +5,7 @@ on:
 jobs:
   contract-tests:
     name: Run All tests
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
