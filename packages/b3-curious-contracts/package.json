@@ -12,7 +12,7 @@
     "clean:prepare": "pnpm run clean && pnpm run prepare",
     "deploy:bsfactory:goerli": "npx hardhat deploy --network goerli --tags BattleshipFactory --export ./minified/deployments.json",
     "verify:bsfactory:goerli": "npx hardhat etherscan-verify --network goerli --solc-input",
-    "publish-packages": "pnpm run clean && pnpm run prepare && pnpm publish --no-git-checks"
+    "publish-packages": "pnpm run prepare && pnpm publish --no-git-checks"
   },
   "files": [
     "dist",
