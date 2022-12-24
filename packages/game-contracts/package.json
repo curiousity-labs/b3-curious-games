@@ -1,5 +1,5 @@
 {
-  "name": "rancher-contracts",
+  "name": "game-contracts",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -7,7 +7,7 @@
   "scripts": {
     "test": "REPORT_GAS=true npx hardhat test",
     "compile": "npx hardhat compile",
-    "deploy:bsfactory:goerli": "npx hardhat run ./scripts/deployBattleshipFactory.ts --network goerli"
+    "deploy:bsfactory:goerli": "npx hardhat deploy --network goerli --tags BattleshipFactory --export ./minified/deployments.json"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
@@ -26,6 +26,8 @@
     "dotenv": "^16.0.3",
     "ethers": "^5.7.1",
     "hardhat": "^2.12.4",
+    "hardhat-deploy": "^0.11.22",
+    "hardhat-deploy-ethers": "0.3.0-beta.13",
     "hardhat-gas-reporter": "^1.0.9",
     "mocha": "^10.2.0",
     "solidity-coverage": "^0.8.2",

@@ -1,4 +1,4 @@
-import { Battleship } from "../../../typechain-types"
+import { Battleship, BattleshipImpl } from "../../../typechain"
 import { formatMappedStrs } from "../methods/data"
 
 export const shipLocationsOne: string[][] = [
@@ -19,7 +19,7 @@ export const shipLocationsTwo: string[][] = [
 ]
 export const shipLocationsTwoBytes = formatMappedStrs(shipLocationsTwo).flat()
 
-export async function fastForwardLastTurnTeamOneLead(signer1C: Battleship, signer2C: Battleship) {
+export async function fastForwardLastTurnTeamOneLead(signer1C: Battleship | BattleshipImpl, signer2C: Battleship | BattleshipImpl) {
   await signer2C.takeTurn(shipLocationsOneBytes[0])
   await signer1C.takeTurn(shipLocationsTwoBytes[0])
 
@@ -65,7 +65,7 @@ export async function fastForwardLastTurnTeamOneLead(signer1C: Battleship, signe
   await signer2C.takeTurn(shipLocationsOneBytes[0])
 }
 
-export async function fastForwardLastTurnTeamTwoLead(signer1C: Battleship, signer2C: Battleship) {
+export async function fastForwardLastTurnTeamTwoLead(signer1C: Battleship | BattleshipImpl, signer2C: Battleship | BattleshipImpl) {
   await signer2C.takeTurn(shipLocationsOneBytes[0])
   await signer1C.takeTurn(shipLocationsTwoBytes[0])
 

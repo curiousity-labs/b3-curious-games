@@ -11,7 +11,7 @@ import {
   fastForwardLastTurnTeamOneLead,
   ERROR_NOT_TURN,
 } from "./helpers/data/battleship"
-import { Battleship, Battleship__factory } from '../typechain-types';
+import { Battleship, Battleship__factory } from '../typechain';
 
 describe("Battleship", () => {
   let battleshipContract: Battleship

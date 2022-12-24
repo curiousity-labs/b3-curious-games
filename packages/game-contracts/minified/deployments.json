@@ -1,0 +1,251 @@
+{
+  "name": "goerli",
+  "chainId": "5",
+  "contracts": {
+    "BattleshipFactory": {
+      "address": "0x9A7Df56981ba9a57175FCC38FDbB6DF478D06ee1",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "implAddress",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [],
+          "name": "battleshipImplAddr",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "teamtwo",
+              "type": "address"
+            }
+          ],
+          "name": "deployAndChallange",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_gameId",
+              "type": "uint256"
+            }
+          ],
+          "name": "getGame",
+          "outputs": [
+            {
+              "internalType": "contract BattleshipImpl",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "getGames",
+          "outputs": [
+            {
+              "internalType": "contract BattleshipImpl[]",
+              "name": "",
+              "type": "address[]"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        }
+      ]
+    },
+    "BattleshipImpl": {
+      "address": "0xBf6A740ebC973cfB8236050e2b54ff26D2f06513",
+      "abi": [
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "team1",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "team2",
+              "type": "address"
+            }
+          ],
+          "name": "GameCreated",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "winner",
+              "type": "address"
+            }
+          ],
+          "name": "GameFinished",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "team",
+              "type": "address"
+            }
+          ],
+          "name": "TeamReady",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "team",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "bytes4",
+              "name": "target",
+              "type": "bytes4"
+            },
+            {
+              "indexed": false,
+              "internalType": "bool",
+              "name": "isSuccessful",
+              "type": "bool"
+            }
+          ],
+          "name": "TurnFinished",
+          "type": "event"
+        },
+        {
+          "inputs": [],
+          "name": "currentTurn",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_team1",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "_team2",
+              "type": "address"
+            }
+          ],
+          "name": "init",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes4[15]",
+              "name": "targets",
+              "type": "bytes4[15]"
+            }
+          ],
+          "name": "setTeamOnePieces",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes4[15]",
+              "name": "targets",
+              "type": "bytes4[15]"
+            }
+          ],
+          "name": "setTeamTwoPieces",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes4",
+              "name": "target",
+              "type": "bytes4"
+            }
+          ],
+          "name": "takeTurn",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "team1",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "team2",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        }
+      ]
+    }
+  }
+}
