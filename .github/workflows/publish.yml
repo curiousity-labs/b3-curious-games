@@ -36,10 +36,9 @@ jobs:
         run: npm install -g pnpm
       - name: Install dependencies
         run: pnpm install
-      - name: Compile Contracts
-        working-directory: ./packages/b3-curious-contracts
-        run: pnpm run compile
-      - name: Publish
-        uses: JS-DevTools/npm-publish@v1
+      - name: Compile and publish
+        run: pnpm run publish-packages
         with:
           token: ${{ secrets.CONTRACTS_NPM_TOKEN }}
+      - name: Publish
+        uses: JS-DevTools/npm-publish@v1
