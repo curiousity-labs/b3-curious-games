@@ -11,9 +11,9 @@ import {
   fastForwardLastTurnTeamOneLead,
   ERROR_NOT_TURN,
 } from "./helpers/data/battleship"
-import { Battleship__factory } from "../typechain-types/factories/contracts/BattleshipImpl.sol"
 import { BattleshipFactory__factory } from "../typechain-types"
-import { Battleship } from "../typechain-types/contracts/BattleshipImpl.sol"
+import { Battleship } from "../typechain-types/BattleshipImpl.sol"
+import { Battleship__factory } from "../typechain-types/factories/BattleshipImpl.sol"
 
 describe("Battleship | As Clone", () => {
   let battleshipContractAddr: string;
