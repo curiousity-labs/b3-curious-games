@@ -1,4 +1,4 @@
-FROM node:16.13.2-alpine
+FROM node:16.18.1-alpine
 
 # Copies a hardhat.package.json and renames
 COPY package.json /blockchain-node/package.json 
@@ -14,7 +14,9 @@ WORKDIR /blockchain-node/
 # caching isn't needed since this will be rebuild and ran fresh each time a test is ran
 RUN apk --no-cache --virtual build-dependencies add python3 make g++
 
-RUN npm install
+RUN npm -g pnpm
+
+RUN pnpm install
 
 # keeps server running
-CMD ["npx", "hardhat", "node"]
+CMD ["pnpm", "run", "test"]

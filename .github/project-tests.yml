@@ -1,0 +1,21 @@
+name: Project Tests
+on:
+  push:
+  pull_request:
+jobs:
+  contract-tests:
+    name: Run All tests
+    runs-on: ubuntu-lastest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up node
+      uses: actions/setup-node@v2
+      with:
+        node-version-file: '.nvmrc'
+    - name: Install pnpm
+      run: npm install -g pnpm
+    - name: Install dependencies
+      run: pnpm install
+    - name: Execute tests
+      run: pnpm run test
