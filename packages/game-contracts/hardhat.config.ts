@@ -5,6 +5,7 @@ import "@nomiclabs/hardhat-ethers";
 import 'hardhat-gas-reporter';
 import '@typechain/hardhat';
 import 'solidity-coverage';
+import "@nomiclabs/hardhat-etherscan";
 
 require('dotenv').config()
 
@@ -26,9 +27,14 @@ const config: HardhatUserConfig = {
     deployer: 0,
   },
   typechain: {
-		outDir: 'typechain',
-		target: 'ethers-v5',
-	},
+    outDir: 'typechain',
+    target: 'ethers-v5',
+  },
+  verify: {
+    etherscan: {
+      apiKey: process.env.ETHERSCAN_API_KEY
+    }
+  },
   networks: {
     mainnet: {
       chainId: 1,
@@ -38,11 +44,6 @@ const config: HardhatUserConfig = {
         : [],
     },
     goerli: {
-      verify: {
-        etherscan: {
-          apiKey: process.env.ETHERSCAN_API_KEY
-        }
-      },
       chainId: 5,
       url: process.env.GOERLI_PROVIDER || "",
       accounts: process.env.GOERLI_DEPLOYER_PRIVATE_KEY

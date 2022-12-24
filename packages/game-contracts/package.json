@@ -7,7 +7,8 @@
   "scripts": {
     "test": "REPORT_GAS=true npx hardhat test",
     "compile": "npx hardhat compile",
-    "deploy:bsfactory:goerli": "npx hardhat deploy --network goerli --tags BattleshipFactory --export ./minified/deployments.json"
+    "deploy:bsfactory:goerli": "npx hardhat deploy --network goerli --tags BattleshipFactory --export ./minified/deployments.json",
+    "verify:bsfactory:goerli": "npx hardhat etherscan-verify --network goerli --solc-input"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
