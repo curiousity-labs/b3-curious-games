@@ -37,8 +37,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Compile and publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.CONTRACTS_NPM_TOKEN }}
         run: pnpm run publish-packages
-        with:
-          token: ${{ secrets.CONTRACTS_NPM_TOKEN }}
-      - name: Publish
-        uses: JS-DevTools/npm-publish@v1
