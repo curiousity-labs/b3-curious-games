@@ -21,6 +21,7 @@ jobs:
     - name: Execute tests
       run: pnpm run test
   publish:
+    name: Publish Contracts
     environment: production
     runs-on: ubuntu-latest
     needs: all-tests
@@ -36,6 +37,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Compile Contracts
+        working-directory: ./packages/b3-curious-contracts
         run: pnpm run compile
       - name: Publish
         uses: JS-DevTools/npm-publish@v1
