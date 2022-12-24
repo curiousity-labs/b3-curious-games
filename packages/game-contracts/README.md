@@ -8,10 +8,12 @@ FactorContract and Implementation Contract to save gas cost when creating new ga
 
 ## Scripts
 
-```shell
-pnpm run test // run tests
-pnpm run compile // run hardhat compilier
-```
+| name | description |
+| :---- | :---------- |
+| test | run `hardhat` tests |
+| compile | run `hardhat` compiler; also runs `typechain` compiler |
+| deploy:bsfactory:goerli | deploys battleship factory and impl contracts to goerli network |
+| verify:bsfactory:goerli | un-verified deployed contracts on goerli network |
 
 ## Local Development
 
