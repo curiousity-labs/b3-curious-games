@@ -16,14 +16,14 @@
   "files": [
     "dist",
     "minified",
-    "contracts"
+    "typechain"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/decent-dao/curiousity-labs/b3-curious-games.git"
   },
-  "main": "dist/typechain/index.js",
-  "types": "dist/typechain/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bytes": "^5.7.0",
