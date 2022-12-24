@@ -16,7 +16,7 @@ jobs:
     - name: Install pnpm
       run: npm install -g pnpm
     - name: Install dependencies
-      run: pnpm ci
+      run: pnpm install
     - name: Execute tests
       run: pnpm run test
       
