@@ -1,21 +1,17 @@
 name: Publish NPM Package
 on: 
-  push:
-    branches:
-    - main
+  release:
+    types: [created]
 
 jobs:
   publish:
-    needs: contract-tests
-    environment: release
+    environment: production
     runs-on: ubuntu-latest
+    needs: contract-tests 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm install
-      - run: npm run compile
-      - uses: JS-DevTools/npm-publish@v1
+      - name: Compile Contracts
+        run: pnpm run compile
+      - name: Publish
+        uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.CONTRACTS_NPM_TOKEN }}
