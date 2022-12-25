@@ -1,14 +1,21 @@
+import { localhost } from 'wagmi/chains';
 import '@rainbow-me/rainbowkit/styles.css'
 
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { ledgerWallet, metaMaskWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets'
-import { chain, configureChains, createClient } from 'wagmi'
+import { configureChains, createClient, goerli } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 
+export const chainsArr = [goerli];
+
+if(process.env.NODE_ENV === 'development') {
+  chainsArr.push(localhost)
+}
+
 export const { chains, provider } = configureChains(
-  [chain.goerli, chain.localhost],
+  chainsArr,
   [
     alchemyProvider({ apiKey: import.meta.env.VITE_ALCHEMY_ID }),
     infuraProvider({ apiKey: import.meta.env.VITE_INFURA_ID }),
@@ -18,7 +25,7 @@ export const { chains, provider } = configureChains(
 
 const connectors = connectorsForWallets([
   {
-    groupName: 'Recommended',
+    groupName: 'Suppoerted Wallets',
     wallets: [
       metaMaskWallet({ chains }),
       ledgerWallet({ chains }),
