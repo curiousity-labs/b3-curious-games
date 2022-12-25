@@ -32,11 +32,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install dependencies
         run: pnpm install
       - name: Compile and publish
+        run: pnpm run publish-packages
         env:
           NODE_AUTH_TOKEN: ${{ secrets.CONTRACTS_NPM_TOKEN }}
-        run: pnpm run publish-packages
