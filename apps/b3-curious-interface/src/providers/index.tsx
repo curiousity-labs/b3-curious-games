@@ -1,13 +1,18 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import { theme } from '@decent-org/fractal-ui'
 import { HashRouter } from 'react-router-dom'
+import { WagmiConfig } from 'wagmi'
+import { wagmiClient, chains } from './network/rainbow-kit.config'
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 
 export function AppProviders({ children }: { children: JSX.Element }) {
   return (
     <ChakraProvider theme={theme}>
-      <HashRouter>
-        {children}
-      </HashRouter>
+      <WagmiConfig client={wagmiClient}>
+        <RainbowKitProvider chains={chains} modalSize='compact'>
+          <HashRouter>{children}</HashRouter>
+        </RainbowKitProvider>
+      </WagmiConfig>
     </ChakraProvider>
   )
 }
