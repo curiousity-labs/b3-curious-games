@@ -14,7 +14,13 @@ jobs:
       with:
         node-version-file: '.nvmrc'
     - name: Install pnpm
-      run: npm install -g pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 7
+    - name: Install dependencies
+      run: pnpm install --no-frozen-lockfile -r
+    - name: Execute tests
+      run: pnpm run test
     - name: Install dependencies
       run: pnpm install --no-frozen-lockfile
     - name: Execute tests

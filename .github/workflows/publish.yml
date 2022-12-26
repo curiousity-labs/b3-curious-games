@@ -1,5 +1,5 @@
 name: Publish NPM Package
-on: 
+on:
   release:
     types: [created]
 
@@ -8,18 +8,20 @@ jobs:
     name: Run all project tests
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Set up node
-      uses: actions/setup-node@v3
-      with:
-        node-version-file: '.nvmrc'
-    - name: Install pnpm
-      run: npm install -g pnpm
-    - name: Install dependencies
-      run: pnpm install --no-frozen-lockfile
-    - name: Execute tests
-      run: pnpm run test
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile -r
+      - name: Execute tests
+        run: pnpm run test
   publish:
     name: Publish Contracts
     environment: production
@@ -31,14 +33,14 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
+          node-version-file: ".nvmrc"
+          registry-url: "https://registry.npmjs.org"
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install dependencies
         run: pnpm install
       - name: Compile and publish
-        run: | 
+        run: |
           rm -rf README.md
           mv README.contracts-npm.md README.md
           pnpm run publish-packages
