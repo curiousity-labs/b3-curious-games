@@ -1,8 +1,6 @@
 import { createContext, useContext, Context } from 'react'
-import { AppState } from './session/types';
 
 export interface IStoreContext {
-  appState: AppState;
   loaders: string[] // define these
 }
 

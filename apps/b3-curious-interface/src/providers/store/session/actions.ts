@@ -1,5 +1,5 @@
-export enum AppStateAction {
+export enum SessionStateAction {
   Reset
 }
 
-export type AppStateActions = { type: AppStateAction.Reset }
+export type SessionStateActions = { type: SessionStateAction.Reset }

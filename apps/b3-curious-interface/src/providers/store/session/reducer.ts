@@ -1,8 +1,8 @@
-import { AppStateAction, AppStateActions } from './actions';
-import { AppState } from './types';
-export function reducer(state: AppState, action: AppStateActions) {
+import { SessionStateAction, SessionStateActions } from './actions';
+import { SessionState } from './types';
+export function reducer(state: SessionState, action: SessionStateActions) {
   switch(action.type) {
-    case AppStateAction.Reset: {
+    case SessionStateAction.Reset: {
       return state
     }
     default:

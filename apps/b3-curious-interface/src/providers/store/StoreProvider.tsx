@@ -5,7 +5,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   /**
    * appState -> Store for information
    */
-  const [appState, appDispatch] = useReducer(() => [], [])
+  const [sessionState, sessionDispatch] = useReducer(() => [], [])
 
   function dispatch({ state, action }: { state: any, action: { type: any, payload: any } }) {
     switch (action.type) {
@@ -16,9 +16,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
 
   const value = useMemo(() => ({
-    appState: {
-      isAccountConnected: false
-    },
     loaders: []
   }), [])
 
