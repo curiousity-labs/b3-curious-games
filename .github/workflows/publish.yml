@@ -17,9 +17,9 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 7
+          version: 7.16.1
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile -r
+        run: pnpm install --no-frozen-lockfile
       - name: Execute tests
         run: pnpm run test
   publish:
@@ -36,9 +36,11 @@ jobs:
           node-version-file: ".nvmrc"
           registry-url: "https://registry.npmjs.org"
       - name: Install pnpm
-        run: npm install -g pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.16.1
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       - name: Compile and publish
         run: |
           rm -rf README.md
