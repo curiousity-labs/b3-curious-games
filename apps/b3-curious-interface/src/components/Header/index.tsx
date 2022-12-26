@@ -1,6 +1,9 @@
-import { Button, Flex, Text } from '@chakra-ui/react';
-import { constants } from 'ethers';
+import { Button, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Disconnect } from '@decent-org/fractal-ui';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { ReactNode } from 'react';
+import { useAccount, useDisconnect } from 'wagmi';
+import { useAddressLookup } from '../../hooks/utils/useAddressString';
 
 function HeaderWrapper({ children }: { children?: ReactNode }) {
   return (
@@ -11,21 +14,30 @@ function HeaderWrapper({ children }: { children?: ReactNode }) {
 }
 
 export function Header() {
-  const isLoading = false;
-  const isConnected = true;
+  const { address } = useAccount()
+  const { disconnect } = useDisconnect()
+  const { openConnectModal } = useConnectModal()
+  const { addressInfo } = useAddressLookup(address);
+
+  const isLoading = false; // @todo update with loader from main app provider
 
   if (isLoading) {
-    return <HeaderWrapper>Loading...</HeaderWrapper>
+    // return empty wrapper during loading to keep space in dom
+    return <HeaderWrapper></HeaderWrapper>;
   }
 
-  if (!isConnected) {
-    return <HeaderWrapper><Button>Connect Wallet</Button></HeaderWrapper>
+  if (!address) {
+    return <HeaderWrapper><Button onClick={openConnectModal}>Connect Wallet</Button></HeaderWrapper>
   }
   return (
     <HeaderWrapper>
-      <Flex w="full" h="full" flexDirection="column" justifyContent="center" alignItems="flex-end">
-        <Text>{constants.AddressZero}</Text>
-        <Text>nullAddress.eth</Text>
+      <Flex gap={2} justifyContent="flex-end" alignItems="center" w="full">
+        <Flex w="full" h="full" flexDirection="column" justifyContent="center" alignItems="flex-end">
+          <Text>{addressInfo.truncated}</Text>
+          {addressInfo.ensName && <Text>{addressInfo.ensName}</Text>}
+          {addressInfo.registryDAOName && <Text>{addressInfo.registryDAOName}</Text>}
+        </Flex>
+        <IconButton px={1} bg="alert-red.dark" minWidth="0px" minH="full" aria-label="disconnect" icon={<Disconnect color="grayscale.400" />} onClick={() => disconnect()} />
       </Flex>
     </HeaderWrapper>
   )
