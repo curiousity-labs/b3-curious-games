@@ -1,12 +1,11 @@
 import { localhost } from 'wagmi/chains';
 import '@rainbow-me/rainbowkit/styles.css'
 
-import { connectorsForWallets } from '@rainbow-me/rainbowkit'
-import { ledgerWallet, metaMaskWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets'
 import { configureChains, createClient, goerli } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
+import { getDefaultWallets } from '@rainbow-me/rainbowkit';
 
 export const chainsArr = [goerli];
 
@@ -23,16 +22,11 @@ export const { chains, provider } = configureChains(
   ],
 )
 
-const connectors = connectorsForWallets([
-  {
-    groupName: 'Suppoerted Wallets',
-    wallets: [
-      metaMaskWallet({ chains }),
-      ledgerWallet({ chains }),
-      walletConnectWallet({ chains }),
-    ],
-  },
-])
+const { connectors } = getDefaultWallets({
+  appName: 'b3 Curious',
+  chains
+});
+
 
 export const wagmiClient = createClient({
   autoConnect: true,
