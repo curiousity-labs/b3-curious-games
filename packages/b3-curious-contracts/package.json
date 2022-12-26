@@ -11,7 +11,7 @@
     "verify:bsfactory:goerli": "npx hardhat etherscan-verify --network goerli --solc-input",
     "clean": "hardhat clean && rimraf dist",
     "add-readme": "mv README.contracts-npm.md ./dist/README.md",
-    "package:prep": "pnpm run clean && pnpm run compile && tsc && add-readme",
+    "package:prep": "pnpm run clean && pnpm run compile && tsc && pnpm run add-readme",
     "publish-packages": "pnpm run package:prep && pnpm publish --no-git-checks"
   },
   "files": [
