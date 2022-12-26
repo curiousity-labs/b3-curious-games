@@ -18,6 +18,7 @@ importers:
       '@decent-org/fractal-ui': ^0.1.6
       '@emotion/react': ^11.10.4
       '@emotion/styled': ^11.10.4
+      '@fractal-framework/fractal-contracts': ^0.1.13
       '@rainbow-me/rainbowkit': ^0.8.1
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
@@ -33,6 +34,7 @@ importers:
       '@typescript-eslint/parser': ^5.44.0
       '@vitejs/plugin-react': ^2.2.0
       axios: ^0.27.2
+      b3-curious-contracts: workspace:^0.0.3
       crypto-js: ^4.1.1
       eslint: ^8.28.0
       eslint-config-prettier: ^8.5.0
@@ -57,8 +59,10 @@ importers:
       '@decent-org/fractal-ui': 0.1.6_esfrlvvs52uqdysw5zco4wkcqy
       '@emotion/react': 11.10.5_kzbn2opkn2327fwg5yzwzya5o4
       '@emotion/styled': 11.10.5_qvatmowesywn4ye42qoh247szu
+      '@fractal-framework/fractal-contracts': 0.1.13
       '@rainbow-me/rainbowkit': 0.8.1_2y6rhj2imb4nfq7vvx7lvu45g4
       axios: 0.27.2
+      b3-curious-contracts: link:../../packages/b3-curious-contracts
       crypto-js: 4.1.1
       ethers: 5.7.2
       framer-motion: 7.10.3_biqbaboplfbrettd7655fr4n2y
@@ -2027,6 +2031,10 @@ packages:
       '@ethersproject/properties': 5.7.0
       '@ethersproject/strings': 5.7.0
 
+  /@fractal-framework/fractal-contracts/0.1.13:
+    resolution: {integrity: sha512-41Zx0ndfW0zsB1M11hyQwuVPGJxkfQN8y54kZKafwYKItVKx5I+Og2I9gowHXalQoAG1V21xBFXvmmt8Ux4fzg==}
+    dev: false
+
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
     engines: {node: '>=10.10.0'}
@@ -3925,7 +3933,7 @@ packages:
   /axios/0.27.2:
     resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
     dependencies:
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
       form-data: 4.0.0
     transitivePeerDependencies:
       - debug
@@ -5867,6 +5875,7 @@ packages:
         optional: true
     dependencies:
       debug: 4.3.4
+    dev: true
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
