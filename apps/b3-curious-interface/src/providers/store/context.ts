@@ -1,5 +1,5 @@
 import { createContext, useContext, Context } from 'react'
-import { AppState } from './appState/types';
+import { AppState } from './session/types';
 
 export interface IStoreContext {
   appState: AppState;

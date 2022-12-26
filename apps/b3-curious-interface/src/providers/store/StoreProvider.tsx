@@ -7,6 +7,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
    */
   const [appState, appDispatch] = useReducer(() => [], [])
 
+  function dispatch({ state, action }: { state: any, action: { type: any, payload: any } }) {
+    switch (action.type) {
+      default:
+        return state
+    }
+  }
+
 
   const value = useMemo(() => ({
     appState: {
