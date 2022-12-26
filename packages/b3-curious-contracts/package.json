@@ -8,10 +8,10 @@
     "test": "REPORT_GAS=true npx hardhat test",
     "compile": "npx hardhat compile",
     "clean": "hardhat clean && rimraf dist",
-    "prepare:package": "pnpm run clean && pnpm run compile && tsc",
+    "package:prep": "pnpm run clean && pnpm run compile && tsc",
     "deploy:bsfactory:goerli": "npx hardhat deploy --network goerli --tags BattleshipFactory --export ./minified/deployments.json",
     "verify:bsfactory:goerli": "npx hardhat etherscan-verify --network goerli --solc-input",
-    "publish-packages": "pnpm run prepare:package && pnpm publish --no-git-checks"
+    "publish-packages": "pnpm run package:prep && pnpm publish --no-git-checks"
   },
   "files": [
     "dist",
