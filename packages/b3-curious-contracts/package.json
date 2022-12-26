@@ -1,6 +1,6 @@
 {
   "name": "b3-curious-contracts",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "author": "David A Colon",
   "license": "MIT",
@@ -10,14 +10,12 @@
     "deploy:bsfactory:goerli": "npx hardhat deploy --network goerli --tags BattleshipFactory --export ./minified/deployments.json",
     "verify:bsfactory:goerli": "npx hardhat etherscan-verify --network goerli --solc-input",
     "clean": "hardhat clean && rimraf dist",
-    "add-readme": "mv README.contracts-npm.md ./dist/README.md",
-    "package:prep": "pnpm run clean && pnpm run compile && tsc && pnpm run add-readme",
+    "package:prep": "pnpm run clean && pnpm run compile && tsc",
     "publish-packages": "pnpm run package:prep && pnpm publish --no-git-checks"
   },
   "files": [
-    "dist",
-    "minified",
-    "typechain"
+    "./minified",
+    "./typechain"
   ],
   "repository": {
     "type": "git",
