@@ -12,7 +12,6 @@ function HeaderWrapper({ children }: { children?: ReactNode }) {
 
 export function Header() {
   const isLoading = false;
-  
   const isConnected = true;
 
   if (isLoading) {
