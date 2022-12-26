@@ -42,9 +42,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
       - name: Compile and publish
-        run: |
-          rm -rf README.md
-          mv README.contracts-npm.md README.md
-          pnpm run publish-packages
+        run: pnpm run publish-packages
         env:
           NODE_AUTH_TOKEN: ${{ secrets.CONTRACTS_NPM_TOKEN }}

@@ -7,10 +7,11 @@
   "scripts": {
     "test": "REPORT_GAS=true npx hardhat test",
     "compile": "npx hardhat compile",
-    "clean": "hardhat clean && rimraf dist",
-    "package:prep": "pnpm run clean && pnpm run compile && tsc",
     "deploy:bsfactory:goerli": "npx hardhat deploy --network goerli --tags BattleshipFactory --export ./minified/deployments.json",
     "verify:bsfactory:goerli": "npx hardhat etherscan-verify --network goerli --solc-input",
+    "clean": "hardhat clean && rimraf dist",
+    "add-readme": "mv README.contracts-npm.md ./dist/README.md",
+    "package:prep": "pnpm run clean && pnpm run compile && tsc && add-readme",
     "publish-packages": "pnpm run package:prep && pnpm publish --no-git-checks"
   },
   "files": [
@@ -20,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/decent-dao/curiousity-labs/b3-curious-games.git"
+    "url": "https://github.com/curiousity-labs/b3-curious-games.git"
   },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
