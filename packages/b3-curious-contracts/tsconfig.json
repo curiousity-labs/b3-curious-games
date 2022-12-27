@@ -17,6 +17,6 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
     "resolveJsonModule": true
   },
-  "exclude": ["dist", "node_modules", "test", "./hardhat.config.ts"],
-  "include": ["typechain"],
+  "include": ["./test", "./typechain", "./contractDeployments", "./minified"],
+  "exclude": ["./dist", "./test", "./deploy"]
 }

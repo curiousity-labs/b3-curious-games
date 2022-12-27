@@ -14,8 +14,9 @@
     "publish-packages": "pnpm run package:prep && pnpm publish --no-git-checks"
   },
   "files": [
-    "./minified",
-    "./typechain"
+    "minified",
+    "typechain",
+    "deployments"
   ],
   "repository": {
     "type": "git",
