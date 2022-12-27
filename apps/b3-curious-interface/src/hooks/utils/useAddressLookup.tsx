@@ -4,7 +4,7 @@ import { addressSubString } from '../../utils/string'
 import { isAddress } from 'ethers/lib/utils.js'
 import { useAppProvider } from '../../providers/store/context'
 
-type AddresInfo = {
+export type AddressInfo = {
   full: string | null,
   truncated: string | null,
   ensName: string | null,
@@ -24,9 +24,9 @@ enum AddressLookupAction {
   RESET
 }
 
-type AddressLoopupActions = { type: AddressLookupAction.SET_ADDRESS, payload: AddresInfo } | { type: AddressLookupAction.RESET }
+type AddressLoopupActions = { type: AddressLookupAction.SET_ADDRESS, payload: AddressInfo } | { type: AddressLookupAction.RESET }
 
-const reducer = (state: AddresInfo, action: AddressLoopupActions) => {
+const reducer = (state: AddressInfo, action: AddressLoopupActions) => {
   switch (action.type) {
     case AddressLookupAction.SET_ADDRESS: {
       return { ...action.payload }

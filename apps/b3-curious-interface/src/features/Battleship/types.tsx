@@ -1,3 +1,4 @@
+import { AddressInfo } from '../../hooks/utils/useAddressLookup'
 import { Piece } from './models'
 
 export type BSquare = {
@@ -18,5 +19,7 @@ export type ShipRange = { starPos: string; endPos: string }
 
 export type NewGameFormValues = {
     teamOne: string,
+    teamOneAddressInfo: AddressInfo
     teamTwo: string,
+    teamTwoAddressInfo: AddressInfo
 }

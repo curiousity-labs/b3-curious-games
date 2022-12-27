@@ -1,23 +1,32 @@
 import { Input, Box } from '@chakra-ui/react';
 import { LabelWrapper } from '@decent-org/fractal-ui';
-import { constants } from 'ethers';
-import { useAddressLookup } from '../../../hooks/utils/useAddressLookup';
+import { constants, utils } from 'ethers';
+import { AddressInfo, useAddressLookup } from '../../../hooks/utils/useAddressLookup';
 import { DataRow } from '../../layout/DataRow';
 import { NewGameFormValues } from '../../../features/Battleship/types';
+import { useEffect } from 'react';
 
 interface INewGameFormInput {
   value: string,
   error?: string,
   label: string,
   name: string,
+  setFieldValue: (field: string, value: AddressInfo, shouldValidate?: boolean | undefined) => void
   handleChange: {
     (e: React.ChangeEvent<NewGameFormValues>): void;
     <T = string | React.ChangeEvent<NewGameFormValues>>(field: T): T extends React.ChangeEvent<NewGameFormValues> ? void : (e: string | React.ChangeEvent<NewGameFormValues>) => void;
   };
 }
 
-export const NewGameFormInput = ({ label, name, value, error, handleChange }: INewGameFormInput) => {
+export const NewGameFormInput = ({ label, name, setFieldValue, value, error, handleChange }: INewGameFormInput) => {
   const { addressInfo } = useAddressLookup(value);
+
+  useEffect(() => {
+    if (value.trim() && utils.isAddress(value)) {
+      setFieldValue(`${name}AddressInfo`, addressInfo);
+    }
+  }, [value, addressInfo, name, setFieldValue])
+
   return (
     <Box py={2} px={4} bg="black.900-semi-transparent" rounded="lg">
       <LabelWrapper label={label} errorMessage={error}>
