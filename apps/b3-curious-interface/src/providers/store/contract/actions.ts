@@ -1,5 +1,10 @@
+import { FractalContracts, B3Contracts } from './types'
+
 export enum ContractStateAction {
-  Reset
+  SET_CONTRACTS,
 }
 
-export type ContractStateActions = { type: ContractStateAction.Reset }
+export type ContractStateActions = {
+  type: ContractStateAction.SET_CONTRACTS
+  payload: { fractal: FractalContracts; b3Curious: B3Contracts }
+}

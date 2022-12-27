@@ -1,13 +1,32 @@
 import { Context, createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { useNetwork } from 'wagmi'
 import { goerliConfig } from './networks'
+import { IContracts } from './types'
 
 export type NetworkConfig = {
-  contracts: object
+  contracts: IContracts
 }
 
 export const defaultState = {
-  contracts: {},
+  contracts: {
+    gnosisSafe: '',
+    gnosisSafeFactory: '',
+    gnosisVetoGuardMasterCopy: '',
+    gnosisMultisend: '',
+    linearVotingMasterCopy: '',
+    zodiacModuleProxyFactory: '',
+    claimingFactory: '',
+    fractalUsulMasterCopy:'',
+    fractalModuleMasterCopy: '',
+    fractalNameRegistry: '',
+    votesTokenMasterCopy: '',
+    claimingMasterCopy: '',
+    usulVetoGuardMasterCopy: '',
+    vetoMultisigVotingMasterCopy: '',
+    vetoERC20VotingMasterCopy: '',
+    battleshipFactory: '',
+    battleshipImpl: ''
+  },
 }
 
 export const NetworkConfigContext = createContext({} as NetworkConfig)
