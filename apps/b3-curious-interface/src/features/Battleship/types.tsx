@@ -14,3 +14,9 @@ export type BSTeam = {
 }
 
 export type ShipRange = { starPos: string; endPos: string }
+
+
+export type NewGameFormValues = {
+    teamOne: string,
+    teamTwo: string,
+}
