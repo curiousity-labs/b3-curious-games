@@ -5,14 +5,14 @@ export const ROUTES = {
   },
   battleshipLanding: {
     path: 'battleship/*',
-    relative: () => 'battleship'
+    relative: () => '/battleship'
   },
   battleshipNew: {
-    path: 'battleship/new',
-    relative: () => 'battleship/new'
+    path: 'new',
+    relative: () => '/battleship/new'
   },
   battleshipGame: {
-    path: 'battleship/game/:gameAddress',
-    relative: (gameAddress: string) => `battleship/game/${gameAddress}`
+    path: 'game/:gameAddress',
+    relative: (gameAddress: string) => `/battleship/game/${gameAddress}`
   }
 }
