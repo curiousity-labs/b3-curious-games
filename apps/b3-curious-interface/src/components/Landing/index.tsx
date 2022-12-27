@@ -17,9 +17,8 @@ export function Landing() {
           p='40px'
           bg='transparent'
           rounded='lg'
-          shadow='md'
         >
-          <Text textStyle="text-5xl-mono-bold" fontFamily="mono" >b3 Curious</Text>
+          <Text textStyle="text-5xl-mono-bold" fontFamily="mono" >B3 Curious</Text>
           <Button w='full' variant='tertiary' onClick={() => navigate(ROUTES.battleshipLanding.relative())}>
             Enter Battleship Room
           </Button>
