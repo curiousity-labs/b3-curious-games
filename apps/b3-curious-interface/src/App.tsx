@@ -6,7 +6,7 @@ import { Footer } from './components/Footer'
 
 function App() {
   return (
-    <Grid templateRows="4rem minmax(calc(100vh - 7rem), 1fr) 3rem">
+    <Grid templateRows="4rem minmax(calc(100vh - 7rem), 1fr) 3rem" maxW="6xl" mx="auto">
       <GridItem>
         <Header />
       </GridItem>
