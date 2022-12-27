@@ -3,6 +3,7 @@ import { Battleship } from '../features/Battleship';
 import { Landing } from '../components/Landing';
 import { ROUTES } from './routes';
 import { BattleshipLanding } from '../features/Battleship/components/Landing';
+import { NewGame } from '../features/Battleship/components/NewGame';
 
 export function Pages() {
   return (
@@ -10,7 +11,7 @@ export function Pages() {
       <Route index element={<Landing /> } />
       <Route path={ROUTES.battleshipLanding.path} >
         <Route index element={<BattleshipLanding />} />
-        <Route path={ROUTES.battleshipNew.path} element={<div />} />
+        <Route path={ROUTES.battleshipNew.path} element={<NewGame />} />
         <Route path={ROUTES.battleshipGame.path} element={<Battleship />} />
       </Route>
     </Routes>

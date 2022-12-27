@@ -3,7 +3,7 @@ import { Disconnect } from '@decent-org/fractal-ui';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { ReactNode } from 'react';
 import { useAccount, useDisconnect } from 'wagmi';
-import { useAddressLookup } from '../../hooks/utils/useAddressString';
+import { useAddressLookup } from '../../hooks/utils/useAddressLookup';
 
 function HeaderWrapper({ children }: { children?: ReactNode }) {
   return (

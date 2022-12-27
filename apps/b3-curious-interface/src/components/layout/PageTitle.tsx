@@ -2,14 +2,14 @@ import { Flex, Spacer, Button, Divider, Box, Text } from '@chakra-ui/react';
 
 interface IPageTitle {
   title: string;
-  buttons: {
+  buttons?: {
     onClick: () => void;
     variant?: string;
     label: string;
   }[],
 }
 
-export function PageTitle({ title, buttons }: IPageTitle) {
+export function PageTitle({ title, buttons = [] }: IPageTitle) {
   return (
     <Box
       marginTop="3rem"
@@ -26,7 +26,7 @@ export function PageTitle({ title, buttons }: IPageTitle) {
           {title}
         </Text>
         <Spacer />
-        {buttons.length && buttons.map((button, i) => (
+        {!!buttons.length && buttons.map((button, i) => (
           <Button
             key={i}
             {...button}

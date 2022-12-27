@@ -2,6 +2,7 @@ import { useCallback, useEffect, useReducer } from 'react'
 import { useProvider } from 'wagmi'
 import { addressSubString } from '../../utils/string'
 import { isAddress } from 'ethers/lib/utils.js'
+import { useAppProvider } from '../../providers/store/context'
 
 type AddresInfo = {
   full: string | null,
@@ -20,14 +21,18 @@ const intialAddressState = {
 
 enum AddressLookupAction {
   SET_ADDRESS,
+  RESET
 }
 
-type AddressLoopupActions = { type: AddressLookupAction.SET_ADDRESS, payload: AddresInfo }
+type AddressLoopupActions = { type: AddressLookupAction.SET_ADDRESS, payload: AddresInfo } | { type: AddressLookupAction.RESET }
 
 const reducer = (state: AddresInfo, action: AddressLoopupActions) => {
   switch (action.type) {
     case AddressLookupAction.SET_ADDRESS: {
       return { ...action.payload }
+    }
+    case AddressLookupAction.RESET: {
+      return intialAddressState
     }
     default:
       return state
@@ -37,14 +42,19 @@ const reducer = (state: AddresInfo, action: AddressLoopupActions) => {
 export const useAddressLookup = (_address: string | undefined ) => {
   const [addressInfo, addrDispatch] = useReducer(reducer, intialAddressState);
   const provider = useProvider()
-
+  const { contracts } = useAppProvider()
 
   const lookupAddress = useCallback(async () => {
-    if (!_address || !isAddress(_address) || !provider) {
+    if (!_address || !isAddress(_address) || !provider || !contracts.fractal) {
+      addrDispatch({ type: AddressLookupAction.RESET })
       return;
     }
     const ensName = await provider.lookupAddress(_address).catch(() => null);
-    const registryDAOName = null; // @todo add Fractal contracts to look this up.
+
+    const registryContract = contracts.fractal.fractalNameRegistry
+    const registryDAONameEvent = await registryContract.queryFilter(registryContract.filters.FractalNameUpdated(_address))
+    const registryDAOName = registryDAONameEvent[0] ? registryDAONameEvent[0].args[1] : null
+
     const truncated = addressSubString(_address);
 
     addrDispatch({
@@ -54,7 +64,7 @@ export const useAddressLookup = (_address: string | undefined ) => {
       }
     })
 
-  }, [provider, _address])
+  }, [provider, _address, contracts.fractal])
 
   useEffect(() => {
     lookupAddress()
