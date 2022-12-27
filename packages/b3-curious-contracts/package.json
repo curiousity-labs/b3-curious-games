@@ -14,13 +14,12 @@
     "publish-packages": "pnpm run package:prep && pnpm publish --no-git-checks"
   },
   "files": [
-    "minified",
-    "typechain",
-    "deployments"
+    "./dist",
+    "./minified/deployments.json"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/curiousity-labs/b3-curious-games.git"
+    "url": "git+https://github.com/curiousity-labs/b3-curious-games.git"
   },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

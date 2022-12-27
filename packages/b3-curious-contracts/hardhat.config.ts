@@ -7,7 +7,8 @@ import '@typechain/hardhat';
 import 'solidity-coverage';
 import "@nomiclabs/hardhat-etherscan";
 
-require('dotenv').config()
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 const config: HardhatUserConfig = {
   solidity: {
