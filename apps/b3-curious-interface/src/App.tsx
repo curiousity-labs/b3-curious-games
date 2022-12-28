@@ -2,7 +2,7 @@ import { Grid, GridItem } from '@chakra-ui/react'
 import { Pages } from './pages'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
-
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
