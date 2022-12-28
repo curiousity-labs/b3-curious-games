@@ -43,7 +43,7 @@ export const NewGameFormInput = ({
   }, [value, addressInfo, name, setFieldValue])
 
   return (
-    <Box py={2} px={4} bg='black.900-semi-transparent' rounded='lg'>
+    <Box py={2} px={4} bg='chocolate.600' rounded='lg'>
       <LabelWrapper label={label} errorMessage={error}>
         <InputGroup>
           <Input

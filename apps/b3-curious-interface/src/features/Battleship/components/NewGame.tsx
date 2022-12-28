@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from '@chakra-ui/react'
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import { PageTitle } from '../../../components/layout/PageTitle'
 import { Formik, FormikHelpers, FormikProps } from 'formik'
 import * as yup from 'yup'
@@ -44,7 +44,7 @@ export const NewGame = () => {
     }
     const { teamOneAddressInfo, teamTwoAddressInfo } = values;
 
-    if(teamOneAddressInfo.isSafe) {
+    if (teamOneAddressInfo.isSafe) {
       // is Usul; create usul proposal
 
       // is Multisig; create multisig proposal
@@ -54,7 +54,7 @@ export const NewGame = () => {
       // is Multisig (w/guard) create proposal through guard?
 
       // isAddress, create game
-      
+
     }
     return;
   }, [contracts])
@@ -84,9 +84,10 @@ export const NewGameForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Flex flexDirection='column' gap={2}>
+      <Flex flexDirection='column' gap={4} bg="black.900-semi-transparent" p={4} rounded="xl">
+        <Text>Enter a valid ETH address. Safe, Fractal Usul, and Fractal Safe address are also supported.</Text>
         <NewGameFormInput
-          label='Team One'
+          label='Your Team'
           name='teamOne'
           value={values.teamOne}
           error={errors.teamOne}
