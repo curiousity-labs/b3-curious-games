@@ -13,7 +13,11 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -64,8 +68,23 @@ export interface BattleshipFactoryInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "getGame", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getGames", data: BytesLike): Result;
 
-  events: {};
+  events: {
+    "GameCreated(address,uint256)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "GameCreated"): EventFragment;
 }
+
+export interface GameCreatedEventObject {
+  gameAddress: string;
+  gameId: BigNumber;
+}
+export type GameCreatedEvent = TypedEvent<
+  [string, BigNumber],
+  GameCreatedEventObject
+>;
+
+export type GameCreatedEventFilter = TypedEventFilter<GameCreatedEvent>;
 
 export interface BattleshipFactory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -139,7 +158,13 @@ export interface BattleshipFactory extends BaseContract {
     getGames(overrides?: CallOverrides): Promise<string[]>;
   };
 
-  filters: {};
+  filters: {
+    "GameCreated(address,uint256)"(
+      gameAddress?: null,
+      gameId?: null
+    ): GameCreatedEventFilter;
+    GameCreated(gameAddress?: null, gameId?: null): GameCreatedEventFilter;
+  };
 
   estimateGas: {
     battleshipImplAddr(overrides?: CallOverrides): Promise<BigNumber>;
