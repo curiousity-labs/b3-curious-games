@@ -29,7 +29,7 @@ export const goerliConfig: NetworkConfig = {
     usulVetoGuardMasterCopy: UsulVetoGuard.address,
     vetoMultisigVotingMasterCopy: VetoMultisigVoting.address,
     vetoERC20VotingMasterCopy: VetoERC20Voting.address,
-    battleshipFactory: BattleshipImpl.address,
-    battleshipImpl: BattleshipFactory.address
+    battleshipFactory: BattleshipFactory.address,
+    battleshipImpl: BattleshipImpl.address
   },
 }

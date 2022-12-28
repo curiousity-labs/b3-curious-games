@@ -16,7 +16,7 @@ import { BattleshipFactory, BattleshipImpl } from 'b3-curious-contracts'
 
 export interface ContractState {
   fractal: FractalContracts | null
-  b3Contracts: B3Contracts | null
+  b3Curious: B3Contracts | null
 }
 
 export type B3Contracts = {

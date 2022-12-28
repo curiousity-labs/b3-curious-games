@@ -3,7 +3,7 @@ import { ContractState } from './types';
 
 export const contractInitialState: ContractState = {
   fractal: null,
-  b3Contracts: null,
+  b3Curious: null,
 }
 
 export function reducer(state: ContractState, action: ContractStateActions) {

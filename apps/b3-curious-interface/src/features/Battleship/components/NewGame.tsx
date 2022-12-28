@@ -7,9 +7,10 @@ import { newGameInitialValues } from '../constants'
 import { NewGameFormValues } from '../types'
 import { ROUTES } from '../../../pages/routes'
 import { useNavigate } from 'react-router-dom'
-import { utils } from 'ethers'
+import { ContractReceipt, utils } from 'ethers'
 import { useAppProvider } from '../../../providers/store/context'
 import { useCallback } from 'react'
+import { useTransaction } from '../../../hooks/utils/useTransaction'
 
 const schema = yup.object().shape({
   teamOne: yup
@@ -35,29 +36,44 @@ const schema = yup.object().shape({
 
 export const NewGame = () => {
   const { contracts } = useAppProvider();
+  const [contractCall, isPending] = useTransaction();
+
+  const navigate = useNavigate()
+
+  const successCallback = useCallback((txReceipt: ContractReceipt) => {
+    // should navigate to game page
+    if (txReceipt.events) {
+      navigate(ROUTES.battleshipGame.relative(txReceipt.events[0].address))
+    }
+  }, [navigate])
 
   const handleSubmit = useCallback(async (values: NewGameFormValues, actions: FormikHelpers<NewGameFormValues>) => {
-    const b3Contracts = contracts.b3Contracts
+    const b3Contracts = contracts.b3Curious
     const fractalContracts = contracts.fractal
+
     if (!b3Contracts || !fractalContracts) {
       return;
     }
     const { teamOneAddressInfo, teamTwoAddressInfo } = values;
 
-    if (teamOneAddressInfo.isSafe) {
-      // is Usul; create usul proposal
+    // is Usul; create usul proposal
 
-      // is Multisig; create multisig proposal
+    // is Multisig; create multisig proposal
 
-      // is Usul (w/guard)l create proposal through guard?
+    // is Usul (w/guard)l create proposal through guard?
 
-      // is Multisig (w/guard) create proposal through guard?
+    // is Multisig (w/guard) create proposal through guard?
 
-      // isAddress, create game
-
-    }
+    // @note if not supported Safe, creates game using connected account
+    await contractCall({
+      contractFn: () => b3Contracts.battleshipFactory.deployAndChallange(teamTwoAddressInfo.full!),
+      pendingMessage: 'Creating game...',
+      failedMessage: 'Transaction failed',
+      successMessage: 'Team Challedged',
+      successCallback,
+    })
     return;
-  }, [contracts])
+  }, [contracts, contractCall, successCallback])
 
   return (
     <Box px={4}>
@@ -78,7 +94,8 @@ export const NewGameForm = ({
   isValid,
   handleChange,
   handleSubmit,
-  setFieldValue
+  setFieldValue,
+  isSubmitting,
 }: FormikProps<NewGameFormValues>) => {
   const navigate = useNavigate()
 
@@ -86,6 +103,7 @@ export const NewGameForm = ({
     <form onSubmit={handleSubmit}>
       <Flex flexDirection='column' gap={4} bg="black.900-semi-transparent" p={4} rounded="xl">
         <Text>Enter a valid ETH address. Safe, Fractal Usul, and Fractal Safe address are also supported.</Text>
+        <Text>If Team one address is not a supperted Safe address, connected account is used</Text>
         <NewGameFormInput
           label='Your Team'
           name='teamOne'
@@ -112,7 +130,7 @@ export const NewGameForm = ({
         >
           Prev
         </Button>
-        <Button type='submit' disabled={!isValid}>
+        <Button type='submit' disabled={!isValid || isSubmitting}>
           Submit
         </Button>
       </Flex>

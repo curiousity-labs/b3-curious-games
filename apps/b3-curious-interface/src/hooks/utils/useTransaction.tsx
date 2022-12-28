@@ -47,14 +47,6 @@ const useTransaction = () => {
       try {
 
         const txResponse = await contractFn()
-        const wait =
-          process.env.NODE_ENV !== 'development'
-            ? 0
-            : process.env.REACT_APP_DEVELOPMENT_TX_WAIT_MS
-              ? parseInt(process.env.REACT_APP_DEVELOPMENT_TX_WAIT_MS)
-              : 0;
-
-        await new Promise(resolve => setTimeout(() => resolve(null), wait))
         const txReceipt = await txResponse.wait()
 
         toast.dismiss(toastRef.current)
@@ -87,15 +79,14 @@ const useTransaction = () => {
         }, 2000);
       } catch (e) {
         const error = e as ProviderRpcError;
+        console.log('🚀 ~ file: useTransaction.tsx:90 ~ error', error)
         toast.dismiss(toastRef.current);
         setPending(false);
         if (error.code === 4001) {
           toast.error('User Rejected');
           return;
         }
-
         toast.error('Unknown Error');
-
       }
     },
     [],
