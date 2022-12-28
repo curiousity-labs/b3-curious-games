@@ -60,11 +60,11 @@ export const useAddressLookup = (_address: string | undefined) => {
     )
     const registryDAOName = registryDAONameEvent[0] ? registryDAONameEvent[0].args[1] : null
 
-    const getSafeVersion = await contracts.fractal.gnosisSafe
+    const contractGetCall = await contracts.fractal.gnosisSafe
       .attach(_address)
       .getChainId()
-      .catch(() => null)
-    const isSafe = !!getSafeVersion
+      .catch(() => null) // fails if not a Safe
+    const isSafe = !!contractGetCall
 
     const truncated = addressSubString(_address)
 
