@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "BattleshipFactory": {
-      "address": "0x31B2E48c8E17d3Cf2A8Ae8590788c94FD187f38F",
+      "address": "0x55698Fb908944825981C0BdbC55be82e46388C12",
       "abi": [
         {
           "inputs": [
@@ -90,7 +90,7 @@
       ]
     },
     "BattleshipImpl": {
-      "address": "0xBf6A740ebC973cfB8236050e2b54ff26D2f06513",
+      "address": "0xC49A9929F2854FE12694e55C5575E7100B5BE691",
       "abi": [
         {
           "anonymous": false,
@@ -165,6 +165,19 @@
         {
           "inputs": [],
           "name": "currentTurn",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "game_winner",
           "outputs": [
             {
               "internalType": "address",

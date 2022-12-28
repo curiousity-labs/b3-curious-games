@@ -31,7 +31,7 @@ contract BattleshipImpl {
      * @dev Set to 0x0000~ while game is active. game is over when winner is set
      * @notice This should be updated with winner when game is over
      */
-    address game_winner = address(0);
+    address public game_winner = address(0);
 
     address public team1 = address(0);
     address public team2 = address(0);
@@ -117,7 +117,10 @@ contract BattleshipImpl {
     }
 
     function targetSpot(bytes4 target, address defTeam) private gameOver {
-        if (locations[defTeam][target] == 1 && teamHits[msg.sender].targeted[target] == 0) {
+        if (
+            locations[defTeam][target] == 1 &&
+            teamHits[msg.sender].targeted[target] == 0
+        ) {
             uint8 raisedHit = ++teamHits[msg.sender].hitCount;
             teamHits[msg.sender].hitCount = raisedHit;
             teamHits[msg.sender].targeted[target] = 1;
@@ -135,9 +138,7 @@ contract BattleshipImpl {
     }
 
     modifier checkTurn() {
-        if (
-            (currentTurn == address(0) && msg.sender == team2)
-        ) {
+        if ((currentTurn == address(0) && msg.sender == team2)) {
             _;
             return;
         }

@@ -29,6 +29,7 @@ import type {
 export interface BattleshipImplInterface extends utils.Interface {
   functions: {
     "currentTurn()": FunctionFragment;
+    "game_winner()": FunctionFragment;
     "init(address,address)": FunctionFragment;
     "setTeamOnePieces(bytes4[15])": FunctionFragment;
     "setTeamTwoPieces(bytes4[15])": FunctionFragment;
@@ -40,6 +41,7 @@ export interface BattleshipImplInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "currentTurn"
+      | "game_winner"
       | "init"
       | "setTeamOnePieces"
       | "setTeamTwoPieces"
@@ -50,6 +52,10 @@ export interface BattleshipImplInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "currentTurn",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "game_winner",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -73,6 +79,10 @@ export interface BattleshipImplInterface extends utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "currentTurn",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "game_winner",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
@@ -167,6 +177,8 @@ export interface BattleshipImpl extends BaseContract {
   functions: {
     currentTurn(overrides?: CallOverrides): Promise<[string]>;
 
+    game_winner(overrides?: CallOverrides): Promise<[string]>;
+
     init(
       _team1: PromiseOrValue<string>,
       _team2: PromiseOrValue<string>,
@@ -195,6 +207,8 @@ export interface BattleshipImpl extends BaseContract {
 
   currentTurn(overrides?: CallOverrides): Promise<string>;
 
+  game_winner(overrides?: CallOverrides): Promise<string>;
+
   init(
     _team1: PromiseOrValue<string>,
     _team2: PromiseOrValue<string>,
@@ -222,6 +236,8 @@ export interface BattleshipImpl extends BaseContract {
 
   callStatic: {
     currentTurn(overrides?: CallOverrides): Promise<string>;
+
+    game_winner(overrides?: CallOverrides): Promise<string>;
 
     init(
       _team1: PromiseOrValue<string>,
@@ -277,6 +293,8 @@ export interface BattleshipImpl extends BaseContract {
   estimateGas: {
     currentTurn(overrides?: CallOverrides): Promise<BigNumber>;
 
+    game_winner(overrides?: CallOverrides): Promise<BigNumber>;
+
     init(
       _team1: PromiseOrValue<string>,
       _team2: PromiseOrValue<string>,
@@ -305,6 +323,8 @@ export interface BattleshipImpl extends BaseContract {
 
   populateTransaction: {
     currentTurn(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    game_winner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     init(
       _team1: PromiseOrValue<string>,
