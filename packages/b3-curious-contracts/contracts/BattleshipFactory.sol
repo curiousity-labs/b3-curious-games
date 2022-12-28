@@ -7,7 +7,7 @@ import "./BattleshipImpl.sol";
 contract BattleshipFactory {
     event GameCreated(address gameAddress, uint gameId);
     mapping(uint => BattleshipImpl) BattleshipGames;
-    uint gameId;
+    uint public gameId;
 
     address public battleshipImplAddr;
 
@@ -34,9 +34,5 @@ contract BattleshipFactory {
             games[i] = BattleshipGames[i];
         }
         return games;
-    }
-
-    function getGame(uint _gameId) public view returns (BattleshipImpl) {
-        return BattleshipGames[_gameId];
     }
 }

@@ -15,7 +15,8 @@
   },
   "files": [
     "./dist",
-    "./minified/deployments.json"
+    "./minified/deployments.json",
+    "typechain"
   ],
   "repository": {
     "type": "git",
