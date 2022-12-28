@@ -4,7 +4,6 @@
 import type {
   BaseContract,
   BigNumber,
-  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -31,7 +30,7 @@ export interface BattleshipFactoryInterface extends utils.Interface {
   functions: {
     "battleshipImplAddr()": FunctionFragment;
     "deployAndChallange(address)": FunctionFragment;
-    "getGame(uint256)": FunctionFragment;
+    "gameId()": FunctionFragment;
     "getGames()": FunctionFragment;
   };
 
@@ -39,7 +38,7 @@ export interface BattleshipFactoryInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "battleshipImplAddr"
       | "deployAndChallange"
-      | "getGame"
+      | "gameId"
       | "getGames"
   ): FunctionFragment;
 
@@ -51,10 +50,7 @@ export interface BattleshipFactoryInterface extends utils.Interface {
     functionFragment: "deployAndChallange",
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "getGame",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: "gameId", values?: undefined): string;
   encodeFunctionData(functionFragment: "getGames", values?: undefined): string;
 
   decodeFunctionResult(
@@ -65,7 +61,7 @@ export interface BattleshipFactoryInterface extends utils.Interface {
     functionFragment: "deployAndChallange",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "getGame", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "gameId", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getGames", data: BytesLike): Result;
 
   events: {
@@ -120,10 +116,7 @@ export interface BattleshipFactory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    getGame(
-      _gameId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    gameId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getGames(overrides?: CallOverrides): Promise<[string[]]>;
   };
@@ -135,10 +128,7 @@ export interface BattleshipFactory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  getGame(
-    _gameId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  gameId(overrides?: CallOverrides): Promise<BigNumber>;
 
   getGames(overrides?: CallOverrides): Promise<string[]>;
 
@@ -150,10 +140,7 @@ export interface BattleshipFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    getGame(
-      _gameId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    gameId(overrides?: CallOverrides): Promise<BigNumber>;
 
     getGames(overrides?: CallOverrides): Promise<string[]>;
   };
@@ -174,10 +161,7 @@ export interface BattleshipFactory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    getGame(
-      _gameId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    gameId(overrides?: CallOverrides): Promise<BigNumber>;
 
     getGames(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -192,10 +176,7 @@ export interface BattleshipFactory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    getGame(
-      _gameId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    gameId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getGames(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
