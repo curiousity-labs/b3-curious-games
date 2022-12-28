@@ -54,7 +54,7 @@ export const NewGame = () => {
       // is Multisig (w/guard) create proposal through guard?
 
       // isAddress, create game
-    
+      
     }
     return;
   }, [contracts])
@@ -92,6 +92,7 @@ export const NewGameForm = ({
           error={errors.teamOne}
           handleChange={handleChange}
           setFieldValue={setFieldValue}
+          hasSelfFunc
         />
         <NewGameFormInput
           label='Team Two'
