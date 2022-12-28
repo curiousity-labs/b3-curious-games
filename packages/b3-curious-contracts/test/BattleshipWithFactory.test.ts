@@ -32,7 +32,8 @@ describe("BattleshipImpl | As Clone", () => {
 
     await battleshipFactory.deployAndChallange(account2.address)
 
-    battleshipContractAddr = await battleshipFactory.getGame(0);
+    const battleshipContractAddrs = await battleshipFactory.getGames();
+    battleshipContractAddr = battleshipContractAddrs[0];
     battleshipContractSignerOne = BattleshipImpl__factory.connect(battleshipContractAddr, account1)
     battleshipContractSignerTwo = BattleshipImpl__factory.connect(battleshipContractAddr, account2)
   })
