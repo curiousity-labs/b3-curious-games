@@ -5,19 +5,23 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 import "./BattleshipImpl.sol";
 
 contract BattleshipFactory {
+    event GameCreated(address gameAddress, uint gameId);
     mapping(uint => BattleshipImpl) BattleshipGames;
     uint gameId;
 
     address public battleshipImplAddr;
 
     function deployAndChallange(address teamtwo) external {
-        BattleshipImpl newGame = BattleshipImpl(Clones.clone(battleshipImplAddr));
+        BattleshipImpl newGame = BattleshipImpl(
+            Clones.clone(battleshipImplAddr)
+        );
 
         newGame.init(msg.sender, teamtwo);
 
         BattleshipGames[gameId] = newGame;
 
         gameId = ++gameId;
+        emit GameCreated(address(newGame), gameId);
     }
 
     constructor(address implAddress) {
