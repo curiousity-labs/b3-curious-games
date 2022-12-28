@@ -5,10 +5,11 @@ import { isAddress } from 'ethers/lib/utils.js'
 import { useAppProvider } from '../../providers/store/context'
 
 export type AddressInfo = {
-  full: string | null,
-  truncated: string | null,
-  ensName: string | null,
-  registryDAOName: string | null,
+  full: string | null
+  truncated: string | null
+  ensName: string | null
+  registryDAOName: string | null
+  isSafe: boolean
 }
 
 const intialAddressState = {
@@ -16,15 +17,17 @@ const intialAddressState = {
   truncated: null,
   ensName: null,
   registryDAOName: null,
+  isSafe: false,
 }
-
 
 enum AddressLookupAction {
   SET_ADDRESS,
-  RESET
+  RESET,
 }
 
-type AddressLoopupActions = { type: AddressLookupAction.SET_ADDRESS, payload: AddressInfo } | { type: AddressLookupAction.RESET }
+type AddressLoopupActions =
+  | { type: AddressLookupAction.SET_ADDRESS; payload: AddressInfo }
+  | { type: AddressLookupAction.RESET }
 
 const reducer = (state: AddressInfo, action: AddressLoopupActions) => {
   switch (action.type) {
@@ -39,31 +42,42 @@ const reducer = (state: AddressInfo, action: AddressLoopupActions) => {
   }
 }
 
-export const useAddressLookup = (_address: string | undefined ) => {
-  const [addressInfo, addrDispatch] = useReducer(reducer, intialAddressState);
+export const useAddressLookup = (_address: string | undefined) => {
+  const [addressInfo, addrDispatch] = useReducer(reducer, intialAddressState)
   const provider = useProvider()
   const { contracts } = useAppProvider()
 
   const lookupAddress = useCallback(async () => {
     if (!_address || !isAddress(_address) || !provider || !contracts.fractal) {
       addrDispatch({ type: AddressLookupAction.RESET })
-      return;
+      return
     }
-    const ensName = await provider.lookupAddress(_address).catch(() => null);
+    const ensName = await provider.lookupAddress(_address).catch(() => null)
 
     const registryContract = contracts.fractal.fractalNameRegistry
-    const registryDAONameEvent = await registryContract.queryFilter(registryContract.filters.FractalNameUpdated(_address))
+    const registryDAONameEvent = await registryContract.queryFilter(
+      registryContract.filters.FractalNameUpdated(_address),
+    )
     const registryDAOName = registryDAONameEvent[0] ? registryDAONameEvent[0].args[1] : null
 
-    const truncated = addressSubString(_address);
+    const getSafeVersion = await contracts.fractal.gnosisSafe
+      .attach(_address)
+      .getChainId()
+      .catch(() => null)
+    const isSafe = !!getSafeVersion
+
+    const truncated = addressSubString(_address)
 
     addrDispatch({
       type: AddressLookupAction.SET_ADDRESS,
       payload: {
-        full: _address, ensName, registryDAOName, truncated
-      }
+        full: _address,
+        ensName,
+        registryDAOName,
+        truncated,
+        isSafe,
+      },
     })
-
   }, [provider, _address, contracts.fractal])
 
   useEffect(() => {
@@ -71,5 +85,4 @@ export const useAddressLookup = (_address: string | undefined ) => {
   }, [lookupAddress])
 
   return { addressInfo }
-
 }

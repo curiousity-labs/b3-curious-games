@@ -9,13 +9,15 @@ export const newGameInitialValues: NewGameFormValues = {
     full: null,
     truncated: null,
     ensName: null,
-    registryDAOName: null
+    registryDAOName: null,
+    isSafe: false,
   },
   teamTwo: '',
   teamTwoAddressInfo: {
     full: null,
     truncated: null,
     ensName: null,
-    registryDAOName: null
+    registryDAOName: null,
+    isSafe: false
   },
 }
