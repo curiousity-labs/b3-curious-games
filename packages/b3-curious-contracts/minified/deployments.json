@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "BattleshipFactory": {
-      "address": "0x9A7Df56981ba9a57175FCC38FDbB6DF478D06ee1",
+      "address": "0xac347e3bDe37259370F8C955B2f4b5154Ce92390",
       "abi": [
         {
           "inputs": [
@@ -15,6 +15,25 @@
           ],
           "stateMutability": "nonpayable",
           "type": "constructor"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "gameAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "gameId",
+              "type": "uint256"
+            }
+          ],
+          "name": "GameCreated",
+          "type": "event"
         },
         {
           "inputs": [],
