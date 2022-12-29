@@ -5,30 +5,26 @@ pragma solidity ^0.8.17;
  * @title onchain battleship
  */
 contract Battleship {
-    event GameCreated(address team1, address team2);
     event TeamReady(address team);
     event TurnFinished(address team, bytes4 target, bool isSuccessful);
     event GameFinished(address winner);
 
     address public game_winner = address(0);
-    address public team1 = address(0);
-    address public team2 = address(0);
+    address public teamOne = address(0);
+    address public teamTwo = address(0);
     address public currentTurn = address(0);
 
-    struct Turn {
-        bytes4 location;
-        uint8 operation;
-    }
+    mapping(address => bool) private teamReady;
+    mapping(address => mapping(bytes4 => uint8)) private locations;
+    mapping(address => TeamHits) private teamHits;
 
     struct TeamHits {
         uint8 hitCount;
-        uint8 turnNum;
-        mapping(uint8 => Turn) turnStats;
         mapping(bytes4 => uint8) targeted;
     }
 
-    modifier piecesSet() {
-        require(teamReady[msg.sender] == false, "Pieces Set");
+    modifier piecesSet(bool isReady) {
+        require(teamReady[msg.sender] == isReady, "Pieces Set");
         _;
     }
 
@@ -38,17 +34,13 @@ contract Battleship {
     }
 
     modifier checkTurn() {
-        if ((currentTurn == address(0) && msg.sender == team2)) {
+        if ((currentTurn == address(0) && msg.sender == teamTwo)) {
             _;
             return;
         }
         require(currentTurn == msg.sender, "Not your turn");
         _;
     }
-
-    mapping(address => mapping(bytes4 => uint8)) private locations;
-    mapping(address => TeamHits) teamHits;
-    mapping(address => bool) private teamReady;
 
     function checkAndSetPieces(
         bytes4[15] memory targets,
@@ -61,13 +53,17 @@ contract Battleship {
         emit TeamReady(team);
     }
 
-    function setTeamOnePieces(bytes4[15] memory targets) external piecesSet {
-        require(msg.sender == team1, "Team One Only");
+    function setTeamOnePieces(
+        bytes4[15] memory targets
+    ) external piecesSet(false) {
+        require(msg.sender == teamOne, "Team One Only");
         checkAndSetPieces(targets, msg.sender);
     }
 
-    function setTeamTwoPieces(bytes4[15] memory targets) external piecesSet {
-        require(msg.sender == team2, "Team Two Only");
+    function setTeamTwoPieces(
+        bytes4[15] memory targets
+    ) external piecesSet(false) {
+        require(msg.sender == teamTwo, "Team Two Only");
         checkAndSetPieces(targets, msg.sender);
     }
 
@@ -92,17 +88,16 @@ contract Battleship {
         currentTurn = defTeam;
     }
 
-    function takeTurn(bytes4 target) external checkTurn {
-        if (msg.sender == team1) {
-            targetSpot(target, team2);
+    function takeTurn(bytes4 target) external piecesSet(true) checkTurn {
+        if (msg.sender == teamOne) {
+            targetSpot(target, teamTwo);
         } else {
-            targetSpot(target, team1);
+            targetSpot(target, teamOne);
         }
     }
 
-    constructor(address _team2) {
-        team1 = msg.sender;
-        team2 = _team2;
-        emit GameCreated(team1, team2);
+    constructor(address _teamTwo) {
+        teamOne = msg.sender;
+        teamTwo = _teamTwo;
     }
 }

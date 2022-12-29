@@ -11,10 +11,11 @@ import {
   fastForwardLastTurnTeamOneLead,
   ERROR_NOT_TURN,
 } from "./helpers/data/battleship"
-import { BattleshipFactory__factory, BattleshipImpl__factory } from "../typechain"
+import { BattleshipFactory, BattleshipFactory__factory, BattleshipImpl__factory } from "../typechain"
 import { BattleshipImpl } from "../typechain/BattleshipImpl"
 
 describe("BattleshipImpl | As Clone", () => {
+  let battleshipFactory: BattleshipFactory
   let battleshipContractAddr: string;
 
   let account1: SignerWithAddress
@@ -28,7 +29,7 @@ describe("BattleshipImpl | As Clone", () => {
 
     // Deploys and initializes game with teams
     const battleshipContractImpl = await new BattleshipImpl__factory(account1).deploy()
-    const battleshipFactory = await new BattleshipFactory__factory(account1).deploy(battleshipContractImpl.address)
+    battleshipFactory = await new BattleshipFactory__factory(account1).deploy(battleshipContractImpl.address)
 
     await battleshipFactory.deployAndChallange(account2.address)
 
@@ -40,8 +41,10 @@ describe("BattleshipImpl | As Clone", () => {
 
   describe("Setup | Success", async () => {
     it("Should deploy Battleship contract | Creates game", async () => {
-      const gameCreatedEvent = await battleshipContractSignerOne.queryFilter(battleshipContractSignerOne.filters.GameCreated())
-      expect(gameCreatedEvent[0].args[0] === account1.address)
+      const gameCreatedEvent = await battleshipFactory.queryFilter(battleshipFactory.filters.GameCreated())
+      expect(gameCreatedEvent[0].args[0] === battleshipContractAddr)
+      expect(gameCreatedEvent[0].args[1] === account1.address)
+      expect(gameCreatedEvent[0].args[2] === account2.address)
     })
 
     it("Set team 1 pieces", async () => {

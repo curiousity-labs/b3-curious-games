@@ -36,8 +36,10 @@ describe("Battleship", () => {
 
   describe("Setup | Success", async () => {
     it("Should deploy Battleship contract | Creates game", async () => {
-      const gameCreatedEvent = await battleshipContractSignerOne.queryFilter(battleshipContractSignerOne.filters.GameCreated())
-      expect(gameCreatedEvent[0].args[0] === account1.address)
+      const teamOne = await battleshipContract.teamOne()
+      const teamTwo = await battleshipContract.teamTwo();
+      expect(teamOne === account1.address);
+      expect(teamTwo === account2.address);
     })
 
     it("Set team 1 pieces", async () => {

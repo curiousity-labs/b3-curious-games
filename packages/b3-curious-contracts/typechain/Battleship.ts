@@ -29,25 +29,31 @@ import type {
 export interface BattleshipInterface extends utils.Interface {
   functions: {
     "currentTurn()": FunctionFragment;
+    "game_winner()": FunctionFragment;
     "setTeamOnePieces(bytes4[15])": FunctionFragment;
     "setTeamTwoPieces(bytes4[15])": FunctionFragment;
     "takeTurn(bytes4)": FunctionFragment;
-    "team1()": FunctionFragment;
-    "team2()": FunctionFragment;
+    "teamOne()": FunctionFragment;
+    "teamTwo()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "currentTurn"
+      | "game_winner"
       | "setTeamOnePieces"
       | "setTeamTwoPieces"
       | "takeTurn"
-      | "team1"
-      | "team2"
+      | "teamOne"
+      | "teamTwo"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "currentTurn",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "game_winner",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -62,11 +68,15 @@ export interface BattleshipInterface extends utils.Interface {
     functionFragment: "takeTurn",
     values: [PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(functionFragment: "team1", values?: undefined): string;
-  encodeFunctionData(functionFragment: "team2", values?: undefined): string;
+  encodeFunctionData(functionFragment: "teamOne", values?: undefined): string;
+  encodeFunctionData(functionFragment: "teamTwo", values?: undefined): string;
 
   decodeFunctionResult(
     functionFragment: "currentTurn",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "game_winner",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -78,32 +88,19 @@ export interface BattleshipInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "takeTurn", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "team1", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "team2", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "teamOne", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "teamTwo", data: BytesLike): Result;
 
   events: {
-    "GameCreated(address,address)": EventFragment;
     "GameFinished(address)": EventFragment;
     "TeamReady(address)": EventFragment;
     "TurnFinished(address,bytes4,bool)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "GameCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GameFinished"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TeamReady"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TurnFinished"): EventFragment;
 }
-
-export interface GameCreatedEventObject {
-  team1: string;
-  team2: string;
-}
-export type GameCreatedEvent = TypedEvent<
-  [string, string],
-  GameCreatedEventObject
->;
-
-export type GameCreatedEventFilter = TypedEventFilter<GameCreatedEvent>;
 
 export interface GameFinishedEventObject {
   winner: string;
@@ -160,6 +157,8 @@ export interface Battleship extends BaseContract {
   functions: {
     currentTurn(overrides?: CallOverrides): Promise<[string]>;
 
+    game_winner(overrides?: CallOverrides): Promise<[string]>;
+
     setTeamOnePieces(
       targets: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -175,12 +174,14 @@ export interface Battleship extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    team1(overrides?: CallOverrides): Promise<[string]>;
+    teamOne(overrides?: CallOverrides): Promise<[string]>;
 
-    team2(overrides?: CallOverrides): Promise<[string]>;
+    teamTwo(overrides?: CallOverrides): Promise<[string]>;
   };
 
   currentTurn(overrides?: CallOverrides): Promise<string>;
+
+  game_winner(overrides?: CallOverrides): Promise<string>;
 
   setTeamOnePieces(
     targets: PromiseOrValue<BytesLike>[],
@@ -197,12 +198,14 @@ export interface Battleship extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  team1(overrides?: CallOverrides): Promise<string>;
+  teamOne(overrides?: CallOverrides): Promise<string>;
 
-  team2(overrides?: CallOverrides): Promise<string>;
+  teamTwo(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     currentTurn(overrides?: CallOverrides): Promise<string>;
+
+    game_winner(overrides?: CallOverrides): Promise<string>;
 
     setTeamOnePieces(
       targets: PromiseOrValue<BytesLike>[],
@@ -219,18 +222,12 @@ export interface Battleship extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    team1(overrides?: CallOverrides): Promise<string>;
+    teamOne(overrides?: CallOverrides): Promise<string>;
 
-    team2(overrides?: CallOverrides): Promise<string>;
+    teamTwo(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    "GameCreated(address,address)"(
-      team1?: null,
-      team2?: null
-    ): GameCreatedEventFilter;
-    GameCreated(team1?: null, team2?: null): GameCreatedEventFilter;
-
     "GameFinished(address)"(winner?: null): GameFinishedEventFilter;
     GameFinished(winner?: null): GameFinishedEventFilter;
 
@@ -252,6 +249,8 @@ export interface Battleship extends BaseContract {
   estimateGas: {
     currentTurn(overrides?: CallOverrides): Promise<BigNumber>;
 
+    game_winner(overrides?: CallOverrides): Promise<BigNumber>;
+
     setTeamOnePieces(
       targets: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -267,14 +266,16 @@ export interface Battleship extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    team1(overrides?: CallOverrides): Promise<BigNumber>;
+    teamOne(overrides?: CallOverrides): Promise<BigNumber>;
 
-    team2(overrides?: CallOverrides): Promise<BigNumber>;
+    teamTwo(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     currentTurn(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    game_winner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     setTeamOnePieces(
       targets: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -290,8 +291,8 @@ export interface Battleship extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    team1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    teamOne(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    team2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    teamTwo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

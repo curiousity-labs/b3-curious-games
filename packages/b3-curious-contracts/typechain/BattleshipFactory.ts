@@ -28,44 +28,28 @@ import type {
 
 export interface BattleshipFactoryInterface extends utils.Interface {
   functions: {
-    "battleshipImplAddr()": FunctionFragment;
     "deployAndChallange(address)": FunctionFragment;
-    "gameId()": FunctionFragment;
     "getGames()": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic:
-      | "battleshipImplAddr"
-      | "deployAndChallange"
-      | "gameId"
-      | "getGames"
+    nameOrSignatureOrTopic: "deployAndChallange" | "getGames"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "battleshipImplAddr",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "deployAndChallange",
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "gameId", values?: undefined): string;
   encodeFunctionData(functionFragment: "getGames", values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "battleshipImplAddr",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "deployAndChallange",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "gameId", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getGames", data: BytesLike): Result;
 
   events: {
-    "GameCreated(address,uint256)": EventFragment;
+    "GameCreated(address,address,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "GameCreated"): EventFragment;
@@ -73,10 +57,11 @@ export interface BattleshipFactoryInterface extends utils.Interface {
 
 export interface GameCreatedEventObject {
   gameAddress: string;
-  gameId: BigNumber;
+  teamOne: string;
+  teamTwo: string;
 }
 export type GameCreatedEvent = TypedEvent<
-  [string, BigNumber],
+  [string, string, string],
   GameCreatedEventObject
 >;
 
@@ -109,74 +94,57 @@ export interface BattleshipFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    battleshipImplAddr(overrides?: CallOverrides): Promise<[string]>;
-
     deployAndChallange(
       teamtwo: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    gameId(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     getGames(overrides?: CallOverrides): Promise<[string[]]>;
   };
-
-  battleshipImplAddr(overrides?: CallOverrides): Promise<string>;
 
   deployAndChallange(
     teamtwo: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  gameId(overrides?: CallOverrides): Promise<BigNumber>;
-
   getGames(overrides?: CallOverrides): Promise<string[]>;
 
   callStatic: {
-    battleshipImplAddr(overrides?: CallOverrides): Promise<string>;
-
     deployAndChallange(
       teamtwo: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    gameId(overrides?: CallOverrides): Promise<BigNumber>;
-
     getGames(overrides?: CallOverrides): Promise<string[]>;
   };
 
   filters: {
-    "GameCreated(address,uint256)"(
+    "GameCreated(address,address,address)"(
       gameAddress?: null,
-      gameId?: null
+      teamOne?: null,
+      teamTwo?: null
     ): GameCreatedEventFilter;
-    GameCreated(gameAddress?: null, gameId?: null): GameCreatedEventFilter;
+    GameCreated(
+      gameAddress?: null,
+      teamOne?: null,
+      teamTwo?: null
+    ): GameCreatedEventFilter;
   };
 
   estimateGas: {
-    battleshipImplAddr(overrides?: CallOverrides): Promise<BigNumber>;
-
     deployAndChallange(
       teamtwo: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    gameId(overrides?: CallOverrides): Promise<BigNumber>;
-
     getGames(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    battleshipImplAddr(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     deployAndChallange(
       teamtwo: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
-
-    gameId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getGames(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
