@@ -1,10 +1,10 @@
 import { Box } from '@chakra-ui/react';
-import { PageTitle } from '../../components/layout/PageTitle';
 import { useBattleshipProvider } from './provider/context';
-import { addressSubString } from '../../utils/string';
+import { VersusBadge } from '../../components/layout/VersusBadge';
+import { constants } from 'ethers';
 
 export function Battleship() {
-  const { battleshipGame } = useBattleshipProvider()
+  const { battleshipGame: { gameWinner, teamOne, teamTwo } } = useBattleshipProvider()
 
   // 3 stages of game
   // PRE_GAME - sets up game each team must set pieces to continue
@@ -12,7 +12,13 @@ export function Battleship() {
   // POST_GAME - RESULTS OF GAME shown.
   return (
     <Box>
-      <PageTitle title={`BattleGame ${addressSubString(battleshipGame.gameAddress)}`} />
+      <VersusBadge
+        isGameOver={gameWinner !== constants.AddressZero}
+        isTeamOneWinner={gameWinner === teamOne.full}
+        isTeamTwoWinner={gameWinner === teamTwo.full}
+        teamOneDisplayName={teamOne.ensName || teamOne.registryDAOName || teamOne.truncated || ''}
+        teamTwoDisplayName={teamTwo.ensName || teamTwo.registryDAOName || teamTwo.truncated || ''}
+      />
     </Box>
   )
 }

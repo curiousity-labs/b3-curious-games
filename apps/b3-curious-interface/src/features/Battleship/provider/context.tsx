@@ -1,8 +1,9 @@
 import { createContext, useContext, Context } from 'react'
+import { IBattleshipState } from './gameplay/types'
 
 
 export interface IBattleshipContext {
-  battleshipGame: any
+  battleshipGame: IBattleshipState
   loaders: string[] // define these
 }
 

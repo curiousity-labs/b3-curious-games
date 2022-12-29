@@ -11,9 +11,10 @@ interface IVersusBadge {
 export function VersusBadge({ isGameOver, isTeamOneWinner, isTeamTwoWinner, teamOneDisplayName, teamTwoDisplayName }: IVersusBadge) {
   return (
     <Flex
-      rounded='0.5rem'
       m={4}
       bg={!isGameOver ? 'alert-red.normal' : 'green.500'}
+      w="fit-content"
+      rounded="50%"
     >
       <Badge
         bg={isTeamOneWinner ? 'green.500' : isTeamTwoWinner ? 'alert-red.normal' : 'sand.700'}
