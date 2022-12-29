@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "BattleshipFactory": {
-      "address": "0x55698Fb908944825981C0BdbC55be82e46388C12",
+      "address": "0xbF36222148dF3ef995182562a370A3e9C126aeD8",
       "abi": [
         {
           "inputs": [
@@ -27,26 +27,19 @@
             },
             {
               "indexed": false,
-              "internalType": "uint256",
-              "name": "gameId",
-              "type": "uint256"
+              "internalType": "address",
+              "name": "teamOne",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "teamTwo",
+              "type": "address"
             }
           ],
           "name": "GameCreated",
           "type": "event"
-        },
-        {
-          "inputs": [],
-          "name": "battleshipImplAddr",
-          "outputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
         },
         {
           "inputs": [
@@ -59,19 +52,6 @@
           "name": "deployAndChallange",
           "outputs": [],
           "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "gameId",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -90,27 +70,8 @@
       ]
     },
     "BattleshipImpl": {
-      "address": "0xC49A9929F2854FE12694e55C5575E7100B5BE691",
+      "address": "0x163F40b14D0034D88cA58a669F8dab366F76d7b5",
       "abi": [
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "team1",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "team2",
-              "type": "address"
-            }
-          ],
-          "name": "GameCreated",
-          "type": "event"
-        },
         {
           "anonymous": false,
           "inputs": [
@@ -192,12 +153,12 @@
           "inputs": [
             {
               "internalType": "address",
-              "name": "_team1",
+              "name": "_teamOne",
               "type": "address"
             },
             {
               "internalType": "address",
-              "name": "_team2",
+              "name": "_teamTwo",
               "type": "address"
             }
           ],
@@ -247,7 +208,7 @@
         },
         {
           "inputs": [],
-          "name": "team1",
+          "name": "teamOne",
           "outputs": [
             {
               "internalType": "address",
@@ -260,7 +221,7 @@
         },
         {
           "inputs": [],
-          "name": "team2",
+          "name": "teamTwo",
           "outputs": [
             {
               "internalType": "address",

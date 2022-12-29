@@ -1,25 +1,6 @@
 {
-  "address": "0xC49A9929F2854FE12694e55C5575E7100B5BE691",
+  "address": "0x163F40b14D0034D88cA58a669F8dab366F76d7b5",
   "abi": [
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "team1",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "team2",
-          "type": "address"
-        }
-      ],
-      "name": "GameCreated",
-      "type": "event"
-    },
     {
       "anonymous": false,
       "inputs": [
@@ -101,12 +82,12 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "_team1",
+          "name": "_teamOne",
           "type": "address"
         },
         {
           "internalType": "address",
-          "name": "_team2",
+          "name": "_teamTwo",
           "type": "address"
         }
       ],
@@ -156,7 +137,7 @@
     },
     {
       "inputs": [],
-      "name": "team1",
+      "name": "teamOne",
       "outputs": [
         {
           "internalType": "address",
@@ -169,7 +150,7 @@
     },
     {
       "inputs": [],
-      "name": "team2",
+      "name": "teamTwo",
       "outputs": [
         {
           "internalType": "address",
@@ -181,102 +162,44 @@
       "type": "function"
     }
   ],
-  "transactionHash": "0x02c89c168d73ef050715318f5616a74f3784497316d11e83f5b678616a820510",
+  "transactionHash": "0x4f0ebaaac2fce8d83ae9ca12acce0d15c06203b949632cacf5e5649aad038b17",
   "receipt": {
     "to": null,
     "from": "0x629750317d320B8bB4d48D345A6d699Cc855c4a6",
-    "contractAddress": "0xC49A9929F2854FE12694e55C5575E7100B5BE691",
-    "transactionIndex": 76,
-    "gasUsed": "574382",
+    "contractAddress": "0x163F40b14D0034D88cA58a669F8dab366F76d7b5",
+    "transactionIndex": 81,
+    "gasUsed": "582741",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "blockHash": "0x0f5729b2492986c88564c3f9f96dc0e689ed7e08b0d4891aa7cf59cf020b0a63",
-    "transactionHash": "0x02c89c168d73ef050715318f5616a74f3784497316d11e83f5b678616a820510",
+    "blockHash": "0xb48ab522ad4c8e168ea351e56f4247b9e860cada79f65c72975af0155dbe06d5",
+    "transactionHash": "0x4f0ebaaac2fce8d83ae9ca12acce0d15c06203b949632cacf5e5649aad038b17",
     "logs": [],
-    "blockNumber": 8217817,
-    "cumulativeGasUsed": "11843673",
+    "blockNumber": 8223185,
+    "cumulativeGasUsed": "11632797",
     "status": 1,
     "byzantium": true
   },
   "args": [],
-  "numDeployments": 2,
-  "solcInputHash": "290fc1e1c3bd32bc9777a6399eb707bd",
-  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"team1\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"team2\",\"type\":\"address\"}],\"name\":\"GameCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"winner\",\"type\":\"address\"}],\"name\":\"GameFinished\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"team\",\"type\":\"address\"}],\"name\":\"TeamReady\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"team\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes4\",\"name\":\"target\",\"type\":\"bytes4\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"isSuccessful\",\"type\":\"bool\"}],\"name\":\"TurnFinished\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"currentTurn\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"game_winner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_team1\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_team2\",\"type\":\"address\"}],\"name\":\"init\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4[15]\",\"name\":\"targets\",\"type\":\"bytes4[15]\"}],\"name\":\"setTeamOnePieces\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4[15]\",\"name\":\"targets\",\"type\":\"bytes4[15]\"}],\"name\":\"setTeamTwoPieces\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"target\",\"type\":\"bytes4\"}],\"name\":\"takeTurn\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"team1\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"team2\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"GameCreated(address,address)\":{\"params\":{\"team1\":\"address of team 1\",\"team2\":\"address of team 2\"}},\"TeamReady(address)\":{\"params\":{\"team\":\"address of team 1\"}},\"TurnFinished(address,bytes4,bool)\":{\"params\":{\"target\":\"target location of attempted hit\",\"team\":\"address of team whose turn was taken\"}}},\"kind\":\"dev\",\"methods\":{\"setTeamOnePieces(bytes4[15])\":{\"params\":{\"targets\":\"byte array of ship locations\"}},\"setTeamTwoPieces(bytes4[15])\":{\"params\":{\"targets\":\"byte array of ship locations\"}}},\"stateVariables\":{\"game_winner\":{\"details\":\"Set to 0x0000~ while game is active. game is over when winner is set\"}},\"title\":\"onchain battleship\",\"version\":1},\"userdoc\":{\"events\":{\"GameCreated(address,address)\":{\"notice\":\"This will be used to track which addresses are parcipating\"},\"TeamReady(address)\":{\"notice\":\"This event will only event fire twice per contract, when 2 events have been fired game can begin\"},\"TurnFinished(address,bytes4,bool)\":{\"notice\":\"This will keep history of moves takenThis should filtered and used by front-end to update hit/misses\"}},\"kind\":\"user\",\"methods\":{\"game_winner()\":{\"notice\":\"This should be updated with winner when game is over\"},\"init(address,address)\":{\"notice\":\"initilizes game between two addresses\"},\"setTeamOnePieces(bytes4[15])\":{\"notice\":\"Sets locations for team 1 shipsTeam 1 Only | Team Pieces not already set\"},\"setTeamTwoPieces(bytes4[15])\":{\"notice\":\"Sets locations for team 2 shipsTeam 2 Only | Team Pieces not already set\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/BattleshipImpl.sol\":\"BattleshipImpl\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":2000},\"remappings\":[]},\"sources\":{\"contracts/BattleshipImpl.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0\\npragma solidity ^0.8.17;\\n\\n/**\\n * @title onchain battleship\\n */\\ncontract BattleshipImpl {\\n    /**\\n     * @notice This will be used to track which addresses are parcipating\\n     * @param team1 address of team 1\\n     * @param team2 address of team 2\\n     */\\n    event GameCreated(address team1, address team2);\\n    /**\\n     * @notice This event will only event fire twice per contract, when 2 events have been fired game can begin\\n     * @param team address of team 1\\n     */\\n    event TeamReady(address team);\\n\\n    /**\\n     * @notice This will keep history of moves taken\\n     * @notice This should filtered and used by front-end to update hit/misses\\n     * @param team address of team whose turn was taken\\n     * @param target target location of attempted hit\\n     */\\n    event TurnFinished(address team, bytes4 target, bool isSuccessful);\\n\\n    event GameFinished(address winner);\\n\\n    /**\\n     * @dev Set to 0x0000~ while game is active. game is over when winner is set\\n     * @notice This should be updated with winner when game is over\\n     */\\n    address public game_winner = address(0);\\n\\n    address public team1 = address(0);\\n    address public team2 = address(0);\\n    address public currentTurn = address(0);\\n\\n    /**\\n     * unit8 0 | undefined: nothing\\n     * unit8 1 : ship\\n     */\\n    struct TeamHits {\\n        uint8 hitCount;\\n        mapping(bytes4 => uint8) targeted;\\n    }\\n\\n    mapping(address => mapping(bytes4 => uint8)) private locations;\\n    mapping(address => TeamHits) teamHits;\\n    mapping(address => bool) private teamReady;\\n\\n    // function getTeamHitCounts()\\n    //     public\\n    //     view\\n    //     returns (uint8 team1Count, uint8 team2Count)\\n    // {\\n    //     team1Count = teamHits[team1].hitCount;\\n    //     team2Count = teamHits[team2].hitCount;\\n    // }\\n\\n    /**\\n     * initilizes game between two addresses\\n     */\\n    // @todo create factory contract\\n    function init(address _team1, address _team2) public {\\n        team1 = _team1;\\n        team2 = _team2;\\n        emit GameCreated(team1, team2);\\n    }\\n\\n    /**\\n     * Sets ship locations for each team\\n     * @notice emits event 'TeamReady'\\n     */\\n    function checkAndSetPieces(\\n        bytes4[15] memory targets,\\n        address team\\n    ) private {\\n        for (uint256 i; i < targets.length; i++) {\\n            locations[team][targets[i]] = 1;\\n        }\\n        teamReady[team] = true;\\n        emit TeamReady(team);\\n    }\\n\\n    modifier piecesSet() {\\n        require(teamReady[msg.sender] == false, \\\"Pieces Set\\\");\\n        _;\\n    }\\n\\n    /**\\n     * Sets locations for team 1 ships\\n     * @param targets byte array of ship locations\\n     * @notice Team 1 Only | Team Pieces not already set\\n     *\\n     */\\n    function setTeamOnePieces(bytes4[15] memory targets) external piecesSet {\\n        require(msg.sender == team1, \\\"Team One Only\\\");\\n        checkAndSetPieces(targets, msg.sender);\\n    }\\n\\n    /**\\n     * Sets locations for team 2 ships\\n     * @param targets byte array of ship locations\\n     * @notice Team 2 Only | Team Pieces not already set\\n     *\\n     */\\n    function setTeamTwoPieces(bytes4[15] memory targets) external piecesSet {\\n        require(msg.sender == team2, \\\"Team Two Only\\\");\\n        checkAndSetPieces(targets, msg.sender);\\n    }\\n\\n    modifier gameOver() {\\n        require(game_winner == address(0), \\\"Game is Over\\\");\\n        _;\\n    }\\n\\n    function targetSpot(bytes4 target, address defTeam) private gameOver {\\n        if (\\n            locations[defTeam][target] == 1 &&\\n            teamHits[msg.sender].targeted[target] == 0\\n        ) {\\n            uint8 raisedHit = ++teamHits[msg.sender].hitCount;\\n            teamHits[msg.sender].hitCount = raisedHit;\\n            teamHits[msg.sender].targeted[target] = 1;\\n            if (raisedHit == 15) {\\n                game_winner = msg.sender;\\n                emit GameFinished(msg.sender);\\n            } else {\\n                emit TurnFinished(msg.sender, target, true);\\n            }\\n        } else {\\n            emit TurnFinished(msg.sender, target, false);\\n        }\\n\\n        currentTurn = defTeam;\\n    }\\n\\n    modifier checkTurn() {\\n        if ((currentTurn == address(0) && msg.sender == team2)) {\\n            _;\\n            return;\\n        }\\n        require(currentTurn == msg.sender, \\\"Not your turn\\\");\\n        _;\\n    }\\n\\n    function takeTurn(bytes4 target) external checkTurn {\\n        if (msg.sender == team1) {\\n            targetSpot(target, team2);\\n        } else {\\n            targetSpot(target, team1);\\n        }\\n    }\\n\\n    /**\\n     *\\n     */\\n    // function forfeitMatch() public {}\\n}\\n\",\"keccak256\":\"0xdb8f1fe0cb32620d9e5f8e173f9cb11bc3d1b7ac5c27752b9ed6747609c1820e\",\"license\":\"GPL-3.0\"}},\"version\":1}",
-  "bytecode": "0x6080604052600080546001600160a01b03199081169091556001805482169055600280548216905560038054909116905534801561003c57600080fd5b506109478061004c6000396000f3fe608060405234801561001057600080fd5b50600436106100885760003560e01c8063e612c0ad1161005b578063e612c0ad146100f7578063e7d4eb091461010a578063ef61b3201461011d578063f09a40161461013057600080fd5b806373f081ee1461008d57806383cbd06d146100a25780638c8d2ede146100d1578063deb61286146100e4575b600080fd5b6100a061009b36600461078e565b610143565b005b6000546100b5906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f35b6001546100b5906001600160a01b031681565b6003546100b5906001600160a01b031681565b6002546100b5906001600160a01b031681565b6100a06101183660046107b0565b610236565b6100a061012b3660046107b0565b6102fa565b6100a061013e36600461085b565b6103b4565b6003546001600160a01b031615801561016657506002546001600160a01b031633145b156101ae576001546001600160a01b03163303610197576002546101949082906001600160a01b0316610430565b50565b6001546101949082906001600160a01b0316610430565b6003546001600160a01b0316331461020d5760405162461bcd60e51b815260206004820152600d60248201527f4e6f7420796f7572207475726e0000000000000000000000000000000000000060448201526064015b60405180910390fd5b6001546001600160a01b03163303610197576002546101949082906001600160a01b0316610430565b3360009081526006602052604090205460ff16156102965760405162461bcd60e51b815260206004820152600a60248201527f50696563657320536574000000000000000000000000000000000000000000006044820152606401610204565b6001546001600160a01b031633146102f05760405162461bcd60e51b815260206004820152600d60248201527f5465616d204f6e65204f6e6c79000000000000000000000000000000000000006044820152606401610204565b610194813361069d565b3360009081526006602052604090205460ff161561035a5760405162461bcd60e51b815260206004820152600a60248201527f50696563657320536574000000000000000000000000000000000000000000006044820152606401610204565b6002546001600160a01b031633146102f05760405162461bcd60e51b815260206004820152600d60248201527f5465616d2054776f204f6e6c79000000000000000000000000000000000000006044820152606401610204565b600180546001600160a01b0384811673ffffffffffffffffffffffffffffffffffffffff199283168117909355600280549185169190921681179091556040805192835260208301919091527fb60d84e37a6658effce28870b1d123cb86f86409df5888679310c0f276e1f5d291015b60405180910390a15050565b6000546001600160a01b0316156104895760405162461bcd60e51b815260206004820152600c60248201527f47616d65206973204f76657200000000000000000000000000000000000000006044820152606401610204565b6001600160a01b03811660009081526004602090815260408083206001600160e01b03198616845290915290205460ff1660011480156104f157503360009081526005602090815260408083206001600160e01b03198616845260010190915290205460ff16155b1561062357336000908152600560205260408120805482906105159060ff166108a4565b825460ff8083166101009490940a84810291021990911617909255336000908152600560209081526040808320805460ff19908116861782556001600160e01b03198a1685526001918201909352922080549091169091179055909150600f036105d3576000805473ffffffffffffffffffffffffffffffffffffffff1916339081179091556040519081527f1728dd43546edd06fabfe796e5b641a151aa90998bfd1b1ec0ae98c6e77084599060200160405180910390a161061d565b604080513381526001600160e01b03198516602082015260018183015290517f5337bbde7e7c72b09a00941bda0ba1caa9206a8bc93d2247d695caea0a4b6de49181900360600190a15b5061066d565b604080513381526001600160e01b03198416602082015260008183015290517f5337bbde7e7c72b09a00941bda0ba1caa9206a8bc93d2247d695caea0a4b6de49181900360600190a15b6003805473ffffffffffffffffffffffffffffffffffffffff19166001600160a01b039290921691909117905550565b60005b600f81101561071c576001600160a01b03821660009081526004602052604081206001918584600f81106106d6576106d66108c3565b602090810291909101516001600160e01b0319168252810191909152604001600020805460ff191660ff9290921691909117905580610714816108d9565b9150506106a0565b506001600160a01b038116600081815260066020908152604091829020805460ff1916600117905590519182527fe2e2b3556c27b5e050482e0af7aac4fa3d28cdbed7ffa0465379328007633f269101610424565b80356001600160e01b03198116811461078957600080fd5b919050565b6000602082840312156107a057600080fd5b6107a982610771565b9392505050565b60006101e08083850312156107c457600080fd5b83601f8401126107d357600080fd5b60405181810181811067ffffffffffffffff8211171561080357634e487b7160e01b600052604160045260246000fd5b60405290830190808583111561081857600080fd5b845b838110156108395761082b81610771565b82526020918201910161081a565b509095945050505050565b80356001600160a01b038116811461078957600080fd5b6000806040838503121561086e57600080fd5b61087783610844565b915061088560208401610844565b90509250929050565b634e487b7160e01b600052601160045260246000fd5b600060ff821660ff81036108ba576108ba61088e565b60010192915050565b634e487b7160e01b600052603260045260246000fd5b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff820361090a5761090a61088e565b506001019056fea2646970667358221220cb5511786960260e3d86274c2f7995bda7af7ef2c9ae8f2689c5c54c855723d264736f6c63430008110033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100885760003560e01c8063e612c0ad1161005b578063e612c0ad146100f7578063e7d4eb091461010a578063ef61b3201461011d578063f09a40161461013057600080fd5b806373f081ee1461008d57806383cbd06d146100a25780638c8d2ede146100d1578063deb61286146100e4575b600080fd5b6100a061009b36600461078e565b610143565b005b6000546100b5906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f35b6001546100b5906001600160a01b031681565b6003546100b5906001600160a01b031681565b6002546100b5906001600160a01b031681565b6100a06101183660046107b0565b610236565b6100a061012b3660046107b0565b6102fa565b6100a061013e36600461085b565b6103b4565b6003546001600160a01b031615801561016657506002546001600160a01b031633145b156101ae576001546001600160a01b03163303610197576002546101949082906001600160a01b0316610430565b50565b6001546101949082906001600160a01b0316610430565b6003546001600160a01b0316331461020d5760405162461bcd60e51b815260206004820152600d60248201527f4e6f7420796f7572207475726e0000000000000000000000000000000000000060448201526064015b60405180910390fd5b6001546001600160a01b03163303610197576002546101949082906001600160a01b0316610430565b3360009081526006602052604090205460ff16156102965760405162461bcd60e51b815260206004820152600a60248201527f50696563657320536574000000000000000000000000000000000000000000006044820152606401610204565b6001546001600160a01b031633146102f05760405162461bcd60e51b815260206004820152600d60248201527f5465616d204f6e65204f6e6c79000000000000000000000000000000000000006044820152606401610204565b610194813361069d565b3360009081526006602052604090205460ff161561035a5760405162461bcd60e51b815260206004820152600a60248201527f50696563657320536574000000000000000000000000000000000000000000006044820152606401610204565b6002546001600160a01b031633146102f05760405162461bcd60e51b815260206004820152600d60248201527f5465616d2054776f204f6e6c79000000000000000000000000000000000000006044820152606401610204565b600180546001600160a01b0384811673ffffffffffffffffffffffffffffffffffffffff199283168117909355600280549185169190921681179091556040805192835260208301919091527fb60d84e37a6658effce28870b1d123cb86f86409df5888679310c0f276e1f5d291015b60405180910390a15050565b6000546001600160a01b0316156104895760405162461bcd60e51b815260206004820152600c60248201527f47616d65206973204f76657200000000000000000000000000000000000000006044820152606401610204565b6001600160a01b03811660009081526004602090815260408083206001600160e01b03198616845290915290205460ff1660011480156104f157503360009081526005602090815260408083206001600160e01b03198616845260010190915290205460ff16155b1561062357336000908152600560205260408120805482906105159060ff166108a4565b825460ff8083166101009490940a84810291021990911617909255336000908152600560209081526040808320805460ff19908116861782556001600160e01b03198a1685526001918201909352922080549091169091179055909150600f036105d3576000805473ffffffffffffffffffffffffffffffffffffffff1916339081179091556040519081527f1728dd43546edd06fabfe796e5b641a151aa90998bfd1b1ec0ae98c6e77084599060200160405180910390a161061d565b604080513381526001600160e01b03198516602082015260018183015290517f5337bbde7e7c72b09a00941bda0ba1caa9206a8bc93d2247d695caea0a4b6de49181900360600190a15b5061066d565b604080513381526001600160e01b03198416602082015260008183015290517f5337bbde7e7c72b09a00941bda0ba1caa9206a8bc93d2247d695caea0a4b6de49181900360600190a15b6003805473ffffffffffffffffffffffffffffffffffffffff19166001600160a01b039290921691909117905550565b60005b600f81101561071c576001600160a01b03821660009081526004602052604081206001918584600f81106106d6576106d66108c3565b602090810291909101516001600160e01b0319168252810191909152604001600020805460ff191660ff9290921691909117905580610714816108d9565b9150506106a0565b506001600160a01b038116600081815260066020908152604091829020805460ff1916600117905590519182527fe2e2b3556c27b5e050482e0af7aac4fa3d28cdbed7ffa0465379328007633f269101610424565b80356001600160e01b03198116811461078957600080fd5b919050565b6000602082840312156107a057600080fd5b6107a982610771565b9392505050565b60006101e08083850312156107c457600080fd5b83601f8401126107d357600080fd5b60405181810181811067ffffffffffffffff8211171561080357634e487b7160e01b600052604160045260246000fd5b60405290830190808583111561081857600080fd5b845b838110156108395761082b81610771565b82526020918201910161081a565b509095945050505050565b80356001600160a01b038116811461078957600080fd5b6000806040838503121561086e57600080fd5b61087783610844565b915061088560208401610844565b90509250929050565b634e487b7160e01b600052601160045260246000fd5b600060ff821660ff81036108ba576108ba61088e565b60010192915050565b634e487b7160e01b600052603260045260246000fd5b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff820361090a5761090a61088e565b506001019056fea2646970667358221220cb5511786960260e3d86274c2f7995bda7af7ef2c9ae8f2689c5c54c855723d264736f6c63430008110033",
+  "numDeployments": 3,
+  "solcInputHash": "566f1544677ff0295a6920480e4f77bc",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"winner\",\"type\":\"address\"}],\"name\":\"GameFinished\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"team\",\"type\":\"address\"}],\"name\":\"TeamReady\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"team\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes4\",\"name\":\"target\",\"type\":\"bytes4\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"isSuccessful\",\"type\":\"bool\"}],\"name\":\"TurnFinished\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"currentTurn\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"game_winner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_teamOne\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_teamTwo\",\"type\":\"address\"}],\"name\":\"init\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4[15]\",\"name\":\"targets\",\"type\":\"bytes4[15]\"}],\"name\":\"setTeamOnePieces\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4[15]\",\"name\":\"targets\",\"type\":\"bytes4[15]\"}],\"name\":\"setTeamTwoPieces\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"target\",\"type\":\"bytes4\"}],\"name\":\"takeTurn\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"teamOne\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"teamTwo\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"@Da-Colon (github)\",\"kind\":\"dev\",\"methods\":{},\"title\":\"onchain battleship\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/BattleshipImpl.sol\":\"BattleshipImpl\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":2000},\"remappings\":[]},\"sources\":{\"contracts/BattleshipImpl.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0\\npragma solidity ^0.8.17;\\n\\n/**\\n * @title onchain battleship\\n * @author @Da-Colon (github)\\n */\\ncontract BattleshipImpl {\\n    event TeamReady(address team);\\n    event TurnFinished(address team, bytes4 target, bool isSuccessful);\\n    event GameFinished(address winner);\\n\\n    address public game_winner = address(0);\\n    address public teamOne = address(0);\\n    address public teamTwo = address(0);\\n    address public currentTurn = address(0);\\n\\n    mapping(address => bool) private teamReady;\\n    mapping(address => mapping(bytes4 => uint8)) private locations;\\n    mapping(address => TeamHits) private teamHits;\\n\\n    struct TeamHits {\\n        uint8 hitCount;\\n        mapping(bytes4 => uint8) targeted;\\n    }\\n\\n    modifier piecesSet(bool isReady) {\\n        require(teamReady[msg.sender] == isReady, \\\"Pieces Set\\\");\\n        _;\\n    }\\n\\n    modifier gameOver() {\\n        require(game_winner == address(0), \\\"Game is Over\\\");\\n        _;\\n    }\\n\\n    modifier checkTurn() {\\n        if ((currentTurn == address(0) && msg.sender == teamTwo)) {\\n            _;\\n            return;\\n        }\\n        require(currentTurn == msg.sender, \\\"Not your turn\\\");\\n        _;\\n    }\\n\\n    function checkAndSetPieces(\\n        bytes4[15] memory targets,\\n        address team\\n    ) private {\\n        for (uint256 i; i < targets.length; i++) {\\n            locations[team][targets[i]] = 1;\\n        }\\n        teamReady[team] = true;\\n        emit TeamReady(team);\\n    }\\n\\n    function setTeamOnePieces(\\n        bytes4[15] memory targets\\n    ) external piecesSet(false) {\\n        require(msg.sender == teamOne, \\\"Team One Only\\\");\\n        checkAndSetPieces(targets, msg.sender);\\n    }\\n\\n    function setTeamTwoPieces(\\n        bytes4[15] memory targets\\n    ) external piecesSet(false) {\\n        require(msg.sender == teamTwo, \\\"Team Two Only\\\");\\n        checkAndSetPieces(targets, msg.sender);\\n    }\\n\\n    function targetSpot(bytes4 target, address defTeam) private gameOver {\\n        if (\\n            locations[defTeam][target] == 1 &&\\n            teamHits[msg.sender].targeted[target] == 0\\n        ) {\\n            uint8 raisedHit = ++teamHits[msg.sender].hitCount;\\n            teamHits[msg.sender].hitCount = raisedHit;\\n            teamHits[msg.sender].targeted[target] = 1;\\n            if (raisedHit == 15) {\\n                game_winner = msg.sender;\\n                emit GameFinished(msg.sender);\\n            } else {\\n                emit TurnFinished(msg.sender, target, true);\\n            }\\n        } else {\\n            emit TurnFinished(msg.sender, target, false);\\n        }\\n\\n        currentTurn = defTeam;\\n    }\\n\\n    function takeTurn(bytes4 target) external piecesSet(true) checkTurn {\\n        if (msg.sender == teamOne) {\\n            targetSpot(target, teamTwo);\\n        } else {\\n            targetSpot(target, teamOne);\\n        }\\n    }\\n\\n    function init(address _teamOne, address _teamTwo) public {\\n        teamOne = _teamOne;\\n        teamTwo = _teamTwo;\\n    }\\n}\\n\",\"keccak256\":\"0x0b5f5990658e42f04a93cd4ae1667e795ea341b0fa1255856a1bc009e3761012\",\"license\":\"GPL-3.0\"}},\"version\":1}",
+  "bytecode": "0x6080604052600080546001600160a01b03199081169091556001805482169055600280548216905560038054909116905534801561003c57600080fd5b5061096f8061004c6000396000f3fe608060405234801561001057600080fd5b50600436106100885760003560e01c8063deb612861161005b578063deb61286146100f7578063e7d4eb091461010a578063ef61b3201461011d578063f09a40161461013057600080fd5b8063356c22ec1461008d57806373f081ee146100bc57806383cbd06d146100d1578063d8e4f9d9146100e4575b600080fd5b6001546100a0906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f35b6100cf6100ca3660046107b6565b610179565b005b6000546100a0906001600160a01b031681565b6002546100a0906001600160a01b031681565b6003546100a0906001600160a01b031681565b6100cf6101183660046107d8565b6102d3565b6100cf61012b3660046107d8565b610397565b6100cf61013e366004610883565b600180546001600160a01b0393841673ffffffffffffffffffffffffffffffffffffffff199182161790915560028054929093169116179055565b3360009081526004602052604090205460019060ff16151581146101e45760405162461bcd60e51b815260206004820152600a60248201527f506965636573205365740000000000000000000000000000000000000000000060448201526064015b60405180910390fd5b6003546001600160a01b031615801561020757506002546001600160a01b031633145b15610250576001546001600160a01b03163303610239576002546102359083906001600160a01b0316610451565b5050565b6001546102359083906001600160a01b0316610451565b6003546001600160a01b031633146102aa5760405162461bcd60e51b815260206004820152600d60248201527f4e6f7420796f7572207475726e0000000000000000000000000000000000000060448201526064016101db565b6001546001600160a01b03163303610239576002546102359083906001600160a01b0316610451565b3360009081526004602052604081205460ff16156103335760405162461bcd60e51b815260206004820152600a60248201527f506965636573205365740000000000000000000000000000000000000000000060448201526064016101db565b6001546001600160a01b0316331461038d5760405162461bcd60e51b815260206004820152600d60248201527f5465616d204f6e65204f6e6c790000000000000000000000000000000000000060448201526064016101db565b61023582336106be565b3360009081526004602052604081205460ff16156103f75760405162461bcd60e51b815260206004820152600a60248201527f506965636573205365740000000000000000000000000000000000000000000060448201526064016101db565b6002546001600160a01b0316331461038d5760405162461bcd60e51b815260206004820152600d60248201527f5465616d2054776f204f6e6c790000000000000000000000000000000000000060448201526064016101db565b6000546001600160a01b0316156104aa5760405162461bcd60e51b815260206004820152600c60248201527f47616d65206973204f766572000000000000000000000000000000000000000060448201526064016101db565b6001600160a01b03811660009081526005602090815260408083206001600160e01b03198616845290915290205460ff16600114801561051257503360009081526006602090815260408083206001600160e01b03198616845260010190915290205460ff16155b1561064457336000908152600660205260408120805482906105369060ff166108cc565b825460ff8083166101009490940a84810291021990911617909255336000908152600660209081526040808320805460ff19908116861782556001600160e01b03198a1685526001918201909352922080549091169091179055909150600f036105f4576000805473ffffffffffffffffffffffffffffffffffffffff1916339081179091556040519081527f1728dd43546edd06fabfe796e5b641a151aa90998bfd1b1ec0ae98c6e77084599060200160405180910390a161063e565b604080513381526001600160e01b03198516602082015260018183015290517f5337bbde7e7c72b09a00941bda0ba1caa9206a8bc93d2247d695caea0a4b6de49181900360600190a15b5061068e565b604080513381526001600160e01b03198416602082015260008183015290517f5337bbde7e7c72b09a00941bda0ba1caa9206a8bc93d2247d695caea0a4b6de49181900360600190a15b6003805473ffffffffffffffffffffffffffffffffffffffff19166001600160a01b039290921691909117905550565b60005b600f81101561073d576001600160a01b03821660009081526005602052604081206001918584600f81106106f7576106f76108eb565b602090810291909101516001600160e01b0319168252810191909152604001600020805460ff191660ff929092169190911790558061073581610901565b9150506106c1565b506001600160a01b038116600081815260046020908152604091829020805460ff1916600117905590519182527fe2e2b3556c27b5e050482e0af7aac4fa3d28cdbed7ffa0465379328007633f26910160405180910390a15050565b80356001600160e01b0319811681146107b157600080fd5b919050565b6000602082840312156107c857600080fd5b6107d182610799565b9392505050565b60006101e08083850312156107ec57600080fd5b83601f8401126107fb57600080fd5b60405181810181811067ffffffffffffffff8211171561082b57634e487b7160e01b600052604160045260246000fd5b60405290830190808583111561084057600080fd5b845b838110156108615761085381610799565b825260209182019101610842565b509095945050505050565b80356001600160a01b03811681146107b157600080fd5b6000806040838503121561089657600080fd5b61089f8361086c565b91506108ad6020840161086c565b90509250929050565b634e487b7160e01b600052601160045260246000fd5b600060ff821660ff81036108e2576108e26108b6565b60010192915050565b634e487b7160e01b600052603260045260246000fd5b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8203610932576109326108b6565b506001019056fea2646970667358221220a930a75e38db5048961e97f20440c515a73bc2585b7500738f53faee8d33911764736f6c63430008110033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100885760003560e01c8063deb612861161005b578063deb61286146100f7578063e7d4eb091461010a578063ef61b3201461011d578063f09a40161461013057600080fd5b8063356c22ec1461008d57806373f081ee146100bc57806383cbd06d146100d1578063d8e4f9d9146100e4575b600080fd5b6001546100a0906001600160a01b031681565b6040516001600160a01b03909116815260200160405180910390f35b6100cf6100ca3660046107b6565b610179565b005b6000546100a0906001600160a01b031681565b6002546100a0906001600160a01b031681565b6003546100a0906001600160a01b031681565b6100cf6101183660046107d8565b6102d3565b6100cf61012b3660046107d8565b610397565b6100cf61013e366004610883565b600180546001600160a01b0393841673ffffffffffffffffffffffffffffffffffffffff199182161790915560028054929093169116179055565b3360009081526004602052604090205460019060ff16151581146101e45760405162461bcd60e51b815260206004820152600a60248201527f506965636573205365740000000000000000000000000000000000000000000060448201526064015b60405180910390fd5b6003546001600160a01b031615801561020757506002546001600160a01b031633145b15610250576001546001600160a01b03163303610239576002546102359083906001600160a01b0316610451565b5050565b6001546102359083906001600160a01b0316610451565b6003546001600160a01b031633146102aa5760405162461bcd60e51b815260206004820152600d60248201527f4e6f7420796f7572207475726e0000000000000000000000000000000000000060448201526064016101db565b6001546001600160a01b03163303610239576002546102359083906001600160a01b0316610451565b3360009081526004602052604081205460ff16156103335760405162461bcd60e51b815260206004820152600a60248201527f506965636573205365740000000000000000000000000000000000000000000060448201526064016101db565b6001546001600160a01b0316331461038d5760405162461bcd60e51b815260206004820152600d60248201527f5465616d204f6e65204f6e6c790000000000000000000000000000000000000060448201526064016101db565b61023582336106be565b3360009081526004602052604081205460ff16156103f75760405162461bcd60e51b815260206004820152600a60248201527f506965636573205365740000000000000000000000000000000000000000000060448201526064016101db565b6002546001600160a01b0316331461038d5760405162461bcd60e51b815260206004820152600d60248201527f5465616d2054776f204f6e6c790000000000000000000000000000000000000060448201526064016101db565b6000546001600160a01b0316156104aa5760405162461bcd60e51b815260206004820152600c60248201527f47616d65206973204f766572000000000000000000000000000000000000000060448201526064016101db565b6001600160a01b03811660009081526005602090815260408083206001600160e01b03198616845290915290205460ff16600114801561051257503360009081526006602090815260408083206001600160e01b03198616845260010190915290205460ff16155b1561064457336000908152600660205260408120805482906105369060ff166108cc565b825460ff8083166101009490940a84810291021990911617909255336000908152600660209081526040808320805460ff19908116861782556001600160e01b03198a1685526001918201909352922080549091169091179055909150600f036105f4576000805473ffffffffffffffffffffffffffffffffffffffff1916339081179091556040519081527f1728dd43546edd06fabfe796e5b641a151aa90998bfd1b1ec0ae98c6e77084599060200160405180910390a161063e565b604080513381526001600160e01b03198516602082015260018183015290517f5337bbde7e7c72b09a00941bda0ba1caa9206a8bc93d2247d695caea0a4b6de49181900360600190a15b5061068e565b604080513381526001600160e01b03198416602082015260008183015290517f5337bbde7e7c72b09a00941bda0ba1caa9206a8bc93d2247d695caea0a4b6de49181900360600190a15b6003805473ffffffffffffffffffffffffffffffffffffffff19166001600160a01b039290921691909117905550565b60005b600f81101561073d576001600160a01b03821660009081526005602052604081206001918584600f81106106f7576106f76108eb565b602090810291909101516001600160e01b0319168252810191909152604001600020805460ff191660ff929092169190911790558061073581610901565b9150506106c1565b506001600160a01b038116600081815260046020908152604091829020805460ff1916600117905590519182527fe2e2b3556c27b5e050482e0af7aac4fa3d28cdbed7ffa0465379328007633f26910160405180910390a15050565b80356001600160e01b0319811681146107b157600080fd5b919050565b6000602082840312156107c857600080fd5b6107d182610799565b9392505050565b60006101e08083850312156107ec57600080fd5b83601f8401126107fb57600080fd5b60405181810181811067ffffffffffffffff8211171561082b57634e487b7160e01b600052604160045260246000fd5b60405290830190808583111561084057600080fd5b845b838110156108615761085381610799565b825260209182019101610842565b509095945050505050565b80356001600160a01b03811681146107b157600080fd5b6000806040838503121561089657600080fd5b61089f8361086c565b91506108ad6020840161086c565b90509250929050565b634e487b7160e01b600052601160045260246000fd5b600060ff821660ff81036108e2576108e26108b6565b60010192915050565b634e487b7160e01b600052603260045260246000fd5b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8203610932576109326108b6565b506001019056fea2646970667358221220a930a75e38db5048961e97f20440c515a73bc2585b7500738f53faee8d33911764736f6c63430008110033",
   "devdoc": {
-    "events": {
-      "GameCreated(address,address)": {
-        "params": {
-          "team1": "address of team 1",
-          "team2": "address of team 2"
-        }
-      },
-      "TeamReady(address)": {
-        "params": {
-          "team": "address of team 1"
-        }
-      },
-      "TurnFinished(address,bytes4,bool)": {
-        "params": {
-          "target": "target location of attempted hit",
-          "team": "address of team whose turn was taken"
-        }
-      }
-    },
+    "author": "@Da-Colon (github)",
     "kind": "dev",
-    "methods": {
-      "setTeamOnePieces(bytes4[15])": {
-        "params": {
-          "targets": "byte array of ship locations"
-        }
-      },
-      "setTeamTwoPieces(bytes4[15])": {
-        "params": {
-          "targets": "byte array of ship locations"
-        }
-      }
-    },
-    "stateVariables": {
-      "game_winner": {
-        "details": "Set to 0x0000~ while game is active. game is over when winner is set"
-      }
-    },
+    "methods": {},
     "title": "onchain battleship",
     "version": 1
   },
   "userdoc": {
-    "events": {
-      "GameCreated(address,address)": {
-        "notice": "This will be used to track which addresses are parcipating"
-      },
-      "TeamReady(address)": {
-        "notice": "This event will only event fire twice per contract, when 2 events have been fired game can begin"
-      },
-      "TurnFinished(address,bytes4,bool)": {
-        "notice": "This will keep history of moves takenThis should filtered and used by front-end to update hit/misses"
-      }
-    },
     "kind": "user",
-    "methods": {
-      "game_winner()": {
-        "notice": "This should be updated with winner when game is over"
-      },
-      "init(address,address)": {
-        "notice": "initilizes game between two addresses"
-      },
-      "setTeamOnePieces(bytes4[15])": {
-        "notice": "Sets locations for team 1 shipsTeam 1 Only | Team Pieces not already set"
-      },
-      "setTeamTwoPieces(bytes4[15])": {
-        "notice": "Sets locations for team 2 shipsTeam 2 Only | Team Pieces not already set"
-      }
-    },
+    "methods": {},
     "version": 1
   },
   "storageLayout": {
     "storage": [
       {
-        "astId": 591,
+        "astId": 573,
         "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
         "label": "game_winner",
         "offset": 0,
@@ -284,23 +207,23 @@
         "type": "t_address"
       },
       {
-        "astId": 597,
+        "astId": 579,
         "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
-        "label": "team1",
+        "label": "teamOne",
         "offset": 0,
         "slot": "1",
         "type": "t_address"
       },
       {
-        "astId": 603,
+        "astId": 585,
         "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
-        "label": "team2",
+        "label": "teamTwo",
         "offset": 0,
         "slot": "2",
         "type": "t_address"
       },
       {
-        "astId": 609,
+        "astId": 591,
         "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
         "label": "currentTurn",
         "offset": 0,
@@ -308,28 +231,28 @@
         "type": "t_address"
       },
       {
-        "astId": 622,
-        "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
-        "label": "locations",
-        "offset": 0,
-        "slot": "4",
-        "type": "t_mapping(t_address,t_mapping(t_bytes4,t_uint8))"
-      },
-      {
-        "astId": 627,
-        "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
-        "label": "teamHits",
-        "offset": 0,
-        "slot": "5",
-        "type": "t_mapping(t_address,t_struct(TeamHits)616_storage)"
-      },
-      {
-        "astId": 631,
+        "astId": 595,
         "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
         "label": "teamReady",
         "offset": 0,
-        "slot": "6",
+        "slot": "4",
         "type": "t_mapping(t_address,t_bool)"
+      },
+      {
+        "astId": 601,
+        "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
+        "label": "locations",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_mapping(t_address,t_mapping(t_bytes4,t_uint8))"
+      },
+      {
+        "astId": 606,
+        "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
+        "label": "teamHits",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_mapping(t_address,t_struct(TeamHits)613_storage)"
       }
     ],
     "types": {
@@ -362,12 +285,12 @@
         "numberOfBytes": "32",
         "value": "t_mapping(t_bytes4,t_uint8)"
       },
-      "t_mapping(t_address,t_struct(TeamHits)616_storage)": {
+      "t_mapping(t_address,t_struct(TeamHits)613_storage)": {
         "encoding": "mapping",
         "key": "t_address",
         "label": "mapping(address => struct BattleshipImpl.TeamHits)",
         "numberOfBytes": "32",
-        "value": "t_struct(TeamHits)616_storage"
+        "value": "t_struct(TeamHits)613_storage"
       },
       "t_mapping(t_bytes4,t_uint8)": {
         "encoding": "mapping",
@@ -376,12 +299,12 @@
         "numberOfBytes": "32",
         "value": "t_uint8"
       },
-      "t_struct(TeamHits)616_storage": {
+      "t_struct(TeamHits)613_storage": {
         "encoding": "inplace",
         "label": "struct BattleshipImpl.TeamHits",
         "members": [
           {
-            "astId": 611,
+            "astId": 608,
             "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
             "label": "hitCount",
             "offset": 0,
@@ -389,7 +312,7 @@
             "type": "t_uint8"
           },
           {
-            "astId": 615,
+            "astId": 612,
             "contract": "contracts/BattleshipImpl.sol:BattleshipImpl",
             "label": "targeted",
             "offset": 0,
