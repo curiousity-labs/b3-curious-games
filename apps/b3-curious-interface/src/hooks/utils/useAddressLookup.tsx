@@ -12,7 +12,7 @@ export type AddressInfo = {
   isSafe: boolean
 }
 
-const intialAddressState = {
+export const intialAddressState = {
   full: null,
   truncated: null,
   ensName: null,
