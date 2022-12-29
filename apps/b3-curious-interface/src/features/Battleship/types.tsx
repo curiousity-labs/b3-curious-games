@@ -23,3 +23,10 @@ export type NewGameFormValues = {
     teamTwo: string,
     teamTwoAddressInfo: AddressInfo
 }
+
+export type GameTeamAddress = {
+    gameAddress: string,
+    teamOneAddress: string,
+    teamTwoAddress: string,
+    winner: string,
+}

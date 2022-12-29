@@ -14,6 +14,7 @@ export function PageTitle({ title, buttons = [] }: IPageTitle) {
     <Box
       marginTop="3rem"
       marginBottom="2rem"
+      px={4}
     >
       <Flex
         w="full"

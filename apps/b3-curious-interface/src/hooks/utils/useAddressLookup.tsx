@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer } from 'react'
+import { useCallback, useEffect, useMemo, useReducer } from 'react'
 import { useProvider } from 'wagmi'
 import { addressSubString } from '../../utils/string'
 import { isAddress } from 'ethers/lib/utils.js'
@@ -47,25 +47,31 @@ export const useAddressLookup = (_address: string | undefined) => {
   const provider = useProvider()
   const { contracts } = useAppProvider()
 
+  const displayName = useMemo(() => {
+    const { truncated, ensName, registryDAOName } = addressInfo;
+    return ensName || registryDAOName || truncated || ''
+  }, [addressInfo])
+
   const lookupAddress = useCallback(async () => {
     if (!_address || !isAddress(_address) || !provider || !contracts.fractal) {
       addrDispatch({ type: AddressLookupAction.RESET })
       return
     }
-    const ensName = await provider.lookupAddress(_address).catch(() => null)
-
     const registryContract = contracts.fractal.fractalNameRegistry
-    const registryDAONameEvent = await registryContract.queryFilter(
-      registryContract.filters.FractalNameUpdated(_address),
+    const [ensName, registryDAONameEvent, contractGetCall] = await Promise.all([
+      provider.lookupAddress(_address).catch(() => null),
+      registryContract.queryFilter(
+        registryContract.filters.FractalNameUpdated(_address),
+      ),
+      contracts.fractal.gnosisSafe
+        .attach(_address)
+        .getChainId()
+        .catch(() => null) // fails if not a Safe
+    ]
     )
+
     const registryDAOName = registryDAONameEvent[0] ? registryDAONameEvent[0].args[1] : null
-
-    const contractGetCall = await contracts.fractal.gnosisSafe
-      .attach(_address)
-      .getChainId()
-      .catch(() => null) // fails if not a Safe
     const isSafe = !!contractGetCall
-
     const truncated = addressSubString(_address)
 
     addrDispatch({
@@ -84,5 +90,5 @@ export const useAddressLookup = (_address: string | undefined) => {
     lookupAddress()
   }, [lookupAddress])
 
-  return { addressInfo }
+  return { addressInfo, displayName }
 }

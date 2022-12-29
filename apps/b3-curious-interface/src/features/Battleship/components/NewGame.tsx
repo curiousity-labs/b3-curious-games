@@ -76,7 +76,7 @@ export const NewGame = () => {
   }, [contracts, contractCall, successCallback])
 
   return (
-    <Box px={4}>
+    <Box>
       <PageTitle title='New Game' />
       <Formik
         initialValues={newGameInitialValues}
