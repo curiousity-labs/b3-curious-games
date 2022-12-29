@@ -42,7 +42,7 @@ const reducer = (state: AddressInfo, action: AddressLoopupActions) => {
   }
 }
 
-export const useAddressLookup = (_address: string | undefined) => {
+export const useAddressLookup = (address?: string) => {
   const [addressInfo, addrDispatch] = useReducer(reducer, intialAddressState)
   const provider = useProvider()
   const { contracts } = useAppProvider()
@@ -52,10 +52,10 @@ export const useAddressLookup = (_address: string | undefined) => {
     return ensName || registryDAOName || truncated || ''
   }, [addressInfo])
 
-  const lookupAddress = useCallback(async () => {
+  const lookupAddress = useCallback(async (_address?: string) => {
     if (!_address || !isAddress(_address) || !provider || !contracts.fractal) {
       addrDispatch({ type: AddressLookupAction.RESET })
-      return
+      return intialAddressState;
     }
     const registryContract = contracts.fractal.fractalNameRegistry
     const [ensName, registryDAONameEvent, contractGetCall] = await Promise.all([
@@ -74,21 +74,27 @@ export const useAddressLookup = (_address: string | undefined) => {
     const isSafe = !!contractGetCall
     const truncated = addressSubString(_address)
 
+    return {
+      full: _address,
+      ensName,
+      registryDAOName,
+      truncated,
+      isSafe,
+    }
+  }, [provider, contracts.fractal])
+
+  const storeAddressInfo = useCallback(async (_address?: string) => {
     addrDispatch({
       type: AddressLookupAction.SET_ADDRESS,
-      payload: {
-        full: _address,
-        ensName,
-        registryDAOName,
-        truncated,
-        isSafe,
-      },
+      payload: await lookupAddress(_address),
     })
-  }, [provider, _address, contracts.fractal])
-
-  useEffect(() => {
-    lookupAddress()
   }, [lookupAddress])
 
-  return { addressInfo, displayName }
+  useEffect(() => {
+    if (address) {
+      storeAddressInfo(address)
+    }
+  }, [storeAddressInfo, address])
+
+  return { addressInfo, displayName, lookupAddress }
 }

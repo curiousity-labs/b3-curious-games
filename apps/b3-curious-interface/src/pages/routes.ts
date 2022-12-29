@@ -4,7 +4,7 @@ export const ROUTES = {
     relative: () => '/'
   },
   battleshipLanding: {
-    path: 'battleship/*',
+    path: 'battleship',
     relative: () => '/battleship'
   },
   battleshipNew: {
