@@ -1,22 +1,13 @@
 import { BSquare } from '../types'
 import { colLoc, rowLoc } from '../constants'
 import { useMemo } from 'react'
+import { Piece } from '../models'
 
-export function useBoard() {
-  const teamOneBoard: BSquare[][] = colLoc
+export function useBoard(shipLocations: Piece[]) {
+  const boardBase: BSquare[][] = colLoc
     .map((vPos) =>
       rowLoc.map((hPos) => {
-        const location = `${hPos}:${vPos}`
-        return {
-          location,
-        }
-      }),
-    )
-    .reverse()
-  const teamTwoBoard: BSquare[][] = colLoc
-    .map((vPos) =>
-      rowLoc.map((hPos) => {
-        const location = `${hPos}:${vPos}`
+        const location = `${hPos}${vPos}`
         return {
           location,
         }
@@ -24,23 +15,19 @@ export function useBoard() {
     )
     .reverse()
 
-  const updatedTeamOneboard = useMemo(() => {
-    // return teamOneBoard.map((col) =>
-    //   col.map((square) => {
-    //     const locatedTeamOnePiece = mockTeamOnePieces.find((ship) =>
-    //       ship.find((pos) => pos === square.location),
-    //     )
-    //     if (locatedTeamOnePiece) {
-    //       const [currentVpos] = square.location.split(':')
-    //       const isPlacedVertically = locatedTeamOnePiece.every((pos) => {
-    //         const [vPos] = pos.split(':')
-    //         return vPos === currentVpos
-    //       })
-    //       return { ...square, Piece: { ...locatedTeamOnePiece, isPlacedVertically } }
-    //     }
-    //     return square
-    //   }),
-    // )
-  }, [teamOneBoard])
-  return;
+  const board = useMemo(() => {
+    return boardBase.map((col) =>
+      col.map((square) => {
+        const locatedPiece = shipLocations.find((ship) =>
+          ship.locations.find((pos) => pos === square.location),
+        )
+        if (locatedPiece) {
+          return { ...square, Piece: locatedPiece }
+        }
+        return square
+      }),
+    )
+  }, [boardBase, shipLocations])
+
+  return { board };
 }

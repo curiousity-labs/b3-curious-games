@@ -1,22 +1,22 @@
-import { BSTeam, ShipRange } from './types';
 
 export class Piece {
   constructor(
-    public currentPos: ShipRange | null,
-    public team: { color: string },
-    public isPlacedVertically: boolean = false
+    public locations: string[],
+    public color: string,
+    public isPlacedVertically: boolean = false,
+    public isHit: boolean = false
   ) { }
 }
 
 export class AircraftCarrier extends Piece {
-  constructor(team: BSTeam, currentPos: ShipRange | null) {
+  constructor(color: string, locations: string[]) {
     super(
-      currentPos, 
-      { color: '' }
+      locations,
+      color
     )
   }
 } // length 5
-export class Battleship {} // length 4
-export class Cruiser {} // length 3
-export class Submarine {} // length 2
-export class Destroyer {} // length 1
+export class Battleship { } // length 4
+export class Cruiser { } // length 3
+export class Submarine { } // length 2
+export class Destroyer { } // length 1

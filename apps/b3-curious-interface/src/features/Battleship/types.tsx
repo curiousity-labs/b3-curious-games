@@ -8,14 +8,6 @@ export type BSquare = {
     // @note Piece = space occupied
 }
 
-export type BSTeam = {
-    color: string
-    name: string
-    isFirst: boolean
-}
-
-export type ShipRange = { starPos: string; endPos: string }
-
 
 export type NewGameFormValues = {
     teamOne: string,

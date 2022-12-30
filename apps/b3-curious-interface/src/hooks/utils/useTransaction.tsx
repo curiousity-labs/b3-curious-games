@@ -79,7 +79,6 @@ const useTransaction = () => {
         }, 2000);
       } catch (e) {
         const error = e as ProviderRpcError;
-        console.log('🚀 ~ file: useTransaction.tsx:90 ~ error', error)
         toast.dismiss(toastRef.current);
         setPending(false);
         if (error.code === 4001) {
