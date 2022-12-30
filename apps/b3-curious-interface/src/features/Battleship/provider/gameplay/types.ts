@@ -1,4 +1,4 @@
-import { BattleshipImpl } from 'b3-curious-contracts';
+import { BattleshipImpl } from 'b3-curious-contracts/typechain';
 import { AddressInfo } from './../../../../hooks/utils/useAddressLookup';
 
 export interface IBattleshipState extends BattleGame {
@@ -15,4 +15,12 @@ export type BattleGame = {
   teamTwo: AddressInfo;
   gameWinner: string;
   battleshipContract: BattleshipImpl | null;
+  turns: Turn[];
+  teamsReady: string[];
+}
+
+export type Turn = {
+  team: string;
+  position: string;
+  isSuccessful: boolean;
 }

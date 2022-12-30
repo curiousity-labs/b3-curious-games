@@ -1,8 +1,8 @@
 import { GameTeamAddress } from './../types';
 import { useAppProvider } from './../../../providers/store/context';
 import { useEffect, useCallback, useState } from 'react';
-import { GameCreatedEvent } from 'b3-curious-contracts/dist/Battleship';
-import { TypedListener } from 'b3-curious-contracts/dist/common';
+import { TypedListener } from 'b3-curious-contracts/typechain/common';
+import { GameCreatedEvent } from 'b3-curious-contracts/typechain/BattleshipFactory';
 export function useLoadGames() {
   const { contracts } = useAppProvider()
   const [games, setGames] = useState<GameTeamAddress[]>([])
@@ -19,15 +19,15 @@ export function useLoadGames() {
       const gameContract = b3Contracts.battleshipImpl.attach(_gameAddress)
       return {
         gameAddress: _gameAddress,
-        teamOneAddress: await gameContract.team1(),
-        teamTwoAddress: await gameContract.team2(),
+        teamOneAddress: await gameContract.teamOne(),
+        teamTwoAddress: await gameContract.teamTwo(),
         winner: await gameContract.game_winner()
       }
     }))
     setGames(gamesWTeamAddr)
   }, [contracts])
 
-  const newGameListener: TypedListener<GameCreatedEvent> = useCallback(async (_gameAddress: string) => {
+  const newGameListener: TypedListener<GameCreatedEvent> = useCallback(async (_gameAddress, teamOne, teamTwo) => {
     const b3Contracts = contracts.b3Curious
     if (!b3Contracts) {
       return;
@@ -35,8 +35,8 @@ export function useLoadGames() {
     const gameContract = b3Contracts.battleshipImpl.attach(_gameAddress)
     const gameInfo = {
       gameAddress: _gameAddress,
-      teamOneAddress: await gameContract.team1(),
-      teamTwoAddress: await gameContract.team2(),
+      teamOneAddress: teamOne,
+      teamTwoAddress: teamTwo,
       winner: await gameContract.game_winner()
     }
     setGames(prevGames => [...prevGames, gameInfo])

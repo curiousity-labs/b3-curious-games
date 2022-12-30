@@ -6,7 +6,7 @@ import { useLoadBattleshipGame } from './gameplay/hooks/useLoadBattleshipGame';
 export function BattleshipProvider({ component }: { component: ReactNode }) {
   const [battleshipGame, dispatch] = useReducer(reducer, battleshipInitialState)
 
-  useLoadBattleshipGame({ dispatch })
+  useLoadBattleshipGame({ battleshipGame, dispatch })
   const value = useMemo(() => ({
     battleshipGame,
     loaders: []

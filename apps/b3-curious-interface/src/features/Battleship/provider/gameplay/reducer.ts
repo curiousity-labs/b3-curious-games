@@ -9,6 +9,8 @@ export const battleshipInitialState: IBattleshipState = {
   teamTwo: intialAddressState,
   gameWinner: constants.AddressZero,
   battleshipContract: null,
+  turns: [],
+  teamsReady: [],
   actions: {
     setPieces: async () => { },
     takeTurn: async () => { }
@@ -19,7 +21,13 @@ export const battleshipInitialState: IBattleshipState = {
 export function reducer(state: IBattleshipState, action: BattleshipStateActions) {
   switch (action.type) {
     case BattleshipStateAction.SET_GAME: {
-      return { ...state, ...action.payload, isBattleshipLoaded: true }
+      return { ...state, ...action.payload }
+    }
+    case BattleshipStateAction.SET_TURNS: {
+      return { ...state, turns: action.payload }
+    }
+    case BattleshipStateAction.SET_READINESS: {
+      return { ...state, teamsReady: action.payload }
     }
     case BattleshipStateAction.Reset: {
       return state

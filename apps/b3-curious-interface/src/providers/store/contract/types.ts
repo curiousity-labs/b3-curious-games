@@ -12,7 +12,7 @@ import {
   OZLinearVoting,
   FractalUsul,
 } from '@fractal-framework/fractal-contracts'
-import { BattleshipFactory, BattleshipImpl } from 'b3-curious-contracts'
+import { BattleshipFactory, BattleshipImpl } from 'b3-curious-contracts/typechain'
 
 export interface ContractState {
   fractal: FractalContracts | null
