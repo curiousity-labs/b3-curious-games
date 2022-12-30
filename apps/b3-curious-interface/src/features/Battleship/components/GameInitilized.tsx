@@ -1,54 +1,48 @@
-import { Button, Flex, Select, Text } from '@chakra-ui/react';
-import { Formik, FormikProps } from 'formik';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Button, Flex, Select, Text } from '@chakra-ui/react'
+import { Formik, FormikProps } from 'formik'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as yup from 'yup'
-import { SetPieceFormValues } from '../types';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '../../../pages/routes';
-import { useBattleshipProvider } from '../provider/context';
-import { useBoard } from '../hooks/useBoard';
-import { Board } from './Board';
-import { ShipSelection } from './ShipSelection';
-import { rowLoc, colLoc } from '../constants';
-import { Piece } from '../models';
+import { PiecesType, SetPieceFormValues, ShipOrientation } from '../types'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../../../pages/routes'
+import { useBattleshipProvider } from '../provider/context'
+import { useBoard } from '../hooks/useBoard'
+import { Board } from './Board'
+import { ShipSelection } from './ShipSelection'
+import { rowLoc, colLoc, initialOrientation } from '../constants'
+import { Piece } from '../models'
+import { createShip } from '../../../utils/battleship'
 
 const piecesInitialValues = {
   team: '',
-  ships: [] as string[]
+  ships: [] as string[],
 }
 const schema = yup.object().shape({
   team: yup.string().required(),
-  ships: yup.array()
+  ships: yup.array(),
 })
 
 export function GameInitilized() {
-
   const handleSubmit = useCallback(async () => { }, [])
-  return (
-    <Formik
-      initialValues={piecesInitialValues}
-      validationSchema={schema}
-      onSubmit={handleSubmit}
-      component={SetPiecesForm}
-    />
-  )
+  return <Formik initialValues={piecesInitialValues} validationSchema={schema} onSubmit={handleSubmit} component={SetPiecesForm} />
 }
 
-const SetPiecesForm = ({
-  isValid,
-  handleSubmit,
-  isSubmitting,
-}: FormikProps<SetPieceFormValues>) => {
-  const { battleshipGame: { teamOne, teamTwo, teamsReady } } = useBattleshipProvider()
+const SetPiecesForm = ({ isValid, handleSubmit, isSubmitting }: FormikProps<SetPieceFormValues>) => {
+  const {
+    battleshipGame: { teamOne, teamTwo, teamsReady },
+  } = useBattleshipProvider()
   const navigate = useNavigate()
 
   const boardRef = useRef<HTMLDivElement>(null)
-  const [locId, setId] = useState('');
+  const [locId, setId] = useState('')
+  const [shipOrientation, setShipOrientation] = useState<ShipOrientation[]>(initialOrientation)
   const [shipLocations, setShipLocations] = useState<Piece[]>([])
-  const { board } = useBoard(shipLocations);
+  const [selectedShip, setSelectedShip] = useState<PiecesType>(PiecesType.None)
+
+  const { board } = useBoard(shipLocations)
 
   const options = useMemo(() => {
-    const _options = [];
+    const _options = []
     const teamOneDisplayName = teamOne.ensName || teamOne.registryDAOName || teamOne.truncated
     const teamTwoDisplayName = teamTwo.ensName || teamTwo.registryDAOName || teamTwo.truncated
 
@@ -59,12 +53,16 @@ const SetPiecesForm = ({
       _options.push({ address: teamTwo.full!, displayName: teamTwoDisplayName })
     }
     return _options
-  }, [teamsReady, teamOne, teamTwo,])
+  }, [teamsReady, teamOne, teamTwo])
 
   useEffect(() => {
     const boardRefCurrent = boardRef.current
     const setIdListener = (mouseEvent: any) => {
-      setId((mouseEvent.target as any).id);
+      const id = mouseEvent.target.id
+      if (id) {
+        const [loc,] = id.split('-')
+        setId(loc)
+      }
     }
     if (boardRefCurrent) {
       boardRefCurrent.addEventListener('mouseover', setIdListener)
@@ -77,44 +75,50 @@ const SetPiecesForm = ({
   }, [])
 
   useEffect(() => {
-    const shipSize = 5
-    const shipDirection = 'hor'
+    if (!locId) {
+      setShipLocations([])
+      return;
+    }
     const [x, y] = locId.split('')
     const rowIndex = rowLoc.findIndex((hLoc) => hLoc === x)
     const colIndex = colLoc.findIndex((vLoc) => vLoc === y)
-    if (shipSize === 5) {
-      if (shipDirection === 'hor') {
-        const shipPiecesX = rowLoc.filter((_, i) => i >= rowIndex - 2 && i !== rowIndex && i <= rowIndex + 2)
-        if (shipPiecesX.length === shipSize - 1) {
-          const shipPieces = [...shipPiecesX.map((_x) => _x + y), locId];
-          const piece = new Piece(shipPieces, 'grayscale.400', false);
+    switch (selectedShip) {
+      case PiecesType.AIRCRAFT_CARRIER: {
+        const piece = createShip({ rowIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [2, 2] })
+        if (piece) {
           setShipLocations([piece])
         }
+        break
       }
+      case PiecesType.BATTLESHIP:
+      case PiecesType.CRUISER:
+      case PiecesType.SUBMARINE:
+      case PiecesType.DESTROYER:
+      case PiecesType.None:
+        return
     }
-
-  }, [locId])
+  }, [locId, selectedShip, shipOrientation])
 
   return (
     <form onSubmit={handleSubmit}>
-      <Flex flexDirection='column' gap={4} bg="black.900-semi-transparent" p={4} rounded="xl" h="full">
+      <Flex flexDirection='column' gap={4} bg='black.900-semi-transparent' p={4} rounded='xl' h='full'>
         <Text>Select Team you are playing for</Text>
         <Text>If team is DAO, a proposal will be created to approve transaction</Text>
         <Text>Note: proposal/transaction will be reverted if not correct team executing</Text>
         <Select>
-          {options.map((option, i) => <option key={i} value={option.address}>Team: {option.displayName}</option>)}
+          {options.map((option, i) => (
+            <option key={i} value={option.address}>
+              Team: {option.displayName}
+            </option>
+          ))}
         </Select>
-        <ShipSelection />
-
-        <Board board={board} ref={boardRef} />
-
+        <Flex justifyContent='center' gap={4} flexWrap={{ sm: 'wrap', md: 'nowrap' }}>
+          <ShipSelection selectShip={setSelectedShip} selectedShip={selectedShip} shipOrientation={shipOrientation} setShipOrientation={setShipOrientation} />
+          <Board board={board} ref={boardRef} squareOnClick={() => { }} />
+        </Flex>
       </Flex>
       <Flex my={4} justifyContent='center' gap={4}>
-        <Button
-          variant='text'
-          onClick={() => navigate(ROUTES.battleshipLanding.relative())}
-          disabled={false}
-        >
+        <Button variant='text' onClick={() => navigate(ROUTES.battleshipLanding.relative())} disabled={false}>
           Prev
         </Button>
         <Button type='submit' disabled={!isValid || isSubmitting}>

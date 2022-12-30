@@ -4,8 +4,6 @@ import { Piece } from './models'
 export type BSquare = {
     location: string,
     Piece?: Piece,
-    // @note undefined = no piece
-    // @note Piece = space occupied
 }
 
 
@@ -26,4 +24,18 @@ export type GameTeamAddress = {
 export type SetPieceFormValues = {
     team: string,
     ships: string[];
+}
+
+export enum PiecesType {
+    None,
+    DESTROYER,
+    SUBMARINE,
+    CRUISER,
+    BATTLESHIP,
+    AIRCRAFT_CARRIER,
+}
+
+export enum ShipOrientation {
+    Horizontal,
+    Veritical
 }

@@ -3,7 +3,8 @@ import { BSquare } from '../types'
 import { forwardRef } from 'react'
 
 interface IBoard {
-  board: BSquare[][]
+  board: BSquare[][];
+  squareOnClick: () => void;
 }
 
 export const Board = forwardRef<HTMLDivElement, IBoard>(({ board }, ref) => {
@@ -37,15 +38,16 @@ export const Board = forwardRef<HTMLDivElement, IBoard>(({ board }, ref) => {
                 >
                   {square.Piece && (
                     <Center
+                      id={square.location + '-piece'}
                       bg='grayscale.400'
                       w={square.Piece.isPlacedVertically ? 'auto' : 'full'}
                       h={!square.Piece.isPlacedVertically ? 'auto' : 'full'}
                       p='0.5rem'
                       transform='rotate(1turn)'
                     >
-                      <Center boxSize='1rem' bg='black.400' rounded='100%'>
+                      <Center id={square.location + '-middle'} boxSize='1rem' bg='black.400' rounded='100%'>
                         {square.Piece.isHit && (
-                          <Box boxSize='0.7rem' rounded='100%' bg='alert-red.normal' />
+                          <Box id={square.location + '-hit'} boxSize='0.7rem' rounded='100%' bg='alert-red.normal' />
                         )}
                       </Center>
                     </Center>
