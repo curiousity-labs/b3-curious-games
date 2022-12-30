@@ -20,6 +20,7 @@ importers:
       '@decent-org/fractal-ui': ^0.1.6
       '@emotion/react': ^11.10.4
       '@emotion/styled': ^11.10.4
+      '@esbuild-plugins/node-globals-polyfill': ^0.1.1
       '@fractal-framework/fractal-contracts': ^0.1.13
       '@rainbow-me/rainbowkit': ^0.8.1
       '@tanstack/query-core': ^4.20.4
@@ -68,6 +69,7 @@ importers:
       '@decent-org/fractal-ui': 0.1.6_esfrlvvs52uqdysw5zco4wkcqy
       '@emotion/react': 11.10.5_3grbeiqrb6djg67fiejiqngkdi
       '@emotion/styled': 11.10.5_pwtpayi7py7ecifctvjbac33ee
+      '@esbuild-plugins/node-globals-polyfill': 0.1.1
       '@fractal-framework/fractal-contracts': 0.1.13
       '@rainbow-me/rainbowkit': 0.8.1_2y6rhj2imb4nfq7vvx7lvu45g4
       '@tanstack/query-core': 4.20.4
@@ -1793,6 +1795,12 @@ packages:
 
   /@emotion/weak-memoize/0.3.0:
     resolution: {integrity: sha512-AHPmaAx+RYfZz0eYu6Gviiagpmiyw98ySSlQvCUhVGDRtDFe4DBS0x1bSjdF3gqUDYOczB+yYvBTtEylYSdRhg==}
+    dev: false
+
+  /@esbuild-plugins/node-globals-polyfill/0.1.1:
+    resolution: {integrity: sha512-MR0oAA+mlnJWrt1RQVQ+4VYuRJW/P2YmRTv1AsplObyvuBMnPHiizUF95HHYiSsMGLhyGtWufaq2XQg6+iurBg==}
+    peerDependencies:
+      esbuild: '*'
     dev: false
 
   /@esbuild/android-arm/0.15.18:

@@ -88,7 +88,7 @@ export const NewGame = () => {
   )
 }
 
-export const NewGameForm = ({
+const NewGameForm = ({
   values,
   errors,
   isValid,

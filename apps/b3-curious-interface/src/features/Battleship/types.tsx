@@ -30,3 +30,8 @@ export type GameTeamAddress = {
     teamTwoAddress: string,
     winner: string,
 }
+
+export type SetPieceFormValues = {
+    team: string,
+    ships: string[];
+}

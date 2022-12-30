@@ -11,6 +11,7 @@
     "@decent-org/fractal-ui": "^0.1.6",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@fractal-framework/fractal-contracts": "^0.1.13",
     "@rainbow-me/rainbowkit": "^0.8.1",
     "@tanstack/query-core": "^4.20.4",
@@ -31,7 +32,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "dev": "GENERATE_SOURCEMAP=false VITE_GIT_HASH=`git rev-parse HEAD` vite",
+    "dev": "GENERATE_SOURCEMAP=false VITE_GIT_HASH=`git rev-parse HEAD` vite --host",
     "build": "vite build",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",

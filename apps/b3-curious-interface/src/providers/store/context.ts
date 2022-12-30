@@ -1,15 +1,12 @@
 import { createContext, useContext, Context } from 'react'
-import { AccountStateActions } from './account/actions'
 import { ContractStateActions } from './contract/actions'
-import { SessionStateActions } from './session/actions'
 import { ContractState } from './contract/types'
 
 export type Dispatch = (
-  action: AccountStateActions | ContractStateActions | SessionStateActions,
+  action: ContractStateActions,
 ) => void
 export interface IStoreContext {
   contracts: ContractState
-  loaders: string[] // define these
   dispatch: Dispatch
 }
 

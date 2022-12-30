@@ -1,6 +1,6 @@
 import { ContractStateAction } from './../actions';
 import { useProvider, useSigner } from 'wagmi';
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import {
   FractalModule__factory as FractalModuleInterface,
   FractalNameRegistry__factory as FractalNameRegistryInterface,
@@ -29,8 +29,8 @@ export function useContracts(dispatch: Dispatch) {
   const { data: signer } = useSigner()
   const provider = useProvider();
 
-  const load = useCallback(() => {
-    if (!provider) {
+  useEffect(() => {
+    if (!provider || !signer || !contracts.battleshipFactory) {
       return;
     }
     const signerOrProvider = signer || provider
@@ -51,7 +51,6 @@ export function useContracts(dispatch: Dispatch) {
     const moduleProxyFactory = ModuleProxyFactoryInterface.connect(contracts.zodiacModuleProxyFactory, signerOrProvider)
     const ozLinearVoting = OZLinearVotingInterface.connect(contracts.linearVotingMasterCopy, signerOrProvider)
     const fractalUsulFactory = FractalUsulInterface.connect(contracts.fractalUsulMasterCopy, signerOrProvider)
-
 
     dispatch({
       type: ContractStateAction.SET_CONTRACTS,
@@ -78,6 +77,5 @@ export function useContracts(dispatch: Dispatch) {
     })
   }, [provider, signer, contracts, dispatch])
 
-  useEffect(() => load(), [load])
   return
 }

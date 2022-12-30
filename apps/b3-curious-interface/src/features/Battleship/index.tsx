@@ -2,9 +2,10 @@ import { Box, Divider, Flex } from '@chakra-ui/react';
 import { useBattleshipProvider } from './provider/context';
 import { VersusBadge } from '../../components/layout/VersusBadge';
 import { constants } from 'ethers';
+import { GameDisplay } from './components/GameDisplay';
 
 export function Battleship() {
-  const { battleshipGame: { gameWinner, teamOne, teamTwo, turns, teamsReady } } = useBattleshipProvider()
+  const { battleshipGame: { gameWinner, teamOne, teamTwo } } = useBattleshipProvider()
   return (
     <Box>
       <Flex justifyContent="center">
@@ -17,8 +18,7 @@ export function Battleship() {
         />
       </Flex>
       <Divider />
-
-
+      <GameDisplay />
     </Box>
   )
 }

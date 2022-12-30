@@ -1,4 +1,5 @@
 import { GameState, useCheckGameState } from '../hooks/useCheckGameState'
+import { GameInitilized } from './GameInitilized'
 
 export function GameDisplay() {
   const { state } = useCheckGameState()
@@ -6,7 +7,7 @@ export function GameDisplay() {
   switch (state) {
 
     case GameState.GameInitilized:
-      return null
+      return <GameInitilized />
     case GameState.GameStart:
       return null
     case GameState.GameFinished:
