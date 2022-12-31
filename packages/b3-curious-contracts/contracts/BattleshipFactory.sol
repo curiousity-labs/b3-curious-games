@@ -13,14 +13,19 @@ contract BattleshipFactory {
     // gameId -> contract implementation
     mapping(uint => BattleshipImpl) BattleshipGames;
 
-    function deployAndChallange(address teamtwo) external {
+    modifier uniqueTeams(address teamTwo) {
+        require(msg.sender != teamTwo);
+        _;
+    }
+
+    function deployAndChallange(address teamTwo) external uniqueTeams(teamTwo) {
         BattleshipImpl newGame = BattleshipImpl(
             Clones.clone(battleshipImplAddr)
         );
-        newGame.init(msg.sender, teamtwo);
+        newGame.init(msg.sender, teamTwo);
         BattleshipGames[gameId] = newGame;
         gameId = ++gameId;
-        emit GameCreated(address(newGame), msg.sender, teamtwo);
+        emit GameCreated(address(newGame), msg.sender, teamTwo);
     }
 
     constructor(address implAddress) {

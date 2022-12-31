@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "BattleshipFactory": {
-      "address": "0x2eB328b9840C09d39a69e65D6CAe4Ae8efaDd6EF",
+      "address": "0x66a9341c93B7523f13133682d0ACC5BCaB1F79Cb",
       "abi": [
         {
           "inputs": [
@@ -45,7 +45,7 @@
           "inputs": [
             {
               "internalType": "address",
-              "name": "teamtwo",
+              "name": "teamTwo",
               "type": "address"
             }
           ],

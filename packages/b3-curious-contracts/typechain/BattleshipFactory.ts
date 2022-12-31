@@ -95,7 +95,7 @@ export interface BattleshipFactory extends BaseContract {
 
   functions: {
     deployAndChallange(
-      teamtwo: PromiseOrValue<string>,
+      teamTwo: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -103,7 +103,7 @@ export interface BattleshipFactory extends BaseContract {
   };
 
   deployAndChallange(
-    teamtwo: PromiseOrValue<string>,
+    teamTwo: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -111,7 +111,7 @@ export interface BattleshipFactory extends BaseContract {
 
   callStatic: {
     deployAndChallange(
-      teamtwo: PromiseOrValue<string>,
+      teamTwo: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -133,7 +133,7 @@ export interface BattleshipFactory extends BaseContract {
 
   estimateGas: {
     deployAndChallange(
-      teamtwo: PromiseOrValue<string>,
+      teamTwo: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -142,7 +142,7 @@ export interface BattleshipFactory extends BaseContract {
 
   populateTransaction: {
     deployAndChallange(
-      teamtwo: PromiseOrValue<string>,
+      teamTwo: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
