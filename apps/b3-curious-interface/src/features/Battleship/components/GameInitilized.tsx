@@ -15,7 +15,7 @@ import { createShip } from '../../../utils/battleship'
 
 const piecesInitialValues = {
   team: '',
-  ships: [] as string[],
+  ships: [] as Piece[],
 }
 const schema = yup.object().shape({
   team: yup.string().required(),
@@ -27,7 +27,7 @@ export function GameInitilized() {
   return <Formik initialValues={piecesInitialValues} validationSchema={schema} onSubmit={handleSubmit} component={SetPiecesForm} />
 }
 
-const SetPiecesForm = ({ isValid, handleSubmit, isSubmitting }: FormikProps<SetPieceFormValues>) => {
+const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldValue }: FormikProps<SetPieceFormValues>) => {
   const {
     battleshipGame: { teamOne, teamTwo, teamsReady },
   } = useBattleshipProvider()
@@ -39,7 +39,7 @@ const SetPiecesForm = ({ isValid, handleSubmit, isSubmitting }: FormikProps<SetP
   const [shipLocations, setShipLocations] = useState<Piece[]>([])
   const [selectedShip, setSelectedShip] = useState<PiecesType>(PiecesType.None)
 
-  const { board } = useBoard(shipLocations)
+  const { board } = useBoard({ ships: values.ships, shipLocations })
 
   const options = useMemo(() => {
     const _options = []
@@ -60,7 +60,7 @@ const SetPiecesForm = ({ isValid, handleSubmit, isSubmitting }: FormikProps<SetP
     const setIdListener = (mouseEvent: any) => {
       const id = mouseEvent.target.id
       if (id) {
-        const [loc,] = id.split('-')
+        const [loc] = id.split('-')
         setId(loc)
       }
     }
@@ -76,10 +76,14 @@ const SetPiecesForm = ({ isValid, handleSubmit, isSubmitting }: FormikProps<SetP
     }
   }, [])
 
+  const setShips = (ships: Piece[]) => {
+    setSelectedShip(PiecesType.None)
+    setFieldValue('ships', ships)
+  }
+
   useEffect(() => {
     if (!locId) {
       setShipLocations([])
-      return;
     }
     const [x, y] = locId.split('')
     const rowIndex = rowLoc.findIndex((hLoc) => hLoc === x)
@@ -115,8 +119,8 @@ const SetPiecesForm = ({ isValid, handleSubmit, isSubmitting }: FormikProps<SetP
           ))}
         </Select>
         <Flex justifyContent='center' gap={4} flexWrap={{ sm: 'wrap', md: 'nowrap' }}>
-          <ShipSelection selectShip={setSelectedShip} selectedShip={selectedShip} shipOrientation={shipOrientation} setShipOrientation={setShipOrientation} />
-          <Board board={board} ref={boardRef} squareOnClick={() => { }} />
+          <ShipSelection selectShip={setSelectedShip} ships={values.ships} selectedShip={selectedShip} shipOrientation={shipOrientation} setShipOrientation={setShipOrientation} />
+          <Board board={board} ref={boardRef} ships={values.ships} squareOnClick={setShips} />
         </Flex>
       </Flex>
       <Flex my={4} justifyContent='center' gap={4}>

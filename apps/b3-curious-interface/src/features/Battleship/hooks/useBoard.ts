@@ -3,7 +3,12 @@ import { colLoc, rowLoc } from '../constants'
 import { useMemo } from 'react'
 import { Piece } from '../models'
 
-export function useBoard(shipLocations: Piece[]) {
+interface IUseBoard {
+  ships: Piece[]
+  shipLocations: Piece[]
+}
+
+export function useBoard({ ships, shipLocations }: IUseBoard) {
   const boardBase: BSquare[][] = colLoc
     .map((vPos) =>
       rowLoc.map((hPos) => {
@@ -21,13 +26,16 @@ export function useBoard(shipLocations: Piece[]) {
         const locatedPiece = shipLocations.find((ship) =>
           ship.locations.find((pos) => pos === square.location),
         )
-        if (locatedPiece) {
-          return { ...square, Piece: locatedPiece }
+        const locatedSetPiece = ships.find((ship) =>
+          ship.locations.find((pos) => pos === square.location),
+        )
+        if (locatedSetPiece || locatedPiece) {
+          return { ...square, Piece: locatedSetPiece || locatedPiece }
         }
         return square
       }),
     )
-  }, [boardBase, shipLocations])
+  }, [boardBase, shipLocations, ships])
 
   return { board };
 }

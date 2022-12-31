@@ -1,13 +1,15 @@
 import { HStack, Center, Box } from '@chakra-ui/react'
 import { BSquare } from '../types'
 import { forwardRef } from 'react'
+import { Piece } from '../models';
 
 interface IBoard {
   board: BSquare[][];
-  squareOnClick: () => void;
+  ships: Piece[];
+  squareOnClick: ([args]: any) => void;
 }
 
-export const Board = forwardRef<HTMLDivElement, IBoard>(({ board }, ref) => {
+export const Board = forwardRef<HTMLDivElement, IBoard>(({ board, ships, squareOnClick }, ref) => {
   return (
     <Box w='fit-content' ref={ref}>
       {board.map((row, i) => {
@@ -25,6 +27,7 @@ export const Board = forwardRef<HTMLDivElement, IBoard>(({ board }, ref) => {
                   borderColor='blue.900'
                   w={12}
                   h={12}
+                  onClick={() => squareOnClick([...ships, square.Piece])}
                   sx={{
                     '&': {
                       WebkitMarginStart: '0px !important',

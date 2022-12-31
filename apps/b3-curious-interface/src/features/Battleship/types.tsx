@@ -23,7 +23,7 @@ export type GameTeamAddress = {
 
 export type SetPieceFormValues = {
     team: string,
-    ships: string[];
+    ships: Piece[];
 }
 
 export enum PiecesType {
