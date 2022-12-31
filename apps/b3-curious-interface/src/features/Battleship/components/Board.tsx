@@ -27,7 +27,11 @@ export const Board = forwardRef<HTMLDivElement, IBoard>(({ board, ships, squareO
                   borderColor='blue.900'
                   w={12}
                   h={12}
-                  onClick={() => squareOnClick([...ships, square.Piece])}
+                  onClick={() => {
+                    if (square.Piece) {
+                      squareOnClick([...ships, square.Piece])
+                    }
+                  }}
                   sx={{
                     '&': {
                       WebkitMarginStart: '0px !important',

@@ -19,20 +19,24 @@ const piecesInitialValues = {
 }
 const schema = yup.object().shape({
   team: yup.string().required(),
-  ships: yup.array(),
+  ships: yup.array().required().test(
+    'name',
+    (ships: Piece[] | undefined) => !!ships && !!ships.length && ships.sort((a, b) => a.locations.length - b.locations.length).every((ship, i) => {
+      return !!ship.locations.length && ship.locations.length === i + 1
+    })
+  ),
 })
 
 export function GameInitilized() {
   const handleSubmit = useCallback(async () => { }, [])
-  return <Formik initialValues={piecesInitialValues} validationSchema={schema} onSubmit={handleSubmit} component={SetPiecesForm} />
+  return <Formik initialValues={piecesInitialValues} validationSchema={schema} onSubmit={handleSubmit} component={SetPiecesForm} validateOnMount />
 }
 
-const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldValue }: FormikProps<SetPieceFormValues>) => {
+const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldValue, handleChange }: FormikProps<SetPieceFormValues>) => {
   const {
     battleshipGame: { teamOne, teamTwo, teamsReady },
   } = useBattleshipProvider()
   const navigate = useNavigate()
-
   const boardRef = useRef<HTMLDivElement>(null)
   const [locId, setId] = useState('')
   const [shipOrientation, setShipOrientation] = useState<ShipOrientation[]>(initialOrientation)
@@ -45,12 +49,14 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
     const _options = []
     const teamOneDisplayName = teamOne.ensName || teamOne.registryDAOName || teamOne.truncated
     const teamTwoDisplayName = teamTwo.ensName || teamTwo.registryDAOName || teamTwo.truncated
+    if (teamOne.full) {
 
-    if (!teamsReady.includes(teamOne.full || '')) {
-      _options.push({ address: teamOne.full!, displayName: teamOneDisplayName })
-    }
-    if (!teamsReady.includes(teamTwo.full || '')) {
-      _options.push({ address: teamTwo.full!, displayName: teamTwoDisplayName })
+      if (!teamsReady.includes(teamOne.full || '')) {
+        _options.push({ address: teamOne.full!, displayName: teamOneDisplayName })
+      }
+      if (!teamsReady.includes(teamTwo.full || '')) {
+        _options.push({ address: teamTwo.full!, displayName: teamTwoDisplayName })
+      }
     }
     return _options
   }, [teamsReady, teamOne, teamTwo])
@@ -125,7 +131,8 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
         <Text>Select Team you are playing for</Text>
         <Text>If team is DAO, a proposal will be created to approve transaction</Text>
         <Text>Note: proposal/transaction will be reverted if not correct team executing</Text>
-        <Select>
+        <Select name='team' value={values.team} onChange={handleChange}>
+          <option value="" disabled>Select Team</option>
           {options.map((option, i) => (
             <option key={i} value={option.address}>
               Team: {option.displayName}
