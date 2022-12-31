@@ -90,44 +90,34 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
     const colIndex = colLoc.findIndex((vLoc) => vLoc === y)
     switch (selectedShip) {
       case PiecesType.AIRCRAFT_CARRIER: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [2, 2] })
-        if (piece) {
-          setShipLocations([piece])
-        }
+        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [2, 2], ships: values.ships })
+        setShipLocations(piece ? [piece] : [])
         break
       }
       case PiecesType.BATTLESHIP: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 2] })
-        if (piece) {
-          setShipLocations([piece])
-        }
+        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 2], ships: values.ships })
+        setShipLocations(piece ? [piece] : [])
         break
       }
       case PiecesType.CRUISER: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 1] })
-        if (piece) {
-          setShipLocations([piece])
-        }
+        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 1], ships: values.ships })
+        setShipLocations(piece ? [piece] : [])
         break
       }
       case PiecesType.SUBMARINE: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 0] })
-        if (piece) {
-          setShipLocations([piece])
-        }
+        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 0], ships: values.ships })
+        setShipLocations(piece ? [piece] : [])
         break
       }
       case PiecesType.DESTROYER: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [0, 0] })
-        if (piece) {
-          setShipLocations([piece])
-        }
+        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [0, 0], ships: values.ships })
+        setShipLocations(piece ? [piece] : [])
         break
       }
       case PiecesType.None:
         return
     }
-  }, [locId, selectedShip, shipOrientation])
+  }, [locId, selectedShip, shipOrientation, values.ships])
 
   return (
     <form onSubmit={handleSubmit}>

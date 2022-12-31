@@ -2,7 +2,7 @@ import { ShipOrientation } from './../features/Battleship/types';
 import { rowLoc, colLoc } from '../features/Battleship/constants';
 import { Piece } from '../features/Battleship/models';
 
-export function createVerticalShip(colIndex: number, pos: string[], shipSize: number, shipMousePiecePos: string, piecePartsEnds: number[]) {
+export function createVerticalShip(colIndex: number, pos: string[], shipSize: number, shipMousePiecePos: string, piecePartsEnds: number[], ships: Piece[]) {
   const shipPiecesSides = colLoc.filter((_, i) => {
     const isPieceBefore = i >= colIndex - piecePartsEnds[0]
     const isNotPiece = i !== colIndex
@@ -11,11 +11,15 @@ export function createVerticalShip(colIndex: number, pos: string[], shipSize: nu
   })
   if (shipPiecesSides.length === shipSize - 1) {
     const shipPieces = [...shipPiecesSides.map((_y) => pos[0] + _y), shipMousePiecePos];
-    const piece = new Piece(shipPieces, 'grayscale.400', true);
-    return piece;
+    const setPiecesLocations = ships.map((ship) => ship.locations).flat()
+    const isOverlapping = shipPieces.some(loc => setPiecesLocations.includes(loc))
+    if (!isOverlapping) {
+      const piece = new Piece(shipPieces, 'grayscale.400', true);
+      return piece;
+    }
   }
 }
-export function createHorizontalShip(rowIndex: number, pos: string[], shipSize: number, shipMousePiecePos: string, piecePartsEnds: number[]) {
+export function createHorizontalShip(rowIndex: number, pos: string[], shipSize: number, shipMousePiecePos: string, piecePartsEnds: number[], ships: Piece[]) {
   const shipPiecesSides = rowLoc.filter((_, i) => {
     const isPieceBefore = i >= rowIndex - piecePartsEnds[0]
     const isNotPiece = i !== rowIndex
@@ -24,8 +28,13 @@ export function createHorizontalShip(rowIndex: number, pos: string[], shipSize: 
   })
   if (shipPiecesSides.length === shipSize - 1) {
     const shipPieces = [...shipPiecesSides.map((_x) => _x + pos[1]), shipMousePiecePos];
-    const piece = new Piece(shipPieces, 'grayscale.400', false);
-    return piece;
+
+    const setPiecesLocations = ships.map((ship) => ship.locations).flat()
+    const isOverlapping = shipPieces.some(loc => setPiecesLocations.includes(loc))
+    if (!isOverlapping) {
+      const piece = new Piece(shipPieces, 'grayscale.400', false);
+      return piece;
+    }
   }
 }
 
@@ -37,12 +46,13 @@ export type CreateShipParams = {
   shipSize: number,
   shipOrientation: ShipOrientation[],
   shipMousePiecePos: string,
+  ships: Piece[]
 }
 
-export function createShip({ rowIndex, colIndex, pos, shipSize, shipMousePiecePos, shipOrientation, piecePartsEnds }: CreateShipParams) {
+export function createShip({ rowIndex, colIndex, pos, shipSize, shipMousePiecePos, shipOrientation, piecePartsEnds, ships }: CreateShipParams) {
   if (shipOrientation[shipSize] === ShipOrientation.Horizontal) {
-    return createHorizontalShip(rowIndex, pos, shipSize, shipMousePiecePos, piecePartsEnds)
+    return createHorizontalShip(rowIndex, pos, shipSize, shipMousePiecePos, piecePartsEnds, ships)
   } else {
-    return createVerticalShip(colIndex, pos, shipSize, shipMousePiecePos, piecePartsEnds);
+    return createVerticalShip(colIndex, pos, shipSize, shipMousePiecePos, piecePartsEnds, ships);
   }
 }
