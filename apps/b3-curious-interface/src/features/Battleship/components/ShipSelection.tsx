@@ -46,7 +46,7 @@ export function ShipSelection({ ships, selectShip, selectedShip, shipOrientation
               borderColor={selectedShip === pieceSize ? 'gold.500' : 'chocolate.100'}
               p={4}
               _hover={{
-                borderColor: 'chocolate.300'
+                borderColor: selectedShip === pieceSize ? 'gold.500' : 'chocolate.300'
               }}
               boxSize="11rem"
               cursor={isPieceSet ? 'defai;t' : 'cursor'}
@@ -54,7 +54,11 @@ export function ShipSelection({ ships, selectShip, selectedShip, shipOrientation
               justifyContent='center'
               gap='0.1rem'
               position="relative"
-              onClick={() => isPieceSet ? selectShip(pieceSize) : {}}
+              onClick={() => {
+                if (!isPieceSet) {
+                  selectShip(pieceSize)
+                }
+              }}
             >
               {new Array(pieceSize).fill(0).map((_, i) => (
                 <ShipPiece key={i} />

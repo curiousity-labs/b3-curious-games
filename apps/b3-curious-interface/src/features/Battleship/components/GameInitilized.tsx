@@ -96,10 +96,34 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
         }
         break
       }
-      case PiecesType.BATTLESHIP:
-      case PiecesType.CRUISER:
-      case PiecesType.SUBMARINE:
-      case PiecesType.DESTROYER:
+      case PiecesType.BATTLESHIP: {
+        const piece = createShip({ rowIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 2] })
+        if (piece) {
+          setShipLocations([piece])
+        }
+        break
+      }
+      case PiecesType.CRUISER: {
+        const piece = createShip({ rowIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 1] })
+        if (piece) {
+          setShipLocations([piece])
+        }
+        break
+      }
+      case PiecesType.SUBMARINE: {
+        const piece = createShip({ rowIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 0] })
+        if (piece) {
+          setShipLocations([piece])
+        }
+        break
+      }
+      case PiecesType.DESTROYER: {
+        const piece = createShip({ rowIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [0, 0] })
+        if (piece) {
+          setShipLocations([piece])
+        }
+        break
+      }
       case PiecesType.None:
         return
     }
