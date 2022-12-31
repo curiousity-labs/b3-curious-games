@@ -10,7 +10,7 @@ export const battleshipInitialState: IBattleshipState = {
   gameWinner: constants.AddressZero,
   battleshipContract: null,
   turns: [],
-  teamsReady: [],
+  readyEvents: [],
   actions: {
     setPieces: async () => { },
     takeTurn: async () => { }

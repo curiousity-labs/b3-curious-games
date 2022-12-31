@@ -6,7 +6,7 @@ pragma solidity ^0.8.17;
  * @author @Da-Colon (github)
  */
 contract BattleshipImpl {
-    event TeamReady(uint teamNumber);
+    event TeamReady(address team);
     event TurnFinished(address team, bytes4 target, bool isSuccessful);
     event GameFinished(address winner);
 
@@ -45,28 +45,27 @@ contract BattleshipImpl {
 
     function checkAndSetPieces(
         bytes4[15] memory targets,
-        address team,
-        uint8 teamNumber
+        address team
     ) private {
         for (uint256 i; i < targets.length; i++) {
             locations[team][targets[i]] = 1;
         }
         teamReady[team] = true;
-        emit TeamReady(teamNumber);
+        emit TeamReady(team);
     }
 
     function setTeamOnePieces(
         bytes4[15] memory targets
     ) external piecesSet(false) {
         require(msg.sender == teamOne, "Team One Only");
-        checkAndSetPieces(targets, msg.sender, 1);
+        checkAndSetPieces(targets, msg.sender);
     }
 
     function setTeamTwoPieces(
         bytes4[15] memory targets
     ) external piecesSet(false) {
         require(msg.sender == teamTwo, "Team Two Only");
-        checkAndSetPieces(targets, msg.sender, 2);
+        checkAndSetPieces(targets, msg.sender);
     }
 
     function targetSpot(bytes4 target, address defTeam) private gameOver {

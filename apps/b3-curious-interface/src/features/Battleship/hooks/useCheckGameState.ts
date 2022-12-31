@@ -12,7 +12,7 @@ export enum GameState {
 export function useCheckGameState() {
   const [state, setState] = useState<GameState>(GameState.None)
   const {
-    battleshipGame: { gameWinner, gameAddress, teamsReady },
+    battleshipGame: { gameWinner, gameAddress, readyEvents },
   } = useBattleshipProvider()
 
   useEffect(() => {
@@ -28,15 +28,15 @@ export function useCheckGameState() {
       return;
     }
     // Team pieces not set
-    if (teamsReady.length < 2) {
+    if (readyEvents.length < 2) {
       setState(GameState.GameInitilized)
       return
     }
     // Game is ongoing
-    if (teamsReady.length == 2) {
+    if (readyEvents.length == 2) {
       setState(GameState.GameStart);
     }
-  }, [gameWinner, gameAddress, teamsReady])
+  }, [gameWinner, gameAddress, readyEvents])
 
   return { state }
 }

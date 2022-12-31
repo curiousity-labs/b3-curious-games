@@ -1,4 +1,3 @@
-import { TurnFinishedEvent, TeamReadyEvent } from './../../../../../../../../packages/b3-curious-contracts/typechain/Battleship';
 import { BattleshipStateAction } from './../actions';
 import { useAddressLookup } from './../../../../../hooks/utils/useAddressLookup';
 import { useAppProvider } from './../../../../../providers/store/context';
@@ -6,6 +5,7 @@ import { useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { TypedListener } from 'b3-curious-contracts/typechain/common';
 import { BattleGame } from '../types';
+import { TurnFinishedEvent, TeamReadyEvent } from 'b3-curious-contracts/typechain/Battleship';
 
 interface IUseBattleshipGame {
   battleshipGame: BattleGame
@@ -48,7 +48,7 @@ export function useLoadBattleshipGame({ battleshipGame, dispatch }: IUseBattlesh
         teamTwo: teamTwoAddressInfo,
         gameWinner: winner,
         battleshipContract: null,
-        readyEvents,
+        readyEvents: readyEvents.map(event => event.args[0]),
         turns
       }
     })
@@ -73,11 +73,12 @@ export function useLoadBattleshipGame({ battleshipGame, dispatch }: IUseBattlesh
   }, [contracts, params.gameAddress, turnListener])
 
   const readyListener: TypedListener<TeamReadyEvent> = useCallback((team: string) => {
+    console.log('🚀 ~ file: useLoadBattleshipGame.ts:76 ~ team', team)
     dispatch({
       type: BattleshipStateAction.SET_READINESS,
-      payload: [...battleshipGame.teamsReady, team]
+      payload: [...battleshipGame.readyEvents, team]
     })
-  }, [battleshipGame.teamsReady, dispatch])
+  }, [battleshipGame.readyEvents, dispatch])
 
   useEffect(() => {
     const b3Contracts = contracts.b3Curious

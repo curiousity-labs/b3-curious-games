@@ -16,7 +16,7 @@ export type BattleGame = {
   gameWinner: string;
   battleshipContract: BattleshipImpl | null;
   turns: Turn[];
-  teamsReady: string[];
+  readyEvents: string[];
 }
 
 export type Turn = {

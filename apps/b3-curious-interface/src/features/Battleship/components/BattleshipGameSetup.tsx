@@ -1,5 +1,5 @@
 import { Button, Flex, Select, Text } from '@chakra-ui/react'
-import { Formik, FormikProps } from 'formik'
+import { Formik, FormikProps, FormikHelpers } from 'formik'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as yup from 'yup'
 import { PiecesType, SetPieceFormValues, ShipOrientation } from '../types'
@@ -12,13 +12,17 @@ import { ShipSelection } from './ShipSelection'
 import { rowLoc, colLoc, initialOrientation } from '../constants'
 import { Piece } from '../models'
 import { createShip } from '../../../utils/battleship'
+import { useAppProvider } from '../../../providers/store/context'
+import { useTransaction } from '../../../hooks/utils/useTransaction'
+import { formatMappedStrs } from '../../../utils/data'
+import { toast } from 'react-toastify'
 
 const piecesInitialValues = {
   team: '',
   ships: [] as Piece[],
 }
 const schema = yup.object().shape({
-  team: yup.string().required(),
+  team: yup.number().required(),
   ships: yup
     .array()
     .required()
@@ -36,7 +40,56 @@ const schema = yup.object().shape({
 })
 
 export function BattleshipGameSetup() {
-  const handleSubmit = useCallback(async () => { }, [])
+  const {
+    contracts: { b3Curious },
+  } = useAppProvider()
+
+  const { battleshipGame: { gameAddress, teamOne, teamTwo } } = useBattleshipProvider()
+
+  const [contractCall] = useTransaction()
+
+
+  const handleSubmit = useCallback(async (values: SetPieceFormValues, actions: FormikHelpers<SetPieceFormValues>) => {
+    const successCallback = () => {
+      actions.resetForm()
+      toast('Pieces Set! The match will begin when both teams pieces have been set')
+    }
+
+    if (!b3Curious || !teamOne.full || !teamOne.full) {
+      return;
+    }
+
+    // is Usul; create usul proposal
+
+    // is Multisig; create multisig proposal
+
+    // is Usul (w/guard)l create proposal through guard?
+
+    // is Multisig (w/guard) create proposal through guard?
+
+    // @note if not supported Safe, creates game using connected account
+    const battleshipImpl = b3Curious.battleshipImpl.attach(gameAddress)
+    let setFunction: any
+    if (values.team === teamOne.full) {
+      console.log('HERE')
+      setFunction = battleshipImpl.setTeamOnePieces
+    }
+    if (values.team === teamTwo.full) {
+      setFunction = battleshipImpl.setTeamTwoPieces
+    }
+    const shipMapping = values.ships.map((ship) => ship.locations)
+    const pieces = formatMappedStrs(shipMapping).flat();
+
+    contractCall({
+      contractFn: async () => setFunction(pieces),
+      successMessage: 'We did it!',
+      successCallback,
+      failedMessage: 'You failed',
+      pendingMessage: 'Setting team pieces...',
+    })
+
+  }, [b3Curious, contractCall, gameAddress, teamOne, teamTwo])
+
   return <Formik initialValues={piecesInitialValues} validationSchema={schema} onSubmit={handleSubmit} component={SetPiecesForm} validateOnMount />
 }
 
@@ -50,7 +103,7 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
   const navigate = useNavigate()
 
   const {
-    battleshipGame: { teamOne, teamTwo, teamsReady },
+    battleshipGame: { teamOne, teamTwo, readyEvents },
   } = useBattleshipProvider()
 
   const { board } = useBoard({ ships: values.ships, shipLocations })
@@ -64,16 +117,16 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
     const _options = []
     const teamOneDisplayName = teamOne.ensName || teamOne.registryDAOName || teamOne.truncated
     const teamTwoDisplayName = teamTwo.ensName || teamTwo.registryDAOName || teamTwo.truncated
-    if (teamOne.full) {
-      if (!teamsReady.includes(teamOne.full || '')) {
-        _options.push({ address: teamOne.full!, displayName: teamOneDisplayName })
+    if (teamOne.full && teamTwo.full) {
+      if (!readyEvents.includes(teamOne.full)) {
+        _options.push({ team: teamOne.full, displayName: '1: ' + teamOneDisplayName! })
       }
-      if (!teamsReady.includes(teamTwo.full || '')) {
-        _options.push({ address: teamTwo.full!, displayName: teamTwoDisplayName })
+      if (!readyEvents.includes(teamTwo.full)) {
+        _options.push({ team: teamTwo.full, displayName: '2: ' + teamTwoDisplayName! })
       }
     }
     return _options
-  }, [teamsReady, teamOne, teamTwo])
+  }, [readyEvents, teamOne, teamTwo])
 
   useEffect(() => {
     const boardRefCurrent = boardRef.current
@@ -185,8 +238,8 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
             Select Team
           </option>
           {options.map((option, i) => (
-            <option key={i} value={option.address}>
-              Team: {option.displayName}
+            <option key={i} value={option.team}>
+              Team {option.displayName}
             </option>
           ))}
         </Select>

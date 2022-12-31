@@ -43,7 +43,7 @@ export const BattleshipNewGame = () => {
   const successCallback = useCallback((txReceipt: ContractReceipt) => {
     // should navigate to game page
     if (txReceipt.events) {
-      navigate(ROUTES.battleshipGame.relative(txReceipt.events[0].address))
+      navigate(ROUTES.battleshipGame.relative(txReceipt.events[0].args?.[0]))
     }
   }, [navigate])
 

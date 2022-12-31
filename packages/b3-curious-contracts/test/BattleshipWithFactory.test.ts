@@ -13,7 +13,6 @@ import {
 } from "./helpers/data/battleship"
 import { BattleshipFactory, BattleshipFactory__factory, BattleshipImpl__factory } from "../typechain"
 import { BattleshipImpl } from "../typechain/BattleshipImpl"
-import { BigNumber } from "ethers"
 
 describe("BattleshipImpl | As Clone", () => {
   let battleshipFactory: BattleshipFactory
@@ -51,15 +50,16 @@ describe("BattleshipImpl | As Clone", () => {
     it("Set team 1 pieces", async () => {
       await expect(await battleshipContractSignerOne.setTeamOnePieces(shipLocationsOneBytes))
         .to.emit(battleshipContractSignerOne, "TeamReady")
-        .withArgs(BigNumber.from(1))
+        .withArgs(account1.address)
     })
 
     it("Set team 2 pieces", async () => {
       await expect(battleshipContractSignerTwo.setTeamTwoPieces(shipLocationsTwoBytes))
         .to.emit(battleshipContractSignerTwo, "TeamReady")
-        .withArgs(BigNumber.from(2))
+        .withArgs(account2.address)
     })
 
+    // it("Should be ready to play", async () => {})
   })
 
   describe("Setup | REVERT", async () => {
