@@ -1,9 +1,19 @@
 import { ShipOrientation } from './../features/Battleship/types';
-import { rowLoc } from '../features/Battleship/constants';
+import { rowLoc, colLoc } from '../features/Battleship/constants';
 import { Piece } from '../features/Battleship/models';
 
-export function createVerticalShip(rowIndex: number, pos: string[], shipSize: number, shipMousePiecePos: string, piecePartsEnds: number[]) {
-  return;
+export function createVerticalShip(colIndex: number, pos: string[], shipSize: number, shipMousePiecePos: string, piecePartsEnds: number[]) {
+  const shipPiecesSides = colLoc.filter((_, i) => {
+    const isPieceBefore = i >= colIndex - piecePartsEnds[0]
+    const isNotPiece = i !== colIndex
+    const isPieceAfter = i <= colIndex + piecePartsEnds[1]
+    return isPieceBefore && isNotPiece && isPieceAfter
+  })
+  if (shipPiecesSides.length === shipSize - 1) {
+    const shipPieces = [...shipPiecesSides.map((_y) => pos[0] + _y), shipMousePiecePos];
+    const piece = new Piece(shipPieces, 'grayscale.400', true);
+    return piece;
+  }
 }
 export function createHorizontalShip(rowIndex: number, pos: string[], shipSize: number, shipMousePiecePos: string, piecePartsEnds: number[]) {
   const shipPiecesSides = rowLoc.filter((_, i) => {
@@ -21,6 +31,7 @@ export function createHorizontalShip(rowIndex: number, pos: string[], shipSize: 
 
 export type CreateShipParams = {
   rowIndex: number,
+  colIndex: number,
   pos: string[], // [x, y]
   piecePartsEnds: number[] // [leftside, rightside] + main === shipPiece count
   shipSize: number,
@@ -28,10 +39,10 @@ export type CreateShipParams = {
   shipMousePiecePos: string,
 }
 
-export function createShip({ rowIndex, pos, shipSize, shipMousePiecePos, shipOrientation, piecePartsEnds }: CreateShipParams) {
+export function createShip({ rowIndex, colIndex, pos, shipSize, shipMousePiecePos, shipOrientation, piecePartsEnds }: CreateShipParams) {
   if (shipOrientation[shipSize] === ShipOrientation.Horizontal) {
     return createHorizontalShip(rowIndex, pos, shipSize, shipMousePiecePos, piecePartsEnds)
   } else {
-    return createVerticalShip(rowIndex, pos, shipSize, shipMousePiecePos, piecePartsEnds);
+    return createVerticalShip(colIndex, pos, shipSize, shipMousePiecePos, piecePartsEnds);
   }
 }
