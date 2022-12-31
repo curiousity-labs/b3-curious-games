@@ -93,7 +93,7 @@ export interface BattleshipInterface extends utils.Interface {
 
   events: {
     "GameFinished(address)": EventFragment;
-    "TeamReady(address)": EventFragment;
+    "TeamReady(uint8)": EventFragment;
     "TurnFinished(address,bytes4,bool)": EventFragment;
   };
 
@@ -110,9 +110,9 @@ export type GameFinishedEvent = TypedEvent<[string], GameFinishedEventObject>;
 export type GameFinishedEventFilter = TypedEventFilter<GameFinishedEvent>;
 
 export interface TeamReadyEventObject {
-  team: string;
+  teamNumber: number;
 }
-export type TeamReadyEvent = TypedEvent<[string], TeamReadyEventObject>;
+export type TeamReadyEvent = TypedEvent<[number], TeamReadyEventObject>;
 
 export type TeamReadyEventFilter = TypedEventFilter<TeamReadyEvent>;
 
@@ -231,8 +231,8 @@ export interface Battleship extends BaseContract {
     "GameFinished(address)"(winner?: null): GameFinishedEventFilter;
     GameFinished(winner?: null): GameFinishedEventFilter;
 
-    "TeamReady(address)"(team?: null): TeamReadyEventFilter;
-    TeamReady(team?: null): TeamReadyEventFilter;
+    "TeamReady(uint8)"(teamNumber?: null): TeamReadyEventFilter;
+    TeamReady(teamNumber?: null): TeamReadyEventFilter;
 
     "TurnFinished(address,bytes4,bool)"(
       team?: null,

@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "BattleshipFactory": {
-      "address": "0xbF36222148dF3ef995182562a370A3e9C126aeD8",
+      "address": "0x2eB328b9840C09d39a69e65D6CAe4Ae8efaDd6EF",
       "abi": [
         {
           "inputs": [
@@ -70,7 +70,7 @@
       ]
     },
     "BattleshipImpl": {
-      "address": "0x163F40b14D0034D88cA58a669F8dab366F76d7b5",
+      "address": "0x0f4B62eF8A3837b177001383FD6eEAD447DFc1F6",
       "abi": [
         {
           "anonymous": false,
@@ -90,9 +90,9 @@
           "inputs": [
             {
               "indexed": false,
-              "internalType": "address",
-              "name": "team",
-              "type": "address"
+              "internalType": "uint256",
+              "name": "teamNumber",
+              "type": "uint256"
             }
           ],
           "name": "TeamReady",

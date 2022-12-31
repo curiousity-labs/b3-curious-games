@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers';
 import { ethers } from "hardhat"
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 import { expect } from "chai"
@@ -45,16 +46,15 @@ describe("Battleship", () => {
     it("Set team 1 pieces", async () => {
       await expect(await battleshipContractSignerOne.setTeamOnePieces(shipLocationsOneBytes))
         .to.emit(battleshipContractSignerOne, "TeamReady")
-        .withArgs(account1.address)
+        .withArgs(BigNumber.from(1))
     })
 
     it("Set team 2 pieces", async () => {
       await expect(battleshipContractSignerTwo.setTeamTwoPieces(shipLocationsTwoBytes))
         .to.emit(battleshipContractSignerTwo, "TeamReady")
-        .withArgs(account2.address)
+        .withArgs(BigNumber.from(2))
     })
 
-    // it("Should be ready to play", async () => {})
   })
 
   describe("Setup | REVERT", async () => {

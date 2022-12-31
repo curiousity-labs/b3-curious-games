@@ -5,7 +5,7 @@ pragma solidity ^0.8.17;
  * @title onchain battleship
  */
 contract Battleship {
-    event TeamReady(address team);
+    event TeamReady(uint8 teamNumber);
     event TurnFinished(address team, bytes4 target, bool isSuccessful);
     event GameFinished(address winner);
 
@@ -44,27 +44,28 @@ contract Battleship {
 
     function checkAndSetPieces(
         bytes4[15] memory targets,
-        address team
+        address team,
+        uint8 teamNumber
     ) private {
         for (uint256 i; i < targets.length; i++) {
             locations[team][targets[i]] = 1;
         }
         teamReady[team] = true;
-        emit TeamReady(team);
+        emit TeamReady(teamNumber);
     }
 
     function setTeamOnePieces(
         bytes4[15] memory targets
     ) external piecesSet(false) {
         require(msg.sender == teamOne, "Team One Only");
-        checkAndSetPieces(targets, msg.sender);
+        checkAndSetPieces(targets, msg.sender, 1);
     }
 
     function setTeamTwoPieces(
         bytes4[15] memory targets
     ) external piecesSet(false) {
         require(msg.sender == teamTwo, "Team Two Only");
-        checkAndSetPieces(targets, msg.sender);
+        checkAndSetPieces(targets, msg.sender, 2);
     }
 
     function targetSpot(bytes4 target, address defTeam) private gameOver {
