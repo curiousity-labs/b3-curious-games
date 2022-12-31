@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../../pages/routes'
 import { VersusBadge } from '../../../components/layout/VersusBadge'
 
-export function GameCard({ game }: { game: GameTeamAddress }) {
+export function BattleshipCard({ game }: { game: GameTeamAddress }) {
   const navigate = useNavigate()
   const teamOneDisplayName = useAddressLookup(game.teamOneAddress).displayName
   const teamTwoDisplayName = useAddressLookup(game.teamTwoAddress).displayName

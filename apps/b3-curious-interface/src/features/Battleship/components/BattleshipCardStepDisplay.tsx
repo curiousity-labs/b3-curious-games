@@ -1,13 +1,13 @@
 import { GameState, useCheckGameState } from '../hooks/useCheckGameState'
-import { GameInitilized } from './GameInitilized'
+import { BattleshipGameSetup } from './BattleshipGameSetup'
 
-export function GameDisplay() {
+export function BattleshipCardStepDisplay() {
   const { state } = useCheckGameState()
 
   switch (state) {
 
     case GameState.GameInitilized:
-      return <GameInitilized />
+      return <BattleshipGameSetup />
     case GameState.GameStart:
       return null
     case GameState.GameFinished:

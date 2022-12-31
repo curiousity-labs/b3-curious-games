@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../../pages/routes'
 import { useBattleshipProvider } from '../provider/context'
 import { useBoard } from '../hooks/useBoard'
-import { Board } from './Board'
+import { BattleshipBoard } from './BattleshipBoard'
 import { ShipSelection } from './ShipSelection'
 import { rowLoc, colLoc, initialOrientation } from '../constants'
 import { Piece } from '../models'
@@ -19,38 +19,52 @@ const piecesInitialValues = {
 }
 const schema = yup.object().shape({
   team: yup.string().required(),
-  ships: yup.array().required().test(
-    'name',
-    (ships: Piece[] | undefined) => !!ships && !!ships.length && ships.sort((a, b) => a.locations.length - b.locations.length).every((ship, i) => {
-      return !!ship.locations.length && ship.locations.length === i + 1
-    })
-  ),
+  ships: yup
+    .array()
+    .required()
+    .test(
+      'name',
+      (ships: Piece[] | undefined) =>
+        !!ships &&
+        !!ships.length &&
+        ships
+          .sort((a, b) => a.locations.length - b.locations.length)
+          .every((ship, i) => {
+            return !!ship.locations.length && ship.locations.length === i + 1
+          }),
+    ),
 })
 
-export function GameInitilized() {
+export function BattleshipGameSetup() {
   const handleSubmit = useCallback(async () => { }, [])
   return <Formik initialValues={piecesInitialValues} validationSchema={schema} onSubmit={handleSubmit} component={SetPiecesForm} validateOnMount />
 }
 
 const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldValue, handleChange }: FormikProps<SetPieceFormValues>) => {
-  const {
-    battleshipGame: { teamOne, teamTwo, teamsReady },
-  } = useBattleshipProvider()
-  const navigate = useNavigate()
-  const boardRef = useRef<HTMLDivElement>(null)
   const [locId, setId] = useState('')
   const [shipOrientation, setShipOrientation] = useState<ShipOrientation[]>(initialOrientation)
   const [shipLocations, setShipLocations] = useState<Piece[]>([])
   const [selectedShip, setSelectedShip] = useState<PiecesType>(PiecesType.None)
 
+  const boardRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
+
+  const {
+    battleshipGame: { teamOne, teamTwo, teamsReady },
+  } = useBattleshipProvider()
+
   const { board } = useBoard({ ships: values.ships, shipLocations })
+
+  const setShips = (ships: Piece[]) => {
+    setSelectedShip(PiecesType.None)
+    setFieldValue('ships', ships)
+  }
 
   const options = useMemo(() => {
     const _options = []
     const teamOneDisplayName = teamOne.ensName || teamOne.registryDAOName || teamOne.truncated
     const teamTwoDisplayName = teamTwo.ensName || teamTwo.registryDAOName || teamTwo.truncated
     if (teamOne.full) {
-
       if (!teamsReady.includes(teamOne.full || '')) {
         _options.push({ address: teamOne.full!, displayName: teamOneDisplayName })
       }
@@ -82,11 +96,6 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
     }
   }, [])
 
-  const setShips = (ships: Piece[]) => {
-    setSelectedShip(PiecesType.None)
-    setFieldValue('ships', ships)
-  }
-
   useEffect(() => {
     if (!locId) {
       setShipLocations([])
@@ -96,27 +105,67 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
     const colIndex = colLoc.findIndex((vLoc) => vLoc === y)
     switch (selectedShip) {
       case PiecesType.AIRCRAFT_CARRIER: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [2, 2], ships: values.ships })
+        const piece = createShip({
+          locationIndices: [rowIndex, colIndex],
+          pos: [x, y],
+          shipSize: selectedShip,
+          shipMousePiecePos: locId,
+          shipOrientation,
+          piecePartsEnds: [2, 2],
+          ships: values.ships,
+        })
         setShipLocations(piece ? [piece] : [])
         break
       }
       case PiecesType.BATTLESHIP: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 2], ships: values.ships })
+        const piece = createShip({
+          locationIndices: [rowIndex, colIndex],
+          pos: [x, y],
+          shipSize: selectedShip,
+          shipMousePiecePos: locId,
+          shipOrientation,
+          piecePartsEnds: [1, 2],
+          ships: values.ships,
+        })
         setShipLocations(piece ? [piece] : [])
         break
       }
       case PiecesType.CRUISER: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 1], ships: values.ships })
+        const piece = createShip({
+          locationIndices: [rowIndex, colIndex],
+          pos: [x, y],
+          shipSize: selectedShip,
+          shipMousePiecePos: locId,
+          shipOrientation,
+          piecePartsEnds: [1, 1],
+          ships: values.ships,
+        })
         setShipLocations(piece ? [piece] : [])
         break
       }
       case PiecesType.SUBMARINE: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [1, 0], ships: values.ships })
+        const piece = createShip({
+          locationIndices: [rowIndex, colIndex],
+          pos: [x, y],
+          shipSize: selectedShip,
+          shipMousePiecePos: locId,
+          shipOrientation,
+          piecePartsEnds: [1, 0],
+          ships: values.ships,
+        })
         setShipLocations(piece ? [piece] : [])
         break
       }
       case PiecesType.DESTROYER: {
-        const piece = createShip({ rowIndex, colIndex, pos: [x, y], shipSize: selectedShip, shipMousePiecePos: locId, shipOrientation, piecePartsEnds: [0, 0], ships: values.ships })
+        const piece = createShip({
+          locationIndices: [rowIndex, colIndex],
+          pos: [x, y],
+          shipSize: selectedShip,
+          shipMousePiecePos: locId,
+          shipOrientation,
+          piecePartsEnds: [0, 0],
+          ships: values.ships,
+        })
         setShipLocations(piece ? [piece] : [])
         break
       }
@@ -132,7 +181,9 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
         <Text>If team is DAO, a proposal will be created to approve transaction</Text>
         <Text>Note: proposal/transaction will be reverted if not correct team executing</Text>
         <Select name='team' value={values.team} onChange={handleChange}>
-          <option value="" disabled>Select Team</option>
+          <option value='' disabled>
+            Select Team
+          </option>
           {options.map((option, i) => (
             <option key={i} value={option.address}>
               Team: {option.displayName}
@@ -141,7 +192,7 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
         </Select>
         <Flex justifyContent='center' gap={4} flexWrap={{ sm: 'wrap', md: 'nowrap' }}>
           <ShipSelection selectShip={setSelectedShip} ships={values.ships} selectedShip={selectedShip} shipOrientation={shipOrientation} setShipOrientation={setShipOrientation} />
-          <Board board={board} ref={boardRef} ships={values.ships} squareOnClick={setShips} />
+          <BattleshipBoard board={board} ref={boardRef} ships={values.ships} squareOnClick={setShips} />
         </Flex>
       </Flex>
       <Flex my={4} justifyContent='center' gap={4}>

@@ -3,13 +3,13 @@ import { BSquare } from '../types'
 import { forwardRef } from 'react'
 import { Piece } from '../models';
 
-interface IBoard {
+interface IBattleshipBoard {
   board: BSquare[][];
   ships: Piece[];
   squareOnClick: ([args]: any) => void;
 }
 
-export const Board = forwardRef<HTMLDivElement, IBoard>(({ board, ships, squareOnClick }, ref) => {
+export const BattleshipBoard = forwardRef<HTMLDivElement, IBattleshipBoard>(({ board, ships, squareOnClick }, ref) => {
   return (
     <Box w='fit-content' ref={ref}>
       {board.map((row, i) => {
@@ -69,4 +69,4 @@ export const Board = forwardRef<HTMLDivElement, IBoard>(({ board, ships, squareO
   )
 })
 
-Board.displayName = 'Board'
+BattleshipBoard.displayName = 'Board'

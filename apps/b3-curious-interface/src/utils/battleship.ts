@@ -39,8 +39,7 @@ export function createHorizontalShip(rowIndex: number, pos: string[], shipSize: 
 }
 
 export type CreateShipParams = {
-  rowIndex: number,
-  colIndex: number,
+  locationIndices: number[]   // [x,y]
   pos: string[], // [x, y]
   piecePartsEnds: number[] // [leftside, rightside] + main === shipPiece count
   shipSize: number,
@@ -49,10 +48,10 @@ export type CreateShipParams = {
   ships: Piece[]
 }
 
-export function createShip({ rowIndex, colIndex, pos, shipSize, shipMousePiecePos, shipOrientation, piecePartsEnds, ships }: CreateShipParams) {
+export function createShip({ locationIndices, pos, shipSize, shipMousePiecePos, shipOrientation, piecePartsEnds, ships }: CreateShipParams) {
   if (shipOrientation[shipSize] === ShipOrientation.Horizontal) {
-    return createHorizontalShip(rowIndex, pos, shipSize, shipMousePiecePos, piecePartsEnds, ships)
+    return createHorizontalShip(locationIndices[0], pos, shipSize, shipMousePiecePos, piecePartsEnds, ships)
   } else {
-    return createVerticalShip(colIndex, pos, shipSize, shipMousePiecePos, piecePartsEnds, ships);
+    return createVerticalShip(locationIndices[1], pos, shipSize, shipMousePiecePos, piecePartsEnds, ships);
   }
 }

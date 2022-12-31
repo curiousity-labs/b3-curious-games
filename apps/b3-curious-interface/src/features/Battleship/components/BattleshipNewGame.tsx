@@ -34,7 +34,7 @@ const schema = yup.object().shape({
   teamTwoAddressInfo: yup.object().test((value) => !!value.full),
 })
 
-export const NewGame = () => {
+export const BattleshipNewGame = () => {
   const { contracts } = useAppProvider();
   const [contractCall, isPending] = useTransaction();
 
