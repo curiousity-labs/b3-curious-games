@@ -65,7 +65,7 @@ export function useLoadBattleshipGame({ battleshipGame, dispatch }: IUseBattlesh
     if (!b3Contracts || !params.gameAddress) {
       return;
     }
-    const battleshipContract = b3Contracts.battleshipImpl
+    const battleshipContract = b3Contracts.battleshipImpl.attach(params.gameAddress)
     battleshipContract.on(battleshipContract.filters.TurnFinished(), turnListener)
     return () => {
       battleshipContract.off(battleshipContract.filters.TurnFinished(), turnListener)
@@ -73,7 +73,6 @@ export function useLoadBattleshipGame({ battleshipGame, dispatch }: IUseBattlesh
   }, [contracts, params.gameAddress, turnListener])
 
   const readyListener: TypedListener<TeamReadyEvent> = useCallback((team: string) => {
-    console.log('🚀 ~ file: useLoadBattleshipGame.ts:76 ~ team', team)
     dispatch({
       type: BattleshipStateAction.SET_READINESS,
       payload: [...battleshipGame.readyEvents, team]
@@ -85,7 +84,7 @@ export function useLoadBattleshipGame({ battleshipGame, dispatch }: IUseBattlesh
     if (!b3Contracts || !params.gameAddress) {
       return;
     }
-    const battleshipContract = b3Contracts.battleshipImpl
+    const battleshipContract = b3Contracts.battleshipImpl.attach(params.gameAddress)
     battleshipContract.on(battleshipContract.filters.TeamReady(), readyListener)
     return () => {
       battleshipContract.off(battleshipContract.filters.TeamReady(), readyListener)
@@ -95,6 +94,4 @@ export function useLoadBattleshipGame({ battleshipGame, dispatch }: IUseBattlesh
   useEffect(() => {
     loadGame()
   }, [loadGame])
-
-  return;
 }
