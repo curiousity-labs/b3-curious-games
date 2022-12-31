@@ -66,10 +66,12 @@ const SetPiecesForm = ({ isValid, handleSubmit, isSubmitting }: FormikProps<SetP
     }
     if (boardRefCurrent) {
       boardRefCurrent.addEventListener('mouseover', setIdListener)
+      boardRefCurrent.addEventListener('mouseleave', () => setId(''))
     }
     return () => {
       if (boardRefCurrent) {
         boardRefCurrent.removeEventListener('mouseover', setIdListener)
+        boardRefCurrent.removeEventListener('mouseleave', () => setId(''))
       }
     }
   }, [])
