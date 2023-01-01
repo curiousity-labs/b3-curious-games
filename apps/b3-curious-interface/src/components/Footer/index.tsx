@@ -1,4 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
+import b3Json from 'b3-curious-contracts/package.json';
+import fractallJson from '@fractal-framework/fractal-contracts/package.json'
 
 export function Footer() {
   return (
@@ -9,8 +11,8 @@ export function Footer() {
         </Flex>
       </Flex>
       <Flex flexDirection="column" textStyle="text-xs-mono-regular" alignItems="flex-end" color="black.100" p="2">
-        <Text>b3Curious Contracts: v0.0.1</Text>
-        <Text>Fractal Contracts: v0.0.1</Text>
+        <Text>b3Curious Contracts: v{b3Json.version}</Text>
+        <Text>Fractal Contracts: v{fractallJson.version}</Text>
       </Flex>
     </Flex>
   )
