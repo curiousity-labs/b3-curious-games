@@ -32,12 +32,12 @@ export function Header() {
   return (
     <HeaderWrapper>
       <Flex gap={2} justifyContent="flex-end" alignItems="center" w="full">
-        <Flex w="full" h="full" flexDirection="column" justifyContent="center" alignItems="flex-end">
+        <Flex w="full" flexDirection="column" justifyContent="center" alignItems="flex-end">
           <Text>{addressInfo.truncated}</Text>
           {addressInfo.ensName && <Text>{addressInfo.ensName}</Text>}
           {addressInfo.registryDAOName && <Text>{addressInfo.registryDAOName}</Text>}
         </Flex>
-        <IconButton px={1} bg="alert-red.dark" minWidth="0px" minH="full" aria-label="disconnect" icon={<Disconnect color="grayscale.400" />} onClick={() => disconnect()} />
+        <IconButton px={2} py={1} bg="alert-red.dark" minWidth="0px" h="full" aria-label="disconnect" icon={<Disconnect color="grayscale.400" />} onClick={() => disconnect()} />
       </Flex>
     </HeaderWrapper>
   )
