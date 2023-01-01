@@ -15,7 +15,8 @@ import { createShip } from '../../../utils/battleship'
 import { useAppProvider } from '../../../providers/store/context'
 import { useTransaction } from '../../../hooks/utils/useTransaction'
 import { formatMappedStrs } from '../../../utils/data'
-import { toast } from 'react-toastify'
+import { PromiseOrValue } from 'b3-curious-contracts/typechain/common'
+import { BytesLike, Overrides, ContractTransaction } from 'ethers'
 
 const piecesInitialValues = {
   team: '',
@@ -52,12 +53,25 @@ export function BattleshipGameSetup() {
   const handleSubmit = useCallback(async (values: SetPieceFormValues, actions: FormikHelpers<SetPieceFormValues>) => {
     const successCallback = () => {
       actions.resetForm()
-      toast('Pieces Set! The match will begin when both teams pieces have been set')
     }
 
     if (!b3Curious || !teamOne.full || !teamOne.full) {
       return;
     }
+
+    const battleshipImpl = b3Curious.battleshipImpl.attach(gameAddress)
+    let setFunction: (
+      targets: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ) => Promise<ContractTransaction>;
+    if (values.team === teamOne.full) {
+      setFunction = battleshipImpl.setTeamOnePieces
+    }
+    if (values.team === teamTwo.full) {
+      setFunction = battleshipImpl.setTeamTwoPieces
+    }
+    const shipMapping = values.ships.map((ship) => ship.locations)
+    const pieces = formatMappedStrs(shipMapping).flat();
 
     // is Usul; create usul proposal
 
@@ -68,23 +82,11 @@ export function BattleshipGameSetup() {
     // is Multisig (w/guard) create proposal through guard?
 
     // @note if not supported Safe, creates game using connected account
-    const battleshipImpl = b3Curious.battleshipImpl.attach(gameAddress)
-    let setFunction: any
-    if (values.team === teamOne.full) {
-      console.log('HERE')
-      setFunction = battleshipImpl.setTeamOnePieces
-    }
-    if (values.team === teamTwo.full) {
-      setFunction = battleshipImpl.setTeamTwoPieces
-    }
-    const shipMapping = values.ships.map((ship) => ship.locations)
-    const pieces = formatMappedStrs(shipMapping).flat();
-
     contractCall({
       contractFn: async () => setFunction(pieces),
-      successMessage: 'We did it!',
+      successMessage: 'Pieces Set! The match will begin when both teams pieces have been set',
       successCallback,
-      failedMessage: 'You failed',
+      failedMessage: 'There was a problem with the transaction',
       pendingMessage: 'Setting team pieces...',
     })
 
