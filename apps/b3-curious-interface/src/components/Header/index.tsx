@@ -4,10 +4,17 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { ReactNode } from 'react';
 import { useAccount, useDisconnect } from 'wagmi';
 import { useAddressLookup } from '../../hooks/utils/useAddressLookup';
+import { HeaderLogo } from '../animated/HeaderLogo';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../pages/routes';
 
 function HeaderWrapper({ children }: { children?: ReactNode }) {
   return (
     <Flex justifyContent="space-around" alignItems="center" h="full" textStyle="text-sm-mono-semibold" px={4}>
+      <Link to={ROUTES.landing.relative()}>
+        <HeaderLogo />
+
+      </Link>
       {children}
     </Flex>
   )
