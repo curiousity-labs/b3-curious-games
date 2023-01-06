@@ -1,8 +1,5 @@
-import { Button, Flex, Skeleton, SkeletonText, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
-import { constants } from 'ethers'
+import { Button, Flex, SkeletonText, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import { addressSubString } from '../../../utils/string'
-import { useNavigate } from 'react-router-dom'
-import { useAddressLookup } from '../../../hooks/utils/useAddressLookup'
 
 interface IBattleshipTable {
   games: any[]
@@ -32,13 +29,13 @@ export function BattleshipTable({ games }: IBattleshipTable) {
 }
 
 export function TableBodyRow({ game }: { game: any }) {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const teamOneDisplayName = game.teamOne.ensName || game.teamOne.registryDAOName || game.teamOne.truncated
   const teamTwoDisplayName = game.teamTwo.ensName || game.teamTwo.registryDAOName || game.teamTwo.truncated
 
-  const isGameOver = game.winner !== constants.AddressZero
-  const isTeamOneWinner = game.winner === game.teamOneAddress && isGameOver
-  const isTeamTwoWinner = game.winner === game.teamTwoAddress && isGameOver
+  // const isGameOver = game.winner !== constants.AddressZero
+  // const isTeamOneWinner = game.winner === game.teamOneAddress && isGameOver
+  // const isTeamTwoWinner = game.winner === game.teamTwoAddress && isGameOver
 
 
 
