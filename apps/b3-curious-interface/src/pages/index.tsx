@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { Battleship } from '../features/Battleship'
-import { Landing } from '../components/Landing'
+import { Landing } from '../components/pages/Landing'
 import { ROUTES } from './routes'
 import { BattleshipLanding } from '../features/Battleship/components/BattleshipLanding'
 import { BattleshipNewGame } from '../features/Battleship/components/BattleshipNewGame'

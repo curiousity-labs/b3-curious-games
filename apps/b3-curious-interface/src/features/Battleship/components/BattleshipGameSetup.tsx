@@ -55,7 +55,7 @@ export function BattleshipGameSetup() {
       actions.resetForm()
     }
 
-    if (!b3Curious || !teamOne.full || !teamOne.full) {
+    if (!b3Curious || !teamOne.full || !teamTwo.full) {
       return;
     }
 
@@ -116,15 +116,16 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
   }
 
   const options = useMemo(() => {
-    const _options = []
     const teamOneDisplayName = teamOne.ensName || teamOne.registryDAOName || teamOne.truncated
     const teamTwoDisplayName = teamTwo.ensName || teamTwo.registryDAOName || teamTwo.truncated
-    if (teamOne.full && teamTwo.full) {
-      if (!readyEvents.includes(teamOne.full)) {
-        _options.push({ team: teamOne.full, displayName: '1: ' + teamOneDisplayName! })
+
+    const _options = []
+    if (teamOne && teamTwo) {
+      if (!readyEvents.includes(teamOne.full!)) {
+        _options.push({ team: teamOne.full!, displayName: '1: ' + teamOneDisplayName })
       }
-      if (!readyEvents.includes(teamTwo.full)) {
-        _options.push({ team: teamTwo.full, displayName: '2: ' + teamTwoDisplayName! })
+      if (!readyEvents.includes(teamTwo.full!)) {
+        _options.push({ team: teamTwo.full!, displayName: '2: ' + teamTwoDisplayName })
       }
     }
     return _options
@@ -231,7 +232,7 @@ const SetPiecesForm = ({ values, isValid, handleSubmit, isSubmitting, setFieldVa
 
   return (
     <form onSubmit={handleSubmit}>
-      <Flex flexDirection='column' gap={4} bg='black.900-semi-transparent' p={4} rounded='xl' h='full'>
+      <Flex flexDirection='column' gap={4} bg='black.900-semi-transparent' p={4} mt={4} rounded='xl' h='full'>
         <Text>Select Team you are playing for</Text>
         <Text>If team is DAO, a proposal will be created to approve transaction</Text>
         <Text>Note: proposal/transaction will be reverted if not correct team executing</Text>

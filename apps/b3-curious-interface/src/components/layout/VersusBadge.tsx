@@ -1,4 +1,4 @@
-import { Flex, Badge } from '@chakra-ui/react';
+import { Flex, Badge, Skeleton } from '@chakra-ui/react';
 
 interface IVersusBadge {
   isGameOver: boolean,
@@ -9,6 +9,9 @@ interface IVersusBadge {
 }
 
 export function VersusBadge({ isGameOver, isTeamOneWinner, isTeamTwoWinner, teamOneDisplayName, teamTwoDisplayName }: IVersusBadge) {
+  if (!teamOneDisplayName || !teamTwoDisplayName) {
+    return <Skeleton startColor='grayscale.200' w="full" />
+  }
   return (
     <Flex
       m={4}

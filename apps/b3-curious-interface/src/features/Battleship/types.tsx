@@ -14,11 +14,12 @@ export type NewGameFormValues = {
     teamTwoAddressInfo: AddressInfo
 }
 
-export type GameTeamAddress = {
+export type GameData = {
     gameAddress: string,
     teamOneAddress: string,
     teamTwoAddress: string,
     winner: string,
+    turns: number[]
 }
 
 export type SetPieceFormValues = {

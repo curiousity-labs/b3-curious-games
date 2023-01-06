@@ -1,11 +1,15 @@
-import { GameTeamAddress } from './../types';
+import { useAddressLookup } from './../../../hooks/utils/useAddressLookup';
 import { useAppProvider } from './../../../providers/store/context';
 import { useEffect, useCallback, useState } from 'react';
 import { TypedListener } from 'b3-curious-contracts/typechain/common';
 import { GameCreatedEvent } from 'b3-curious-contracts/typechain/BattleshipFactory';
+import { BattleData } from '../provider/gameplay/types';
 export function useLoadGames() {
   const { contracts } = useAppProvider()
-  const [games, setGames] = useState<GameTeamAddress[]>([])
+  const [games, setGames] = useState<BattleData[]>([])
+  const [isGamesLoading, setGamesLoading] = useState(true);
+
+  const { lookupAddress } = useAddressLookup()
 
   const loadGames = useCallback(async () => {
     const b3Contracts = contracts.b3Curious
@@ -19,13 +23,15 @@ export function useLoadGames() {
       const gameContract = b3Contracts.battleshipImpl.attach(_gameAddress)
       return {
         gameAddress: _gameAddress,
-        teamOneAddress: await gameContract.teamOne(),
-        teamTwoAddress: await gameContract.teamTwo(),
-        winner: await gameContract.game_winner()
+        teamOne: await lookupAddress(await gameContract.teamOne()),
+        teamTwo: await lookupAddress(await gameContract.teamOne()),
+        gameWinner: await gameContract.game_winner(),
+        turns: (await gameContract.queryFilter(gameContract.filters.TurnFinished())).map((event) => ({ team: event.args[0], position: event.args[1], isSuccessful: event.args[2] }))
       }
     }))
     setGames(gamesWTeamAddr)
-  }, [contracts])
+    setGamesLoading(false);
+  }, [contracts, lookupAddress])
 
   const newGameListener: TypedListener<GameCreatedEvent> = useCallback(async (_gameAddress, teamOne, teamTwo) => {
     const b3Contracts = contracts.b3Curious
@@ -35,12 +41,13 @@ export function useLoadGames() {
     const gameContract = b3Contracts.battleshipImpl.attach(_gameAddress)
     const gameInfo = {
       gameAddress: _gameAddress,
-      teamOneAddress: teamOne,
-      teamTwoAddress: teamTwo,
-      winner: await gameContract.game_winner()
+      teamOne: await lookupAddress(teamOne),
+      teamTwo: await lookupAddress(teamTwo),
+      gameWinner: await gameContract.game_winner(),
+      turns: (await gameContract.queryFilter(gameContract.filters.TurnFinished())).map((event) => ({ team: event.args[0], position: event.args[1], isSuccessful: event.args[2] }))
     }
     setGames(prevGames => [...prevGames, gameInfo])
-  }, [contracts])
+  }, [contracts, lookupAddress])
 
   useEffect(() => {
     const b3Contracts = contracts.b3Curious
@@ -57,5 +64,5 @@ export function useLoadGames() {
   useEffect(() => {
     loadGames()
   }, [loadGames])
-  return { games };
+  return [games, isGamesLoading] as const;
 }

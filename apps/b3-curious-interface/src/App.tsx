@@ -1,7 +1,7 @@
 import { Grid, GridItem } from '@chakra-ui/react'
 import { Pages } from './pages'
-import { Header } from './components/Header'
-import { Footer } from './components/Footer'
+import { Header } from './components/layout/Header'
+import { Footer } from './components/layout/Footer'
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {

@@ -76,7 +76,7 @@ export const BattleshipNewGame = () => {
   }, [contracts, contractCall, successCallback])
 
   return (
-    <Box>
+    <Box px={4}>
       <PageTitle title='New Game' />
       <Formik
         initialValues={newGameInitialValues}
@@ -101,7 +101,7 @@ const NewGameForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Flex flexDirection='column' gap={4} bg="black.900-semi-transparent" p={4} rounded="xl">
+      <Flex flexDirection='column' gap={4} bg="black.900-semi-transparent" p={4} mt={4} rounded="xl">
         <Text>Enter a valid ETH address. Safe, Fractal Usul, and Fractal Safe address are also supported.</Text>
         <Text>If Team one address is not a supperted Safe address, connected account is used</Text>
         <NewGameFormInput

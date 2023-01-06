@@ -1,15 +1,21 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { PageTitle } from '../../../components/layout/PageTitle'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../../pages/routes'
 import { useLoadGames } from '../hooks/useLoadGames'
-import { BattleshipCard } from './BattleshipCard'
+import { BattleshipTable } from './BattleshipTable'
 
 export function BattleshipLanding() {
   const navigate = useNavigate()
-  const { games } = useLoadGames()
+  const [games, isGamesLoading] = useLoadGames()
+  if (isGamesLoading) {
+    return (
+      // @todo create page loader
+      <div></div>
+    )
+  }
   return (
-    <Box>
+    <Box px={4}>
       <PageTitle
         title='Battleship'
         buttons={[
@@ -19,14 +25,7 @@ export function BattleshipLanding() {
           },
         ]}
       />
-      <Flex flexWrap="wrap" gap={4} justifyContent="space-between">
-        {!!games.length && games.map((game, i) => (
-          <BattleshipCard game={game} key={i} />
-        ))}
-      </Flex>
-      {/* List of active games and stats? */}
-
-      {/* banner with recent games? */}
+      <BattleshipTable games={games} />
     </Box >
   )
 }

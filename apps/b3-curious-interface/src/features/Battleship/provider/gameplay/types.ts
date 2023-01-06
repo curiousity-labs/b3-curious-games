@@ -9,14 +9,17 @@ export interface IBattleshipState extends BattleGame {
   isBattleshipLoaded: boolean;
 }
 
-export type BattleGame = {
+export interface BattleGame extends BattleData {
+  battleshipContract: BattleshipImpl | null;
+  readyEvents: string[];
+}
+
+export type BattleData = {
   gameAddress: string;
   teamOne: AddressInfo;
   teamTwo: AddressInfo;
   gameWinner: string;
-  battleshipContract: BattleshipImpl | null;
   turns: Turn[];
-  readyEvents: string[];
 }
 
 export type Turn = {
