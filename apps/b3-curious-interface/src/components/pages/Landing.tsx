@@ -24,7 +24,7 @@ export function Landing() {
           <Button w='full' variant='tertiary' onClick={() => navigate(ROUTES.battleshipLanding.relative())}>
             Enter Battleship Room
           </Button>
-          <Button w='full' variant='tertiary' disabled>
+          <Button w='full' variant='tertiary' onClick={() => navigate(ROUTES.connect4.relative())}>
             Enter Connect 4 (coming soon)
           </Button>
         </Flex>

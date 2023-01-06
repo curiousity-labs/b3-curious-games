@@ -3,6 +3,10 @@ export const ROUTES = {
     path: '/',
     relative: () => '/'
   },
+  connect4: {
+    path: 'connect4',
+    relative: () => '/connect4'
+  },
   battleshipLanding: {
     path: 'battleship',
     relative: () => '/battleship'
