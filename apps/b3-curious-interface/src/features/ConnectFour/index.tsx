@@ -1,7 +1,7 @@
-import { Flex, HStack, keyframes } from '@chakra-ui/react'
+import { Box, Flex, HStack, keyframes } from '@chakra-ui/react'
 import { ConnectSquare } from './types'
 import { colArr, rowArr } from './constants'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { GameContainer } from './components/GameContainer'
 import { SquareFrame } from './components/SquareFrame'
 import { SquareCenter } from './components/SquareCenter'
@@ -28,41 +28,67 @@ export function ConnectFour() {
   const updatedConnectboard = useMemo(() => {
     return chessBoardData.map((col) =>
       col.map((square) => {
-        // if(square.location === 'xx') {
-        //   return {...square, Piece: true}
-        // }
+        if (square.location === 'a1') {
+          return { ...square, Piece: true }
+        }
+        if (square.location === 'ax') {
+          return { ...square, Piece: true }
+        }
         return square
       }),
     )
   }, [chessBoardData])
 
-  const animateRight = keyframes`
-  0%   { transform: translateX(-150%) }
-  100% { transform: translateX(150%) }
-`
   // @dev pieces should only animate when this is true.
   // @todo ensure that pieces not on the move don't animate as well.
-  const [isAnimating, setIsAnimating] = useState('')
+  const [travelingPiece, setTravelingPiece] = useState<NewPiece>()
+  const [isAnimating, setIsAnimating] = useState(false)
+  type NewPiece = {
+    isTraveling: boolean,
+    transitionDelay: number,
+    finalLocation: string, // a1
+  }
 
-  const animationRight = `${animateRight} 2s 1 `
+  const animateDownTraveling = keyframes`
+  0%   { opacity: 100% }
+  100% { opacity: 100%;  transform: translateY(700%) }
+`
+  const animationDownTraveling = `${animateDownTraveling} 6s 1`
+
+  const fallingPieceRef = useRef<HTMLDivElement>(null)
 
   return (
     <Flex justifyContent="center" h='full'>
       <GameContainer>
         {updatedConnectboard.map((row, i) => {
           return (
-            <HStack key={i} gap='0' rounded="lg">
-              {row.map((square) => {        
+            <Flex key={i} rounded="lg">
+              {row.map((square) => {
+                const isOutOfBounds = square.location.includes('x')
                 return (
                   <SquareFrame
                     key={square.location}
                     square={square}
                   >
-                    <SquareCenter square={square} />
+                    {square.Piece && isOutOfBounds && (
+                      <Box
+                        ref={fallingPieceRef}
+                        w='full'
+                        h='full'
+                        rounded='full'
+                        bg='green.500'
+                        animation={isOutOfBounds ? animationDownTraveling : undefined}
+                        boxSize="6rem"
+                        position='absolute'
+                        opacity='0'
+                        transform='translateY(-150%)'
+                      />
+                    )}
+                    <SquareCenter square={square} fallingPieceRef={fallingPieceRef} />
                   </SquareFrame>
                 )
               })}
-            </HStack>
+            </Flex>
           )
         })}
       </GameContainer>

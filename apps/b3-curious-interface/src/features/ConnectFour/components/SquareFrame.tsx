@@ -1,28 +1,38 @@
 import { ReactNode } from 'react'
 import { ConnectSquare } from '../types'
-import { Center } from '@chakra-ui/react'
+import { Box, Center } from '@chakra-ui/react'
 
 export function SquareFrame({ square, children }: { square: ConnectSquare; children?: ReactNode }) {
   return (
-    <Center
+    <Box
       id={square.location}
       key={square.location}
-      bg={square.color}
-      boxSize={28}
       position='relative'
-      overflow='hidden'
-      sx={{
-        '&': {
-          WebkitMarginStart: '0px !important',
-          marginInlineStart: '0px',
-        },
-        '&:hover': {
-          border: square.Piece ? '4px' : '2px',
-          borderColor: square.Piece ? 'green.500' : 'grayscale.200',
-        },
-      }}
     >
-      {children}
-    </Center>
+      <Center
+        boxSize="7rem"
+        zIndex={0}
+        border={square.color ? '16px inset': undefined}
+        borderRadius="full"
+        borderColor="gold.500"
+        sx={{
+          '&': {
+            WebkitMarginStart: '0px !important',
+            marginInlineStart: '0px',
+          },
+          '&:before': {
+            content: '""',
+            paddingBottom: '50%',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            zIndex: '5',
+            borderRadius: '100%',
+            transform: 'translate(-50%, -50%)',
+          },
+        }}>
+        {children}
+      </Center>
+    </Box>
   )
 }

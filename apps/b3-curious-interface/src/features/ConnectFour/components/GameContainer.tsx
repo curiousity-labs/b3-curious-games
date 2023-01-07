@@ -3,11 +3,7 @@ import { ReactNode } from 'react';
 
 export function GameContainer({ children }: { children: ReactNode }) {
   return (
-    <Box position="relative" sx={{
-      '&:first-of-type': {
-        borderTopLeftRadius: '1rem'
-      }
-    }}>
+    <Box position="relative" overflow="hidden" h="fit-content">
       {children}
     </Box>
   )

@@ -1,20 +1,49 @@
-import { ConnectSquare } from '../types';
-import { Text, Box } from '@chakra-ui/react';
+import { useEffect, useRef } from 'react'
+import { ConnectSquare } from '../types'
+import { Text, Box, keyframes } from '@chakra-ui/react'
 
-export function SquareCenter({ square }: { square: ConnectSquare }) {
+export function SquareCenter({ square, fallingPieceRef }: { square: ConnectSquare, fallingPieceRef: React.RefObject<HTMLDivElement> }) {
+  const locationRef = useRef<HTMLDivElement>(null)
+  const isOutOfBounds = square.location.includes('x')
+
+
+  useEffect(() => {
+    const fallingPieceEle = fallingPieceRef.current
+    const locationEle = locationRef.current
+    let intervalId: NodeJS.Timer
+    // @todo add animation boolean? remove ref?
+    if (fallingPieceEle && locationEle && !isOutOfBounds) {
+      fallingPieceEle.addEventListener('animationstart', (event) => {
+        intervalId = setInterval(() => {
+          const fallingRect = fallingPieceEle.getBoundingClientRect()
+          const locationRect = locationEle.getBoundingClientRect()
+          const fallingRectbottom = Math.round(fallingRect.bottom)
+          const lrt = locationRect.top
+          const lrb = locationRect.top + 96
+          if (square.Piece) {
+            if (fallingRectbottom >= lrt && fallingRectbottom <= lrb) {
+              console.log('BOOOM')
+              // @todo when it collides with piece below; end animation; add piece in spot
+              clearInterval(intervalId)
+            }
+            return;
+          }
+          clearInterval(intervalId)
+        }, 1)
+        fallingPieceEle.addEventListener('animationend', () => {
+          clearInterval(intervalId)
+        })
+      })
+      return () => {
+        fallingPieceEle.removeEventListener('animationstart', () => { })
+      }
+    }
+  }, [fallingPieceRef, square, isOutOfBounds])
   return (
-    <Box
-      border='4px solid'
-      borderColor='black.900'
-      bg='grayscale.100'
-      boxSize="6.5rem"
-      rounded='full'
-      shadow='0px 0px 5px 6px inset rgba(0,0,0,0.2), 0px 0px 5px 12px inset rgba(0,0,0,0.4)'
-    >
-      {square.Piece && <Box w='full' h='full' rounded='full' />}
-      <Text color='black.900' fontSize='6xl' h='full' w='full' textAlign='center'>
-        {square.location}
-      </Text>
+    <Box ref={locationRef}>
+      {square.Piece && !isOutOfBounds && (
+        <Box boxSize={20} bg="white" rounded="full"></Box>
+      )}
     </Box>
   )
 }
