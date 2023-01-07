@@ -10,7 +10,7 @@ import { ROUTES } from '../../pages/routes';
 
 function HeaderWrapper({ children }: { children?: ReactNode }) {
   return (
-    <Flex justifyContent="space-around" alignItems="center" h="full" textStyle="text-sm-mono-semibold" px={4}>
+    <Flex justifyContent="space-between" alignItems="center" h="full" textStyle="text-sm-mono-semibold" px={4}>
       <Link to={ROUTES.landing.relative()}>
         <HeaderLogo />
 
