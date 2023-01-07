@@ -1,8 +1,9 @@
-import { Box, Center, HStack, Text, keyframes } from '@chakra-ui/react'
+import { Box, Center, Flex, HStack, Text, keyframes } from '@chakra-ui/react'
 import { ConnectSquare } from './types'
 import { colArr, rowArr } from './constants'
 import { useMemo, useState } from 'react'
 import { GameContainer } from './components/GameContainer'
+import { SquareFrame } from './components/SquareFrame'
 
 export function ConnectFour() {
   const chessBoardData: ConnectSquare[][] = colArr
@@ -26,9 +27,9 @@ export function ConnectFour() {
   const updatedConnectboard = useMemo(() => {
     return chessBoardData.map((col) =>
       col.map((square) => {
-        if(square.location === 'xx') {
-          return {...square, Piece: true}
-        }
+        // if(square.location === 'xx') {
+        //   return {...square, Piece: true}
+        // }
         return square
       }),
     )
@@ -45,16 +46,16 @@ export function ConnectFour() {
   const animationRight = `${animateRight} 2s 1 `
 
   return (
-    <Center h='full'>
+    <Flex justifyContent="center" h='full'>
       <GameContainer>
         {updatedConnectboard.map((row, i) => {
           return (
-            <HStack key={i} gap='0'>
+            <HStack key={i} gap='0' rounded="lg">
               {row.map((square) => {
                 const isOutOfBounds = square.location.split('').includes('x')
                 if (isOutOfBounds) {
                   return (
-                    <Center id={square.location} key={square.location} bg={square.color} w={40} h={40} position='relative' overflow='hidden'>
+                    <SquareFrame square={square} key={square.location}>
                       {square.Piece && (
                         // @todo create Piece.
                         <Box
@@ -66,34 +67,20 @@ export function ConnectFour() {
                           transition='transform 4s'
                         ></Box>
                       )}
-                    </Center>
+                    </SquareFrame>
                   )
                 }
                 // @todo should only be green when its thats team turn
                 return (
-                  <Center
+                  <SquareFrame
                     key={square.location}
-                    bg={square.color}
-                    w={40}
-                    h={40}
-                    border={isOutOfBounds ? '8px solid' : undefined}
-                    borderColor='gold.500'
-                    sx={{
-                      '&': {
-                        WebkitMarginStart: '0px !important',
-                        marginInlineStart: '0px',
-                      },
-                      '&:hover': {
-                        border: square.Piece ? '4px' : '2px',
-                        borderColor: square.Piece ? 'green.500' : 'grayscale.200',
-                      },
-                    }}
+                    square={square}
                   >
                     <Box
                       border='4px solid'
                       borderColor='black.900'
                       bg='grayscale.100'
-                      boxSize={36}
+                      boxSize="6.5rem"
                       rounded='full'
                       shadow='0px 0px 5px 6px inset rgba(0,0,0,0.2), 0px 0px 5px 12px inset rgba(0,0,0,0.4)'
                     >
@@ -102,13 +89,13 @@ export function ConnectFour() {
                         {square.location}
                       </Text>
                     </Box>
-                  </Center>
+                  </SquareFrame>
                 )
               })}
             </HStack>
           )
         })}
       </GameContainer>
-    </Center>
+    </Flex>
   )
 }
