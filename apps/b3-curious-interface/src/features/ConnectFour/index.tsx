@@ -1,9 +1,10 @@
-import { Box, Center, Flex, HStack, Text, keyframes } from '@chakra-ui/react'
+import { Flex, HStack, keyframes } from '@chakra-ui/react'
 import { ConnectSquare } from './types'
 import { colArr, rowArr } from './constants'
 import { useMemo, useState } from 'react'
 import { GameContainer } from './components/GameContainer'
 import { SquareFrame } from './components/SquareFrame'
+import { SquareCenter } from './components/SquareCenter'
 
 export function ConnectFour() {
   const chessBoardData: ConnectSquare[][] = colArr
@@ -51,44 +52,13 @@ export function ConnectFour() {
         {updatedConnectboard.map((row, i) => {
           return (
             <HStack key={i} gap='0' rounded="lg">
-              {row.map((square) => {
-                const isOutOfBounds = square.location.split('').includes('x')
-                if (isOutOfBounds) {
-                  return (
-                    <SquareFrame square={square} key={square.location}>
-                      {square.Piece && (
-                        // @todo create Piece.
-                        <Box
-                          position='absolute'
-                          boxSize={36}
-                          bg='green.500'
-                          // @todo if piece exists; pieceDir, isFinalDestination
-                          animation={square.Piece && animationRight}
-                          transition='transform 4s'
-                        ></Box>
-                      )}
-                    </SquareFrame>
-                  )
-                }
-                // @todo should only be green when its thats team turn
+              {row.map((square) => {        
                 return (
                   <SquareFrame
                     key={square.location}
                     square={square}
                   >
-                    <Box
-                      border='4px solid'
-                      borderColor='black.900'
-                      bg='grayscale.100'
-                      boxSize="6.5rem"
-                      rounded='full'
-                      shadow='0px 0px 5px 6px inset rgba(0,0,0,0.2), 0px 0px 5px 12px inset rgba(0,0,0,0.4)'
-                    >
-                      {square.Piece && <Box w='full' h='full' rounded='full' />}
-                      <Text color='black.900' fontSize='6xl' h='full' w='full' textAlign='center'>
-                        {square.location}
-                      </Text>
-                    </Box>
+                    <SquareCenter square={square} />
                   </SquareFrame>
                 )
               })}
