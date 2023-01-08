@@ -1,26 +1,26 @@
 import { useEffect, useRef } from 'react'
 import { ConnectSquare } from '../types'
-import { Text, Box, keyframes } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 
-export function SquareCenter({ square, fallingPieceRef }: { square: ConnectSquare, fallingPieceRef: React.RefObject<HTMLDivElement> }) {
+export function SquareCenter({ square, fallingChipRef }: { square: ConnectSquare, fallingChipRef: React.RefObject<HTMLDivElement> }) {
   const locationRef = useRef<HTMLDivElement>(null)
   const isOutOfBounds = square.location.includes('x')
 
 
   useEffect(() => {
-    const fallingPieceEle = fallingPieceRef.current
+    const fallingPieceEle = fallingChipRef.current
     const locationEle = locationRef.current
     let intervalId: NodeJS.Timer
     // @todo add animation boolean? remove ref?
     if (fallingPieceEle && locationEle && !isOutOfBounds) {
-      fallingPieceEle.addEventListener('animationstart', (event) => {
+      fallingPieceEle.addEventListener('animationstart', () => {
         intervalId = setInterval(() => {
           const fallingRect = fallingPieceEle.getBoundingClientRect()
           const locationRect = locationEle.getBoundingClientRect()
           const fallingRectbottom = Math.round(fallingRect.bottom)
           const lrt = locationRect.top
           const lrb = locationRect.top + 96
-          if (square.Piece) {
+          if (square.isPiecePlaced) {
             if (fallingRectbottom >= lrt && fallingRectbottom <= lrb) {
               console.log('BOOOM')
               // @todo when it collides with piece below; end animation; add piece in spot
@@ -38,10 +38,10 @@ export function SquareCenter({ square, fallingPieceRef }: { square: ConnectSquar
         fallingPieceEle.removeEventListener('animationstart', () => { })
       }
     }
-  }, [fallingPieceRef, square, isOutOfBounds])
+  }, [fallingChipRef, square, isOutOfBounds])
   return (
     <Box ref={locationRef}>
-      {square.Piece && !isOutOfBounds && (
+      {square.isPiecePlaced && !isOutOfBounds && (
         <Box boxSize={20} bg="white" rounded="full"></Box>
       )}
     </Box>
