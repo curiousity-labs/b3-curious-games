@@ -62,19 +62,13 @@ contract ConnectFour {
         uint count,
         uint8 currentTeamNum,
         uint8 direction
-    ) private {
+    ) private returns (uint) {
         /// using new chip location as middle == m
         /// [ [ C+1 | R-1 ] [  C+1  ] [ C+1 | R+1 ] ]
         /// [ [    R-1    ] [ C | R ] [    R+1    ]
         /// [ [ C-1 | R-1 ] [  C-1  ] [ C-1 | R+1 ] ]
         Square memory square = board[col][row];
         if (square.state == currentTeamNum) {
-            // team has connected four in a cor game is over;
-            if (count++ == 4) {
-                game_winner = msg.sender;
-                emit GameFinished(msg.sender);
-                return;
-            }
             if (direction == 0) {
                 checkSquare(col++, row--, count++, currentTeamNum, direction);
             }
@@ -101,6 +95,7 @@ contract ConnectFour {
                 checkSquare(col--, row++, count++, currentTeamNum, direction);
             }
         }
+        return count;
     }
 
     /// external function play turn
@@ -123,15 +118,26 @@ contract ConnectFour {
         board[col][row] = Square(currentTeamNum);
 
         /// check board for four in a row
-        checkSquare(col, row, 1, currentTeamNum, 0);
-        checkSquare(col, row, 1, currentTeamNum, 1);
-        checkSquare(col, row, 1, currentTeamNum, 2);
-        checkSquare(col, row, 1, currentTeamNum, 3);
-        checkSquare(col, row, 1, currentTeamNum, 5);
-        checkSquare(col, row, 1, currentTeamNum, 6);
-        checkSquare(col, row, 1, currentTeamNum, 7);
-        checkSquare(col, row, 1, currentTeamNum, 8);
+        uint[4] memory directionalCounts = [
+            checkSquare(col, row, 1, currentTeamNum, 0) +
+                checkSquare(col, row, 1, currentTeamNum, 8),
+            checkSquare(col, row, 1, currentTeamNum, 1) +
+                checkSquare(col, row, 1, currentTeamNum, 7),
+            checkSquare(col, row, 1, currentTeamNum, 6) +
+                checkSquare(col, row, 1, currentTeamNum, 2),
+            checkSquare(col, row, 1, currentTeamNum, 6) +
+                checkSquare(col, row, 1, currentTeamNum, 2)
+        ];
 
+        for (uint i = 0; i < directionalCounts.length; i++) {
+            if (directionalCounts[i] == 4) {
+                game_winner = msg.sender;
+                emit GameFinished(msg.sender);
+                return;
+            }
+        }
+
+        currentTurn = msg.sender == teamOne ? teamTwo : teamOne;
         emit TurnTaken(msg.sender, col, row);
-    }    
+    }
 }
