@@ -140,4 +140,9 @@ contract ConnectFour {
         currentTurn = msg.sender == teamOne ? teamTwo : teamOne;
         emit TurnTaken(msg.sender, col, row);
     }
+
+    function init(address _teamOne, address _teamTwo) public {
+        teamOne = _teamOne;
+        teamTwo = _teamTwo;
+    }
 }
