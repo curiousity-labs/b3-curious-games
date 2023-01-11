@@ -5,7 +5,7 @@ import { ConnectFourFactory } from './../typechain/ConnectFourFactory';
 import { ConnectFour } from '../typechain';
 import { ethers } from 'hardhat';
 import { expect } from 'chai';
-describe.only("ConnectFour", () => {
+describe("ConnectFour", () => {
   let connectFourFactory: ConnectFourFactory
   let connectFourGameAddress: string;
 
