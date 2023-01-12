@@ -3,6 +3,7 @@ pragma solidity ^0.8.17;
 
 /**
  * @title onchain battleship
+ * @author @Da-Colon (github)
  */
 contract Battleship {
     event TeamReady(address team);
@@ -96,8 +97,8 @@ contract Battleship {
         }
     }
 
-    constructor(address _teamTwo) {
-        teamOne = msg.sender;
+    function init(address _teamOne, address _teamTwo) public {
+        teamOne = _teamOne;
         teamTwo = _teamTwo;
     }
 }

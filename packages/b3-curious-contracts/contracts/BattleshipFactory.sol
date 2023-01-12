@@ -2,16 +2,16 @@
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/proxy/Clones.sol";
-import "./BattleshipImpl.sol";
+import "./Battleship.sol";
 
 contract BattleshipFactory {
     event GameCreated(address gameAddress, address teamOne, address teamTwo);
 
     uint private gameId;
-    address private battleshipImplAddr;
+    address private BattleshipAddr;
 
     // gameId -> contract implementation
-    mapping(uint => BattleshipImpl) BattleshipGames;
+    mapping(uint => Battleship) BattleshipGames;
 
     modifier uniqueTeams(address teamTwo) {
         require(msg.sender != teamTwo);
@@ -19,8 +19,8 @@ contract BattleshipFactory {
     }
 
     function deployAndChallange(address teamTwo) external uniqueTeams(teamTwo) {
-        BattleshipImpl newGame = BattleshipImpl(
-            Clones.clone(battleshipImplAddr)
+        Battleship newGame = Battleship(
+            Clones.clone(BattleshipAddr)
         );
         newGame.init(msg.sender, teamTwo);
         BattleshipGames[gameId] = newGame;
@@ -29,11 +29,11 @@ contract BattleshipFactory {
     }
 
     constructor(address implAddress) {
-        battleshipImplAddr = implAddress;
+        BattleshipAddr = implAddress;
     }
 
-    function getGames() public view returns (BattleshipImpl[] memory) {
-        BattleshipImpl[] memory games = new BattleshipImpl[](gameId);
+    function getGames() public view returns (Battleship[] memory) {
+        Battleship[] memory games = new Battleship[](gameId);
         for (uint i = 0; i < gameId; i++) {
             games[i] = BattleshipGames[i];
         }
