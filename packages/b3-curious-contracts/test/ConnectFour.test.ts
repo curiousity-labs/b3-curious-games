@@ -100,8 +100,6 @@ describe.only("ConnectFour", () => {
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 4)      
       await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
 
-      console.log("Board before win", await gameOneContractSignerOne.getGameBoard(connectFourGameOneId))
-
       await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 4))
         .to.emit(gameOneContractSignerTwo, "GameFinished")
         .withArgs(account2.address, connectFourGameOneId)
