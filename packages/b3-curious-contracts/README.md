@@ -29,3 +29,9 @@ compile...
 ```shell
 pnpm run compile
 ```
+
+## Credits
+### Connect Four
+Connect Four contract function and methods were created by/inspired from:
+[Miguel Piedrafita](https://github.com/m1guelpf)
+[Connect4 Smart Contract](https://github.com/m1guelpf/connect4-sol/blob/main/src/ConnectFour.sol)

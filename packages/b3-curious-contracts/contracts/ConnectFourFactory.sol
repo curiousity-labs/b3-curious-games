@@ -5,25 +5,20 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 import "./ConnectFour.sol";
 
 contract ConnectFourFactory {
-    event NewConnectFourSeasonCreated(address gameAddress);
+    event NewConnectFourSeasonCreated(uint seasonId, address gameAddress);
 
     uint private seasonId;
     address private connectFourImplAddr;
 
     // gameId -> contract implementation
-    mapping(uint => ConnectFour) ConnectFourGames;
-
-    modifier uniqueTeams(address opponent) {
-        require(msg.sender != opponent);
-        _;
-    }
+    mapping(uint => ConnectFour) public connectFourGames;
 
     function deployNewSeason(
-        address opponent
-    ) public uniqueTeams(opponent) returns (uint) {
+    ) public returns (uint) {
         ConnectFour newGame = ConnectFour(Clones.clone(connectFourImplAddr));
-        ConnectFourGames[seasonId] = newGame;
-        emit NewConnectFourSeasonCreated(address(newGame));
+        connectFourGames[seasonId] = newGame;
+        
+        emit NewConnectFourSeasonCreated(seasonId, address(newGame));
 
         return seasonId++;
     }
@@ -35,7 +30,7 @@ contract ConnectFourFactory {
     function getGames() public view returns (ConnectFour[] memory) {
         ConnectFour[] memory games = new ConnectFour[](seasonId);
         for (uint i = 0; i < seasonId; i++) {
-            games[i] = ConnectFourGames[i];
+            games[i] = connectFourGames[i];
         }
         return games;
     }

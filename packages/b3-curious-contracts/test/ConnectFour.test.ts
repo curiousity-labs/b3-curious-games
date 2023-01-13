@@ -1,41 +1,121 @@
-import { ConnectFourFactory__factory } from './../typechain/factories/ConnectFourFactory__factory';
-import { ConnectFour__factory } from './../typechain/factories/ConnectFour__factory';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { ConnectFourFactory } from './../typechain/ConnectFourFactory';
-import { ConnectFour } from '../typechain';
-import { ethers } from 'hardhat';
-import { expect } from 'chai';
-describe("ConnectFour", () => {
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
+import {
+  ConnectFour,
+  ConnectFourFactory,
+  ConnectFourFactory__factory,
+  ConnectFour__factory,
+} from "../typechain"
+import { ethers } from "hardhat"
+import { expect } from "chai"
+import { BigNumber } from "ethers"
+describe.only("ConnectFour", () => {
   let connectFourFactory: ConnectFourFactory
-  let connectFourGameAddress: string;
+  let [account1, account2]: SignerWithAddress[] = []
 
-  let account1: SignerWithAddress
-  let account2: SignerWithAddress
-
-  let connectFourContractSignerOne: ConnectFour
-  let connectFourContractSignerTwo: ConnectFour
+  let [gameOneContractSignerOne, gameOneContractSignerTwo]: ConnectFour[] = []
 
   beforeEach(async () => {
     ;[account1, account2] = await ethers.getSigners()
 
     // Deploys and initializes game with teams
     const connectFourContractImpl = await new ConnectFour__factory(account1).deploy()
-    connectFourFactory = await new ConnectFourFactory__factory(account1).deploy(connectFourContractImpl.address)
+    connectFourFactory = await new ConnectFourFactory__factory(account1).deploy(
+      connectFourContractImpl.address
+    )
 
-    await connectFourFactory.deployAndChallange(account2.address)
+    const response = await (await connectFourFactory.deployNewSeason()).wait()
+    const [_, gameAddress] = response.events![0].args!
 
-    const battleshipContractAddrs = await connectFourFactory.getGames();
-    connectFourGameAddress = battleshipContractAddrs[0];
-    connectFourContractSignerOne = ConnectFour__factory.connect(connectFourGameAddress, account1)
-    connectFourContractSignerTwo = ConnectFour__factory.connect(connectFourGameAddress, account2)
+      ;[gameOneContractSignerOne, gameOneContractSignerTwo] = [
+        ConnectFour__factory.connect(gameAddress, account1),
+        ConnectFour__factory.connect(gameAddress, account2),
+      ]
   })
 
-  describe("Setup | Success", async () => {
-    it("Should deploy Connect Fout contract | Create game", async () => {
-      const gameCreatedEvent = await connectFourFactory.queryFilter(connectFourFactory.filters.GameCreated())
-      expect(gameCreatedEvent[0].args[0] === connectFourGameAddress)
-      expect(gameCreatedEvent[0].args[1] === account1.address)
-      expect(gameCreatedEvent[0].args[2] === account2.address)
+  describe("Setup | Challenge", async () => {
+    it("Should create game", async () => {
+      await expect(gameOneContractSignerOne.challenge(account2.address))
+        .to.emit(gameOneContractSignerOne, "GameCreated")
+        .withArgs(0, account1.address, account2.address)
     })
   })
+  describe("Game Play | Success", () => {
+    let connectFourGameOneId: BigNumber = BigNumber.from(0);
+    beforeEach(async () => {
+      const response = await (await gameOneContractSignerOne.challenge(account2.address)).wait();
+      [connectFourGameOneId] = response.events![0].args!
+    })
+
+    it("Should play first move", async () => {
+      await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0))
+        .to.emit(gameOneContractSignerTwo, "TurnTaken")
+        .withArgs(account2.address, 0)
+    })
+
+    it("Should end with horizontal win; team two", async () => {
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 0)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 1)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 5)
+
+      await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3))
+        .to.emit(gameOneContractSignerTwo, "GameFinished")
+        .withArgs(account2.address, connectFourGameOneId)
+
+    })
+    
+    it("Should end with veritical win; team one", async () => {
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)      
+      await expect(gameOneContractSignerOne.makeMove(connectFourGameOneId, 4))
+        .to.emit(gameOneContractSignerOne, "GameFinished")
+        .withArgs(account1.address, connectFourGameOneId)
+    })
+    
+    it("Should end with forward angle win; team two", async () => {
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 2)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 3)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+      
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)      
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 0)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 4)      
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+
+      console.log("Board before win", await gameOneContractSignerOne.getGameBoard(connectFourGameOneId))
+
+      await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 4))
+        .to.emit(gameOneContractSignerTwo, "GameFinished")
+        .withArgs(account2.address, connectFourGameOneId)
+    })
+  })
+
 })
+
+  // describe("Game Play | Revert", () => {
+  // it("Should prevent team one from going first", async () => { })
+  // it("Should prevent random address from playing", async () => {})
+  // it("Should revert if invalid column", async () => {})
+  // it("Should revert if row is exceeded", async () => {})
+  // it("Should revert if challenge is called after game start", async () => {})
+  // it("", async () => {})
+  // })
+

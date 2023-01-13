@@ -11,32 +11,31 @@ import {
   fastForwardLastTurnTeamOneLead,
   ERROR_NOT_TURN,
 } from "./helpers/data/battleship"
-import { BattleshipFactory, BattleshipFactory__factory, BattleshipImpl__factory } from "../typechain"
-import { BattleshipImpl } from "../typechain/BattleshipImpl"
+import { Battleship, BattleshipFactory, BattleshipFactory__factory, Battleship__factory } from "../typechain"
 
-describe("BattleshipImpl | As Clone", () => {
+describe("Battleship | As Clone", () => {
   let battleshipFactory: BattleshipFactory
   let battleshipContractAddr: string;
 
   let account1: SignerWithAddress
   let account2: SignerWithAddress
 
-  let battleshipContractSignerOne: BattleshipImpl
-  let battleshipContractSignerTwo: BattleshipImpl
+  let battleshipContractSignerOne: Battleship
+  let battleshipContractSignerTwo: Battleship
 
   beforeEach(async () => {
     ;[account1, account2] = await ethers.getSigners()
 
     // Deploys and initializes game with teams
-    const battleshipContractImpl = await new BattleshipImpl__factory(account1).deploy()
+    const battleshipContractImpl = await new Battleship__factory(account1).deploy()
     battleshipFactory = await new BattleshipFactory__factory(account1).deploy(battleshipContractImpl.address)
 
     await battleshipFactory.deployAndChallange(account2.address)
 
     const battleshipContractAddrs = await battleshipFactory.getGames();
     battleshipContractAddr = battleshipContractAddrs[0];
-    battleshipContractSignerOne = BattleshipImpl__factory.connect(battleshipContractAddr, account1)
-    battleshipContractSignerTwo = BattleshipImpl__factory.connect(battleshipContractAddr, account2)
+    battleshipContractSignerOne = Battleship__factory.connect(battleshipContractAddr, account1)
+    battleshipContractSignerTwo = Battleship__factory.connect(battleshipContractAddr, account2)
   })
 
   describe("Setup | Success", async () => {
