@@ -137,15 +137,7 @@ contract ConnectFour {
         uint8 row,
         uint8 teamNum
     ) internal view returns (bool) {
-        if (teamNum == 2) {
-            console.log("row", row);
-            console.log("column", column);
-        }
-        uint8 square = board[column][row];
-        if (teamNum == 2) {
-            console.log("square", square);
-        }
-        return square == teamNum;
+        return board[column][row] == teamNum;
     }
 
     /// @notice checks the direction for team state
@@ -263,26 +255,25 @@ contract ConnectFour {
         uint8 teamNum
     ) public view returns (bool) {
         uint8[6][6] storage board = getGame[_gameId].board;
-        //     /// using new chip location as middle == m
-        //     /// [ [ C+1 | R-1 ] [  C+1  ] [ C+1 | R+1 ] ]
-        //     /// [ [    R-1    ] [ C | R ] [    R+1    ]
-        //     /// [ [ C-1 | R-1 ] [  C-1  ] [ C-1 | R+1 ] ]
+            /// using new chip location as middle == m
+            /// [ [ C+1 | R-1 ] [  C+1  ] [ C+1 | R+1 ] ]
+            /// [ [    R-1    ] [ C | R ] [    R+1    ]
+            /// [ [ C-1 | R-1 ] [  C-1  ] [ C-1 | R+1 ] ]
 
-        // uint8 horionalCount = checkHorizonalWin(board, column, row, teamNum);
-        // if (horionalCount == 4) {
-        //     return true;
-        // }
-        // uint8 vericalCount = checkVericalWin(board, column, row, teamNum);
-        // if (vericalCount == 4) {
-        //     return true;
-        // }
+        uint8 horionalCount = checkHorizonalWin(board, column, row, teamNum);
+        if (horionalCount == 4) {
+            return true;
+        }
+        uint8 vericalCount = checkVericalWin(board, column, row, teamNum);
+        if (vericalCount == 4) {
+            return true;
+        }
         uint8 forwardAngleCount = checkForwardAngleWin(
             board,
             column,
             row,
             teamNum
         );
-        console.log("----------forwardAngleCount", forwardAngleCount);
         if (forwardAngleCount == 4) {
             return true;
         }
