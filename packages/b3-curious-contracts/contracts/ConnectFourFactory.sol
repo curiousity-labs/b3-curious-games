@@ -13,11 +13,10 @@ contract ConnectFourFactory {
     // gameId -> contract implementation
     mapping(uint => ConnectFour) public connectFourGames;
 
-    function deployNewSeason(
-    ) public returns (uint) {
+    function deployNewSeason() public returns (uint) {
         ConnectFour newGame = ConnectFour(Clones.clone(connectFourImplAddr));
         connectFourGames[seasonId] = newGame;
-        
+
         emit NewConnectFourSeasonCreated(seasonId, address(newGame));
 
         return seasonId++;

@@ -26,6 +26,7 @@
   "include": [
     "./test",
     "./typechain",
-    "./deploy"
-, "archivedContracts.ts/Battleship.oldTest.ts"  ],
+    "./deploy",
+    "archivedContracts.ts/Battleship.oldTest.ts"
+  ],
 }

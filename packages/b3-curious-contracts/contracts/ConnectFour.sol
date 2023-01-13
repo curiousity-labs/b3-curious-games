@@ -113,11 +113,11 @@ contract ConnectFour {
         /// find bottom of selected column
         for (uint8 i = 0; i < 6; i++) {
             uint8 square = game.board[column][i];
-            if(i == 5) {
+            if (i == 5) {
                 revert InvalidSelection();
             }
             if (square == 0) {
-                row = i++;  
+                row = i++;
                 break;
             }
         }
