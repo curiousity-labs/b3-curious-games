@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
 
-import "hardhat/console.sol";
-
 contract ConnectFour {
     /// @dev revert if caller isn't current team
     error NotYourTurn();
@@ -115,8 +113,11 @@ contract ConnectFour {
         /// find bottom of selected column
         for (uint8 i = 0; i < 6; i++) {
             uint8 square = game.board[column][i];
+            if(i == 5) {
+                revert InvalidSelection();
+            }
             if (square == 0) {
-                row = i++;
+                row = i++;  
                 break;
             }
         }
