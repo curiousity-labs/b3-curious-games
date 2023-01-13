@@ -30,7 +30,6 @@ import type {
 export interface ConnectFourInterface extends utils.Interface {
   functions: {
     "challenge(address)": FunctionFragment;
-    "didPlayerWin(uint8,uint8,uint8,uint8)": FunctionFragment;
     "getGame(uint256)": FunctionFragment;
     "getGameBoard(uint256)": FunctionFragment;
     "makeMove(uint8,uint8)": FunctionFragment;
@@ -39,7 +38,6 @@ export interface ConnectFourInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "challenge"
-      | "didPlayerWin"
       | "getGame"
       | "getGameBoard"
       | "makeMove"
@@ -48,15 +46,6 @@ export interface ConnectFourInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "challenge",
     values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "didPlayerWin",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getGame",
@@ -72,10 +61,6 @@ export interface ConnectFourInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "challenge", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "didPlayerWin",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "getGame", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getGameBoard",
@@ -160,14 +145,6 @@ export interface ConnectFour extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    didPlayerWin(
-      _gameId: PromiseOrValue<BigNumberish>,
-      column: PromiseOrValue<BigNumberish>,
-      row: PromiseOrValue<BigNumberish>,
-      teamNum: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     getGame(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -197,14 +174,6 @@ export interface ConnectFour extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  didPlayerWin(
-    _gameId: PromiseOrValue<BigNumberish>,
-    column: PromiseOrValue<BigNumberish>,
-    row: PromiseOrValue<BigNumberish>,
-    teamNum: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   getGame(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -233,14 +202,6 @@ export interface ConnectFour extends BaseContract {
       opponent: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    didPlayerWin(
-      _gameId: PromiseOrValue<BigNumberish>,
-      column: PromiseOrValue<BigNumberish>,
-      row: PromiseOrValue<BigNumberish>,
-      teamNum: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
 
     getGame(
       arg0: PromiseOrValue<BigNumberish>,
@@ -297,14 +258,6 @@ export interface ConnectFour extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    didPlayerWin(
-      _gameId: PromiseOrValue<BigNumberish>,
-      column: PromiseOrValue<BigNumberish>,
-      row: PromiseOrValue<BigNumberish>,
-      teamNum: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     getGame(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -326,14 +279,6 @@ export interface ConnectFour extends BaseContract {
     challenge(
       opponent: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    didPlayerWin(
-      _gameId: PromiseOrValue<BigNumberish>,
-      column: PromiseOrValue<BigNumberish>,
-      row: PromiseOrValue<BigNumberish>,
-      teamNum: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getGame(
