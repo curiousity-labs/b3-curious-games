@@ -104,6 +104,28 @@ describe.only("ConnectFour", () => {
         .to.emit(gameOneContractSignerTwo, "GameFinished")
         .withArgs(account2.address, connectFourGameOneId)
     })
+
+    it("Should end with backward angle win; team one", async () => {
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 3)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 2)
+      
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 4)      
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 2)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)      
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 1)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
+      await expect(gameOneContractSignerOne.makeMove(connectFourGameOneId, 1))
+        .to.emit(gameOneContractSignerOne, "GameFinished")
+        .withArgs(account1.address, connectFourGameOneId)
+    })
   })
 
 })

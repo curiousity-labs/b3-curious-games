@@ -245,7 +245,51 @@ contract ConnectFour {
         return connectedPiecesCount;
     }
 
-    function checkBackwardAngleWin() internal returns (uint) {}
+    function checkBackwardAngleWin(
+        uint8[6][6] storage board,
+        uint8 column,
+        uint8 row,
+        uint8 teamNum
+    ) internal view returns (uint8) {
+        uint8 connectedPiecesCount = 1;
+        /// @dev checks backward angle down
+        if (row != 0 && column != 0) {
+            uint8 rowIndex = row - 1;
+            uint8 columnIndex = column + 1;
+            while (rowIndex >= 0 || columnIndex < 7) {
+                if (checkSquare(board, columnIndex, rowIndex, teamNum)) {
+                    connectedPiecesCount++;
+                } else {
+                    break;
+                }
+                if (rowIndex == 0 || columnIndex > 6) {
+                    break;
+                } else {
+                    rowIndex--;
+                    columnIndex++;
+                }
+            }
+        }
+        /// @dev checks forward angle down
+        if (row != 0 && column != 0) {
+            uint8 rowIndex = row + 1;
+            uint8 columnIndex = column - 1;
+            while (rowIndex < 7 || columnIndex >= 0) {
+                if (checkSquare(board, columnIndex, rowIndex, teamNum)) {
+                    connectedPiecesCount++;
+                } else {
+                    break;
+                }
+                if (rowIndex > 6 || columnIndex == 0) {
+                    break;
+                } else {
+                    rowIndex++;
+                    columnIndex--;
+                }
+            }
+        }
+        return connectedPiecesCount;
+    }
 
     /// @notice checks to see if there is a winning player
     function didPlayerWin(
@@ -255,10 +299,10 @@ contract ConnectFour {
         uint8 teamNum
     ) public view returns (bool) {
         uint8[6][6] storage board = getGame[_gameId].board;
-            /// using new chip location as middle == m
-            /// [ [ C+1 | R-1 ] [  C+1  ] [ C+1 | R+1 ] ]
-            /// [ [    R-1    ] [ C | R ] [    R+1    ]
-            /// [ [ C-1 | R-1 ] [  C-1  ] [ C-1 | R+1 ] ]
+        /// using new chip location as middle == m
+        /// [ [ C+1 | R-1 ] [  C+1  ] [ C+1 | R+1 ] ]
+        /// [ [    R-1    ] [ C | R ] [    R+1    ]
+        /// [ [ C-1 | R-1 ] [  C-1  ] [ C-1 | R+1 ] ]
 
         uint8 horionalCount = checkHorizonalWin(board, column, row, teamNum);
         if (horionalCount == 4) {
@@ -275,6 +319,15 @@ contract ConnectFour {
             teamNum
         );
         if (forwardAngleCount == 4) {
+            return true;
+        }
+        uint8 backwardAngleCount = checkBackwardAngleWin(
+            board,
+            column,
+            row,
+            teamNum
+        );
+        if (backwardAngleCount == 4) {
             return true;
         }
         return false;
