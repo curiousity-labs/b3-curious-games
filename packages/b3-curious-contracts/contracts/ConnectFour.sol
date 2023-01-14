@@ -12,37 +12,33 @@ contract ConnectFour {
     error SeasonOver();
 
     /// @notice emiited when game is created
-    event GameCreated(uint gameId, address teamOne, address teamTwo);
+    event GameCreated(uint8 gameId, address teamOne, address teamTwo);
     /// @notice emitted after turn is successfully taken
-    event TurnTaken(address team, uint column);
+    event TurnTaken(address team, uint8 column);
     /// @notice emitted when game is complete
-    event GameFinished(address winner, uint gameId);
+    event GameFinished(address winner, uint8 gameId);
 
     /// @notice holds game data
     /// @param teamOne address of challenger
     /// @param teamTwo address of challenged
-    /// @param turn current turn is calculated using bitwise for basically odd/even teamOne/teamTwo
     /// @param winner address of winning team; default: address(0)
+    /// @param turn current turn is calculated using bitwise for basically odd/even teamOne/teamTwo
     /// @param board holds game board data; each 'square' holds current data; 0 = no chip; 1 = team one; 2 = team two
     struct Game {
         address teamOne;
         address teamTwo;
-        uint8 turn;
         address winner;
+        uint8 turn;
         uint8[6][6] board;
     }
 
-    /// @notice holds the initial board information
-    /// @dev set during deployment ~see constructor
-    uint8[6][6] internal initialBoard;
-
     /// @notice Used as a counter for the next game index.
     /// @dev Initialised at 1 because it makes the first transaction slightly cheaper.
-    uint internal gameId = 1;
+    uint8 internal gameId = 1;
 
     /// @notice An indexed list of games
     /// @dev This automatically generates a getter for us, which will return `Game.player1`, `Game.player2`, `Game.moves`, and `Game.finished` (the arrays are skipped)
-    mapping(uint => Game) public getGame;
+    mapping(uint8 => Game) public getGame;
 
     /// @notice prevent move if column is invalid
     modifier validColumn(uint8 column) {
@@ -76,13 +72,14 @@ contract ConnectFour {
      */
     function challenge(
         address opponent
-    ) public uniqueTeams(opponent) returns (uint) {
+    ) public uniqueTeams(opponent) returns (uint8) {
+        uint8[6][6] memory newBoard;
         Game memory newGame = Game({
             teamOne: msg.sender,
             teamTwo: opponent,
             turn: uint8(0),
             winner: address(0),
-            board: initialBoard
+            board: newBoard
         });
 
         getGame[gameId] = newGame;
@@ -374,7 +371,7 @@ contract ConnectFour {
     }
 
     function getGameBoard(
-        uint _gameId
+        uint8 _gameId
     ) public view returns (uint8[6][6] memory) {
         return getGame[_gameId].board;
     }

@@ -29,7 +29,7 @@ import type {
 
 export interface ConnectFourFactoryInterface extends utils.Interface {
   functions: {
-    "connectFourGames(uint256)": FunctionFragment;
+    "connectFourGames(uint8)": FunctionFragment;
     "deployNewSeason()": FunctionFragment;
     "getGames()": FunctionFragment;
   };
@@ -59,7 +59,7 @@ export interface ConnectFourFactoryInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "getGames", data: BytesLike): Result;
 
   events: {
-    "NewConnectFourSeasonCreated(uint256,address)": EventFragment;
+    "NewConnectFourSeasonCreated(uint8,address)": EventFragment;
   };
 
   getEvent(
@@ -68,11 +68,11 @@ export interface ConnectFourFactoryInterface extends utils.Interface {
 }
 
 export interface NewConnectFourSeasonCreatedEventObject {
-  seasonId: BigNumber;
+  seasonId: number;
   gameAddress: string;
 }
 export type NewConnectFourSeasonCreatedEvent = TypedEvent<
-  [BigNumber, string],
+  [number, string],
   NewConnectFourSeasonCreatedEventObject
 >;
 
@@ -135,13 +135,13 @@ export interface ConnectFourFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    deployNewSeason(overrides?: CallOverrides): Promise<BigNumber>;
+    deployNewSeason(overrides?: CallOverrides): Promise<number>;
 
     getGames(overrides?: CallOverrides): Promise<string[]>;
   };
 
   filters: {
-    "NewConnectFourSeasonCreated(uint256,address)"(
+    "NewConnectFourSeasonCreated(uint8,address)"(
       seasonId?: null,
       gameAddress?: null
     ): NewConnectFourSeasonCreatedEventFilter;
