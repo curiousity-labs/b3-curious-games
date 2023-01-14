@@ -4,7 +4,7 @@ import { ethers } from "hardhat"
 import { expect } from "chai"
 import { BigNumber } from "ethers"
 import { ConnectFourFactory, ConnectFour, ConnectFour__factory, ConnectFourFactory__factory } from "../typechain"
-describe.only("ConnectFour", () => {
+describe("ConnectFour", () => {
   let connectFourFactory: ConnectFourFactory
   let [account1, account2, account3]: SignerWithAddress[] = []
 

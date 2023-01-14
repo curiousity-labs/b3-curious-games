@@ -1,14 +1,15 @@
 {
   "name": "b3-curious-contracts",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "EVM contracts written in Solidity",
   "author": "David A Colon",
   "license": "MIT",
   "scripts": {
     "test": "REPORT_GAS=true npx hardhat test",
     "compile": "npm run clean && npx hardhat compile",
-    "deploy:bsfactory:goerli": "npx hardhat deploy --network goerli --tags BattleshipFactory --export ./minified/deployments.json",
-    "verify:bsfactory:goerli": "npx hardhat etherscan-verify --network goerli --solc-input",
+    "deploy:battleship:goerli": "npm run package:prep && npx hardhat deploy --network goerli --tags Battleship --export ./minified/deployments.json",
+    "deploy:connectFour:goerli": "npm run package:prep && npx hardhat deploy --network goerli --tags ConnectFour --export ./minified/deployments.json",
+    "verify:goerli": "npx hardhat etherscan-verify --network goerli --solc-input",
     "clean": "hardhat clean && rimraf dist",
     "package:prep": "pnpm run clean && pnpm run compile && tsc",
     "publish-packages": "pnpm run package:prep && pnpm publish --no-git-checks"

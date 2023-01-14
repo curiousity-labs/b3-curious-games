@@ -7,13 +7,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployer } = await hre.getNamedAccounts();
     const { deploy } = hre.deployments;
     ;
-    const battleship = await deploy('Battleship', {
+    const connectFour = await deploy('ConnectFour', {
       from: deployer,
       log: true,
     });
-    await deploy('BattleshipFactory', {
+    await deploy('ConnectFourFactory', {
       from: deployer,
-      args: [battleship.address],
+      args: [connectFour.address],
       log: true,
     });
 
@@ -24,4 +24,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 export default func;
-func.tags = ['Battleship'];
+func.tags = ['ConnectFour'];
