@@ -1,6 +1,6 @@
 {
   "name": "b3-curious-contracts",
-  "version": "0.0.15",
+  "version": "0.1.0",
   "description": "EVM contracts written in Solidity",
   "author": "David A Colon",
   "license": "MIT",
