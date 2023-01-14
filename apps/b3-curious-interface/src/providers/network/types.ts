@@ -15,5 +15,5 @@ export type IContracts = {
   vetoMultisigVotingMasterCopy: string,
   vetoERC20VotingMasterCopy: string,
   battleshipFactory: string,
-  battleshipImpl: string
+  battleship: string
 }

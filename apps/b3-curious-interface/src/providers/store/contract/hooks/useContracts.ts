@@ -18,7 +18,7 @@ import {
 
 import {
   BattleshipFactory__factory as BattleshipFactoryInterface,
-  BattleshipImpl__factory as BattleshipImplInterface,
+  Battleship__factory as BattleshipInterface,
 } from 'b3-curious-contracts/typechain'
 
 import { useNetworkConfg } from '../../../network/NetworkConfigProvider';
@@ -36,7 +36,7 @@ export function useContracts(dispatch: Dispatch) {
     const signerOrProvider = signer || provider
     // b3 contracts
     const battleshipFactory = BattleshipFactoryInterface.connect(contracts.battleshipFactory, signerOrProvider)
-    const battleshipImpl = BattleshipImplInterface.connect(contracts.battleshipImpl, signerOrProvider)
+    const battleship = BattleshipInterface.connect(contracts.battleship, signerOrProvider)
 
     // fractal contracts
     const fractalModule = FractalModuleInterface.connect(contracts.fractalModuleMasterCopy, signerOrProvider)
@@ -57,7 +57,7 @@ export function useContracts(dispatch: Dispatch) {
       payload: {
         b3Curious: {
           battleshipFactory,
-          battleshipImpl
+          battleship
         },
         fractal: {
           fractalModule,

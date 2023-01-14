@@ -25,7 +25,7 @@ export const defaultState = {
     vetoMultisigVotingMasterCopy: '',
     vetoERC20VotingMasterCopy: '',
     battleshipFactory: '',
-    battleshipImpl: ''
+    battleship: ''
   },
 }
 

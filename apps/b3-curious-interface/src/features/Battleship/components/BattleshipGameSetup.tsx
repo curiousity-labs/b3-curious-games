@@ -59,16 +59,16 @@ export function BattleshipGameSetup() {
       return;
     }
 
-    const battleshipImpl = b3Curious.battleshipImpl.attach(gameAddress)
+    const battleship = b3Curious.battleship.attach(gameAddress)
     let setFunction: (
       targets: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ) => Promise<ContractTransaction>;
     if (values.team === teamOne.full) {
-      setFunction = battleshipImpl.setTeamOnePieces
+      setFunction = battleship.setTeamOnePieces
     }
     if (values.team === teamTwo.full) {
-      setFunction = battleshipImpl.setTeamTwoPieces
+      setFunction = battleship.setTeamTwoPieces
     }
     const shipMapping = values.ships.map((ship) => ship.locations)
     const pieces = formatMappedStrs(shipMapping).flat();

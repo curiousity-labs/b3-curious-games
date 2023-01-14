@@ -23,7 +23,7 @@ export function useLoadBattleshipGame({ battleshipGame, dispatch }: IUseBattlesh
     if (!b3Contracts || !gameAddress) {
       return;
     }
-    const gameContract = b3Contracts.battleshipImpl.attach(gameAddress)
+    const gameContract = b3Contracts.battleship.attach(gameAddress)
 
     const teamOneAddress = await gameContract.teamOne()
     const teamOneAddressInfo = await lookupAddress(teamOneAddress)
@@ -65,7 +65,7 @@ export function useLoadBattleshipGame({ battleshipGame, dispatch }: IUseBattlesh
     if (!b3Contracts || !params.gameAddress) {
       return;
     }
-    const battleshipContract = b3Contracts.battleshipImpl.attach(params.gameAddress)
+    const battleshipContract = b3Contracts.battleship.attach(params.gameAddress)
     battleshipContract.on(battleshipContract.filters.TurnFinished(), turnListener)
     return () => {
       battleshipContract.off(battleshipContract.filters.TurnFinished(), turnListener)
@@ -84,7 +84,7 @@ export function useLoadBattleshipGame({ battleshipGame, dispatch }: IUseBattlesh
     if (!b3Contracts || !params.gameAddress) {
       return;
     }
-    const battleshipContract = b3Contracts.battleshipImpl.attach(params.gameAddress)
+    const battleshipContract = b3Contracts.battleship.attach(params.gameAddress)
     battleshipContract.on(battleshipContract.filters.TeamReady(), readyListener)
     return () => {
       battleshipContract.off(battleshipContract.filters.TeamReady(), readyListener)

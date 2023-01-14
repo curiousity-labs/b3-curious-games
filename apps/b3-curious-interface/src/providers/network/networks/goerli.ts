@@ -10,7 +10,7 @@ import VotesToken from '@fractal-framework/fractal-contracts/deployments/goerli/
 
 import { NetworkConfig } from '../NetworkConfigProvider'
 
-const { BattleshipFactory, BattleshipImpl } = b3CuriousDeployments.contracts
+const { BattleshipFactory, Battleship } = b3CuriousDeployments.contracts
 
 export const goerliConfig: NetworkConfig = {
   contracts: {
@@ -30,6 +30,6 @@ export const goerliConfig: NetworkConfig = {
     vetoMultisigVotingMasterCopy: VetoMultisigVoting.address,
     vetoERC20VotingMasterCopy: VetoERC20Voting.address,
     battleshipFactory: BattleshipFactory.address,
-    battleshipImpl: BattleshipImpl.address
+    battleship: Battleship.address
   },
 }

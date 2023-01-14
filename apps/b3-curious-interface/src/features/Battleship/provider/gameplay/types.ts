@@ -1,4 +1,4 @@
-import { BattleshipImpl } from 'b3-curious-contracts/typechain';
+import { Battleship } from 'b3-curious-contracts/typechain';
 import { AddressInfo } from './../../../../hooks/utils/useAddressLookup';
 
 export interface IBattleshipState extends BattleGame {
@@ -10,7 +10,7 @@ export interface IBattleshipState extends BattleGame {
 }
 
 export interface BattleGame extends BattleData {
-  battleshipContract: BattleshipImpl | null;
+  battleshipContract: Battleship | null;
   readyEvents: string[];
 }
 

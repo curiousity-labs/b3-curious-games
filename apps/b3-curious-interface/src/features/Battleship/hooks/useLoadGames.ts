@@ -20,7 +20,7 @@ export function useLoadGames() {
     const gameAddresses = await b3Contracts.battleshipFactory.getGames();
 
     const gamesWTeamAddr = await Promise.all(gameAddresses.map(async (_gameAddress) => {
-      const gameContract = b3Contracts.battleshipImpl.attach(_gameAddress)
+      const gameContract = b3Contracts.battleship.attach(_gameAddress)
       return {
         gameAddress: _gameAddress,
         teamOne: await lookupAddress(await gameContract.teamOne()),
@@ -38,7 +38,7 @@ export function useLoadGames() {
     if (!b3Contracts) {
       return;
     }
-    const gameContract = b3Contracts.battleshipImpl.attach(_gameAddress)
+    const gameContract = b3Contracts.battleship.attach(_gameAddress)
     const gameInfo = {
       gameAddress: _gameAddress,
       teamOne: await lookupAddress(teamOne),
