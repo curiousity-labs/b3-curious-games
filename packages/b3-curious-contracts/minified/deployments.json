@@ -400,7 +400,7 @@
       ]
     },
     "ConnectFour": {
-      "address": "0x00A6240b67Cb0da3234eCf2e0ad87c1F8d5fe428",
+      "address": "0x459AF48f2E18b2943398835b4843079291F28a84",
       "abi": [
         {
           "inputs": [],
@@ -427,9 +427,9 @@
           "inputs": [
             {
               "indexed": false,
-              "internalType": "uint8",
+              "internalType": "uint256",
               "name": "gameId",
-              "type": "uint8"
+              "type": "uint256"
             },
             {
               "indexed": false,
@@ -452,15 +452,15 @@
           "inputs": [
             {
               "indexed": false,
-              "internalType": "address",
-              "name": "winner",
-              "type": "address"
+              "internalType": "uint256",
+              "name": "gameId",
+              "type": "uint256"
             },
             {
               "indexed": false,
-              "internalType": "uint8",
-              "name": "gameId",
-              "type": "uint8"
+              "internalType": "address",
+              "name": "winner",
+              "type": "address"
             }
           ],
           "name": "GameFinished",
@@ -469,6 +469,12 @@
         {
           "anonymous": false,
           "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "gameId",
+              "type": "uint256"
+            },
             {
               "indexed": false,
               "internalType": "address",
@@ -494,13 +500,7 @@
             }
           ],
           "name": "challenge",
-          "outputs": [
-            {
-              "internalType": "uint8",
-              "name": "",
-              "type": "uint8"
-            }
-          ],
+          "outputs": [],
           "stateMutability": "nonpayable",
           "type": "function"
         },
@@ -509,9 +509,9 @@
           "name": "gameId",
           "outputs": [
             {
-              "internalType": "uint8",
+              "internalType": "uint256",
               "name": "",
-              "type": "uint8"
+              "type": "uint256"
             }
           ],
           "stateMutability": "view",
@@ -520,9 +520,9 @@
         {
           "inputs": [
             {
-              "internalType": "uint8",
+              "internalType": "uint256",
               "name": "",
-              "type": "uint8"
+              "type": "uint256"
             }
           ],
           "name": "getGame",
@@ -591,7 +591,7 @@
       ]
     },
     "ConnectFourFactory": {
-      "address": "0xBFEa2f8F77EdA73Ea10695772163A72d1339Dc14",
+      "address": "0x57A3D2d44b43cEd996d85E7bF5c4369cEDA702B0",
       "abi": [
         {
           "inputs": [
