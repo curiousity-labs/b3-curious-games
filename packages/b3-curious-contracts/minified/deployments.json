@@ -400,7 +400,7 @@
       ]
     },
     "ConnectFour": {
-      "address": "0x5B400d1305fEd901116e2779130c2F161447BF9F",
+      "address": "0x00A6240b67Cb0da3234eCf2e0ad87c1F8d5fe428",
       "abi": [
         {
           "inputs": [],
@@ -505,6 +505,19 @@
           "type": "function"
         },
         {
+          "inputs": [],
+          "name": "gameId",
+          "outputs": [
+            {
+              "internalType": "uint8",
+              "name": "",
+              "type": "uint8"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
           "inputs": [
             {
               "internalType": "uint8",
@@ -578,7 +591,7 @@
       ]
     },
     "ConnectFourFactory": {
-      "address": "0x434C8C57A8e11D27DB5DD0dC6f3Aa5d5fB9c3dBb",
+      "address": "0xBFEa2f8F77EdA73Ea10695772163A72d1339Dc14",
       "abi": [
         {
           "inputs": [

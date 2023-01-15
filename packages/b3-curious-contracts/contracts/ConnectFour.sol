@@ -34,7 +34,7 @@ contract ConnectFour {
 
     /// @notice Used as a counter for the next game index.
     /// @dev Initialised at 1 because it makes the first transaction slightly cheaper.
-    uint8 internal gameId = 1;
+    uint8 public gameId = 1;
 
     /// @notice An indexed list of games
     /// @dev This automatically generates a getter for us, which will return `Game.player1`, `Game.player2`, `Game.moves`, and `Game.finished` (the arrays are skipped)
