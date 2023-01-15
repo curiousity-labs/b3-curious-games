@@ -31,7 +31,7 @@ export interface ConnectFourInterface extends utils.Interface {
   functions: {
     "challenge(address)": FunctionFragment;
     "gameId()": FunctionFragment;
-    "getGame(uint8)": FunctionFragment;
+    "getGame(uint256)": FunctionFragment;
     "getGameBoard(uint8)": FunctionFragment;
     "makeMove(uint8,uint8)": FunctionFragment;
   };
@@ -73,9 +73,9 @@ export interface ConnectFourInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "makeMove", data: BytesLike): Result;
 
   events: {
-    "GameCreated(uint8,address,address)": EventFragment;
-    "GameFinished(address,uint8)": EventFragment;
-    "TurnTaken(address,uint8)": EventFragment;
+    "GameCreated(uint256,address,address)": EventFragment;
+    "GameFinished(uint256,address)": EventFragment;
+    "TurnTaken(uint256,address,uint8)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "GameCreated"): EventFragment;
@@ -84,33 +84,37 @@ export interface ConnectFourInterface extends utils.Interface {
 }
 
 export interface GameCreatedEventObject {
-  gameId: number;
+  gameId: BigNumber;
   teamOne: string;
   teamTwo: string;
 }
 export type GameCreatedEvent = TypedEvent<
-  [number, string, string],
+  [BigNumber, string, string],
   GameCreatedEventObject
 >;
 
 export type GameCreatedEventFilter = TypedEventFilter<GameCreatedEvent>;
 
 export interface GameFinishedEventObject {
+  gameId: BigNumber;
   winner: string;
-  gameId: number;
 }
 export type GameFinishedEvent = TypedEvent<
-  [string, number],
+  [BigNumber, string],
   GameFinishedEventObject
 >;
 
 export type GameFinishedEventFilter = TypedEventFilter<GameFinishedEvent>;
 
 export interface TurnTakenEventObject {
+  gameId: BigNumber;
   team: string;
   column: number;
 }
-export type TurnTakenEvent = TypedEvent<[string, number], TurnTakenEventObject>;
+export type TurnTakenEvent = TypedEvent<
+  [BigNumber, string, number],
+  TurnTakenEventObject
+>;
 
 export type TurnTakenEventFilter = TypedEventFilter<TurnTakenEvent>;
 
@@ -146,7 +150,7 @@ export interface ConnectFour extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    gameId(overrides?: CallOverrides): Promise<[number]>;
+    gameId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getGame(
       arg0: PromiseOrValue<BigNumberish>,
@@ -177,7 +181,7 @@ export interface ConnectFour extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  gameId(overrides?: CallOverrides): Promise<number>;
+  gameId(overrides?: CallOverrides): Promise<BigNumber>;
 
   getGame(
     arg0: PromiseOrValue<BigNumberish>,
@@ -206,9 +210,9 @@ export interface ConnectFour extends BaseContract {
     challenge(
       opponent: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<number>;
+    ): Promise<void>;
 
-    gameId(overrides?: CallOverrides): Promise<number>;
+    gameId(overrides?: CallOverrides): Promise<BigNumber>;
 
     getGame(
       arg0: PromiseOrValue<BigNumberish>,
@@ -235,7 +239,7 @@ export interface ConnectFour extends BaseContract {
   };
 
   filters: {
-    "GameCreated(uint8,address,address)"(
+    "GameCreated(uint256,address,address)"(
       gameId?: null,
       teamOne?: null,
       teamTwo?: null
@@ -246,17 +250,18 @@ export interface ConnectFour extends BaseContract {
       teamTwo?: null
     ): GameCreatedEventFilter;
 
-    "GameFinished(address,uint8)"(
-      winner?: null,
-      gameId?: null
+    "GameFinished(uint256,address)"(
+      gameId?: null,
+      winner?: null
     ): GameFinishedEventFilter;
-    GameFinished(winner?: null, gameId?: null): GameFinishedEventFilter;
+    GameFinished(gameId?: null, winner?: null): GameFinishedEventFilter;
 
-    "TurnTaken(address,uint8)"(
+    "TurnTaken(uint256,address,uint8)"(
+      gameId?: null,
       team?: null,
       column?: null
     ): TurnTakenEventFilter;
-    TurnTaken(team?: null, column?: null): TurnTakenEventFilter;
+    TurnTaken(gameId?: null, team?: null, column?: null): TurnTakenEventFilter;
   };
 
   estimateGas: {

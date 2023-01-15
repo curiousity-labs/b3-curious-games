@@ -4,7 +4,7 @@ import { ethers } from "hardhat"
 import { expect } from "chai"
 import { BigNumber } from "ethers"
 import { ConnectFourFactory, ConnectFour, ConnectFour__factory, ConnectFourFactory__factory } from "../typechain"
-describe("ConnectFour", () => {
+describe.only("ConnectFour", () => {
   let connectFourFactory: ConnectFourFactory
   let [account1, account2, account3]: SignerWithAddress[] = []
 
@@ -46,7 +46,7 @@ describe("ConnectFour", () => {
     it("Should play first move", async () => {
       await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0))
         .to.emit(gameOneContractSignerTwo, "TurnTaken")
-        .withArgs(account2.address, 0)
+        .withArgs(connectFourGameOneId, account2.address, 0)
     })
 
     it("Should end with horizontal win; team two", async () => {
@@ -61,7 +61,7 @@ describe("ConnectFour", () => {
 
       await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3))
         .to.emit(gameOneContractSignerTwo, "GameFinished")
-        .withArgs(account2.address, connectFourGameOneId)
+        .withArgs(connectFourGameOneId, account2.address)
 
     })
 
@@ -78,7 +78,7 @@ describe("ConnectFour", () => {
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
       await expect(gameOneContractSignerOne.makeMove(connectFourGameOneId, 4))
         .to.emit(gameOneContractSignerOne, "GameFinished")
-        .withArgs(account1.address, connectFourGameOneId)
+        .withArgs(connectFourGameOneId, account1.address)
     })
 
     it("Should end with forward angle win; team two", async () => {
@@ -99,7 +99,7 @@ describe("ConnectFour", () => {
 
       await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 4))
         .to.emit(gameOneContractSignerTwo, "GameFinished")
-        .withArgs(account2.address, connectFourGameOneId)
+        .withArgs(connectFourGameOneId, account2.address)
     })
 
     it("Should end with backward angle win; team one", async () => {
@@ -121,7 +121,7 @@ describe("ConnectFour", () => {
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
       await expect(gameOneContractSignerOne.makeMove(connectFourGameOneId, 1))
         .to.emit(gameOneContractSignerOne, "GameFinished")
-        .withArgs(account1.address, connectFourGameOneId)
+        .withArgs(connectFourGameOneId, account1.address)
     })
   })
   describe("Game Play | Revert", () => {

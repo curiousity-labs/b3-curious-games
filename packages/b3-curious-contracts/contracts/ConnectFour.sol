@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
+import "hardhat/console.sol";
 
 contract ConnectFour {
     /// @notice revert if caller isn't current team
@@ -12,11 +13,11 @@ contract ConnectFour {
     error SeasonOver();
 
     /// @notice emiited when game is created
-    event GameCreated(uint8 gameId, address teamOne, address teamTwo);
+    event GameCreated(uint gameId, address teamOne, address teamTwo);
     /// @notice emitted after turn is successfully taken
-    event TurnTaken(address team, uint8 column);
+    event TurnTaken(uint gameId, address team, uint8 column);
     /// @notice emitted when game is complete
-    event GameFinished(address winner, uint8 gameId);
+    event GameFinished(uint gameId, address winner);
 
     /// @notice holds game data
     /// @param teamOne address of challenger
@@ -34,11 +35,11 @@ contract ConnectFour {
 
     /// @notice Used as a counter for the next game index.
     /// @dev Initialised at 1 because it makes the first transaction slightly cheaper.
-    uint8 public gameId = 1;
+    uint public gameId;
 
     /// @notice An indexed list of games
     /// @dev This automatically generates a getter for us, which will return `Game.player1`, `Game.player2`, `Game.moves`, and `Game.finished` (the arrays are skipped)
-    mapping(uint8 => Game) public getGame;
+    mapping(uint => Game) public getGame;
 
     /// @notice prevent move if column is invalid
     modifier validColumn(uint8 column) {
@@ -47,7 +48,7 @@ contract ConnectFour {
     }
 
     /// @notice prevents gameplay if game is over
-    modifier gameOver(uint8 _gameId) {
+    modifier gameOver(uint _gameId) {
         if (getGame[_gameId].winner != address(0)) revert GameOver();
         _;
     }
@@ -70,9 +71,7 @@ contract ConnectFour {
      * @dev game id is increated each time a new game is created
      * @dev season is over when timer (soon to be added) is past
      */
-    function challenge(
-        address opponent
-    ) public uniqueTeams(opponent) returns (uint8) {
+    function challenge(address opponent) public uniqueTeams(opponent) {
         uint8[6][6] memory newBoard;
         Game memory newGame = Game({
             teamOne: msg.sender,
@@ -81,12 +80,11 @@ contract ConnectFour {
             winner: address(0),
             board: newBoard
         });
-
         getGame[gameId] = newGame;
 
         emit GameCreated(gameId, msg.sender, opponent);
 
-        return gameId++;
+        gameId++;
     }
 
     /**
@@ -129,45 +127,46 @@ contract ConnectFour {
         /// @notice increments turn
         game.turn++;
 
-        emit TurnTaken(msg.sender, column);
+        emit TurnTaken(_gameId, msg.sender, column);
 
         /// @notice checks surrounding squares for connected pieces
         if (didPlayerWin(_gameId, column, row, teamNum)) {
             game.winner = msg.sender;
-            emit GameFinished(msg.sender, _gameId);
+            emit GameFinished(_gameId, msg.sender);
         }
     }
 
     /// @notice checks square for team's chip
-    /// @param board game board data
+    /// @param _gameId id of game
     /// @param column column selected for new chip
     /// @param row row where new chip lands
     /// @param teamNum number assigned to team
     function checkSquare(
-        uint8[6][6] storage board,
+        uint8 _gameId,
         uint8 column,
         uint8 row,
         uint8 teamNum
     ) private view returns (bool) {
+        uint8[6][6] storage board = getGame[_gameId].board;
         return board[column][row] == teamNum;
     }
 
     /// @notice checks the horizontal win
-    /// @param board game board data
+    /// @param _gameId id of game
     /// @param column column selected for new chip
     /// @param row row where new chip lands
     /// @param teamNum number assigned to team
     function checkHorizonalWin(
-        uint8[6][6] storage board,
+        uint8 _gameId,
         uint8 column,
         uint8 row,
         uint8 teamNum
-    ) private view returns (uint8) {
-        uint8 connectedPiecesCount = 1;
+    ) private view returns (uint) {
+        uint connectedPiecesCount = 1;
 
         /// @dev checks to the right of new piece
         for (uint8 i = column + 1; i < 6 - column; i++) {
-            if (checkSquare(board, i, row, teamNum)) {
+            if (checkSquare(_gameId, i, row, teamNum)) {
                 connectedPiecesCount++;
             } else {
                 break;
@@ -177,7 +176,7 @@ contract ConnectFour {
         if (column != 0) {
             uint8 columnIndex = column - 1;
             while (columnIndex >= 0) {
-                if (checkSquare(board, columnIndex, row, teamNum)) {
+                if (checkSquare(_gameId, columnIndex, row, teamNum)) {
                     connectedPiecesCount++;
                 } else {
                     break;
@@ -193,21 +192,21 @@ contract ConnectFour {
     }
 
     /// @notice checks the veritical win
-    /// @param board game board data
+    /// @param _gameId id of game
     /// @param column column selected for new chip
     /// @param row row where new chip lands
     /// @param teamNum number assigned to team
     function checkVericalWin(
-        uint8[6][6] storage board,
+        uint8 _gameId,
         uint8 column,
         uint8 row,
         uint8 teamNum
-    ) private view returns (uint8) {
-        uint8 connectedPiecesCount = 1;
+    ) private view returns (uint) {
+        uint connectedPiecesCount = 1;
 
         /// @dev checks rows above new piece
         for (uint8 i = row + 1; i < 6 - row; i++) {
-            if (checkSquare(board, column, i, teamNum)) {
+            if (checkSquare(_gameId, column, i, teamNum)) {
                 connectedPiecesCount++;
             } else {
                 break;
@@ -217,7 +216,7 @@ contract ConnectFour {
         if (row != 0) {
             uint8 rowIndex = row - 1;
             while (rowIndex >= 0) {
-                if (checkSquare(board, column, rowIndex, teamNum)) {
+                if (checkSquare(_gameId, column, rowIndex, teamNum)) {
                     connectedPiecesCount++;
                 } else {
                     break;
@@ -233,21 +232,21 @@ contract ConnectFour {
     }
 
     /// @notice checks the forward angle win
-    /// @param board game board data
+    /// @param _gameId id of game
     /// @param column column selected for new chip
     /// @param row row where new chip lands
     /// @param teamNum number assigned to team
     function checkForwardAngleWin(
-        uint8[6][6] storage board,
+        uint8 _gameId,
         uint8 column,
         uint8 row,
         uint8 teamNum
-    ) private view returns (uint8) {
-        uint8 connectedPiecesCount = 1;
+    ) private view returns (uint) {
+        uint connectedPiecesCount = 1;
 
         /// @dev checks forward angle up
         for (uint8 i = row + 1; i < 6 - row; i++) {
-            if (checkSquare(board, i, i, teamNum)) {
+            if (checkSquare(_gameId, i, i, teamNum)) {
                 connectedPiecesCount++;
             } else {
                 break;
@@ -259,7 +258,7 @@ contract ConnectFour {
             uint8 rowIndex = row - 1;
             uint8 columnIndex = column - 1;
             while (rowIndex >= 0 || columnIndex >= 0) {
-                if (checkSquare(board, columnIndex, rowIndex, teamNum)) {
+                if (checkSquare(_gameId, columnIndex, rowIndex, teamNum)) {
                     connectedPiecesCount++;
                 } else {
                     break;
@@ -276,24 +275,24 @@ contract ConnectFour {
     }
 
     /// @notice checks the backward angle win
-    /// @param board game board data
+    /// @param _gameId id of game
     /// @param column column selected for new chip
     /// @param row row where new chip lands
     /// @param teamNum number assigned to team
     function checkBackwardAngleWin(
-        uint8[6][6] storage board,
+        uint8 _gameId,
         uint8 column,
         uint8 row,
         uint8 teamNum
-    ) private view returns (uint8) {
-        uint8 connectedPiecesCount = 1;
+    ) private view returns (uint) {
+        uint connectedPiecesCount = 1;
 
         /// @dev checks backward angle down
         if (row != 0 && column != 0) {
             uint8 rowIndex = row - 1;
             uint8 columnIndex = column + 1;
             while (rowIndex >= 0 || columnIndex < 7) {
-                if (checkSquare(board, columnIndex, rowIndex, teamNum)) {
+                if (checkSquare(_gameId, columnIndex, rowIndex, teamNum)) {
                     connectedPiecesCount++;
                 } else {
                     break;
@@ -312,7 +311,7 @@ contract ConnectFour {
             uint8 rowIndex = row + 1;
             uint8 columnIndex = column - 1;
             while (rowIndex < 7 || columnIndex >= 0) {
-                if (checkSquare(board, columnIndex, rowIndex, teamNum)) {
+                if (checkSquare(_gameId, columnIndex, rowIndex, teamNum)) {
                     connectedPiecesCount++;
                 } else {
                     break;
@@ -329,28 +328,31 @@ contract ConnectFour {
     }
 
     /// @notice checks to see if current play won the game
+    /// @param _gameId id of game
+    /// @param column column selected for new chip
+    /// @param row row where new chip lands
+    /// @param teamNum number assigned to team
     function didPlayerWin(
         uint8 _gameId,
         uint8 column,
         uint8 row,
         uint8 teamNum
     ) private view returns (bool) {
-        uint8[6][6] storage board = getGame[_gameId].board;
         /// @dev using new chip location as middle == m
         /// @dev [ [ C+1 | R-1 ] [  C+1  ] [ C+1 | R+1 ] ]
         /// @dev [ [    R-1    ] [ C | R ] [    R+1    ]
         /// @dev [ [ C-1 | R-1 ] [  C-1  ] [ C-1 | R+1 ] ]
 
-        uint8 horionalCount = checkHorizonalWin(board, column, row, teamNum);
+        uint horionalCount = checkHorizonalWin(_gameId, column, row, teamNum);
         if (horionalCount == 4) {
             return true;
         }
-        uint8 vericalCount = checkVericalWin(board, column, row, teamNum);
+        uint vericalCount = checkVericalWin(_gameId, column, row, teamNum);
         if (vericalCount == 4) {
             return true;
         }
-        uint8 forwardAngleCount = checkForwardAngleWin(
-            board,
+        uint forwardAngleCount = checkForwardAngleWin(
+            _gameId,
             column,
             row,
             teamNum
@@ -358,8 +360,8 @@ contract ConnectFour {
         if (forwardAngleCount == 4) {
             return true;
         }
-        uint8 backwardAngleCount = checkBackwardAngleWin(
-            board,
+        uint backwardAngleCount = checkBackwardAngleWin(
+            _gameId,
             column,
             row,
             teamNum
