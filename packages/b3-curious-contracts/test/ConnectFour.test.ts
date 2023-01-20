@@ -49,7 +49,7 @@ describe.only("ConnectFour", () => {
         .withArgs(connectFourGameOneId, account2.address, 0)
     })
 
-    it("Should end with horizontal win; team two", async () => {
+    it("Should end with horizontal win; team two; short length game", async () => {
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0)
       await gameOneContractSignerOne.makeMove(connectFourGameOneId, 0)
 
@@ -62,17 +62,84 @@ describe.only("ConnectFour", () => {
       await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3))
         .to.emit(gameOneContractSignerTwo, "GameFinished")
         .withArgs(connectFourGameOneId, account2.address)
-
     })
 
-    it("Should end with veritical win; team one", async () => {
+    it("Should end with horizontal win; team two; long length game", async () => {
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 0)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 1)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 2)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 4)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 3)
+
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 5)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 5)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 0)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 1)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 2)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 4)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 3)
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+      
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 5)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 5)
+      
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 0)
+      
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 1)
+      
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 2)
+
+      await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3))
+        .to.emit(gameOneContractSignerTwo, "GameFinished")
+        .withArgs(connectFourGameOneId, account2.address)
+    })
+
+    it("Should end with veritical win; team one; med length game", async () => {
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 1)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 3)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 5)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 1)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 3)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 5)
       await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
 
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)
-      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 0)
 
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 2)
+
+      await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 5)
       await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
 
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 2)
@@ -81,7 +148,7 @@ describe.only("ConnectFour", () => {
         .withArgs(connectFourGameOneId, account1.address)
     })
 
-    it("Should end with forward angle win; team two", async () => {
+    it("Should end with forward angle win; team two; short length game", async () => {
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 1)
       await gameOneContractSignerOne.makeMove(connectFourGameOneId, 2)
 
@@ -102,7 +169,7 @@ describe.only("ConnectFour", () => {
         .withArgs(connectFourGameOneId, account2.address)
     })
 
-    it("Should end with backward angle win; team one", async () => {
+    it("Should end with backward angle win; team one; short length game", async () => {
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 3)
       await gameOneContractSignerOne.makeMove(connectFourGameOneId, 4)
 
@@ -152,7 +219,7 @@ describe.only("ConnectFour", () => {
       await gameOneContractSignerOne.makeMove(connectFourGameOneId, 0)
 
       await gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0)
-      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 1)
+      await gameOneContractSignerOne.makeMove(connectFourGameOneId, 0)
       await expect(gameOneContractSignerTwo.makeMove(connectFourGameOneId, 0))
         .to.revertedWithCustomError(gameOneContractSignerTwo, "InvalidSelection")
     })
