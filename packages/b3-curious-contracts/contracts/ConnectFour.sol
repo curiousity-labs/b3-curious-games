@@ -42,7 +42,7 @@ contract ConnectFour {
 
     /// @notice prevent move if column is invalid
     modifier validColumn(uint8 column) {
-        if (column >= 6) revert InvalidSelection();
+        if (column > 5) revert InvalidSelection();
         _;
     }
 
@@ -110,11 +110,11 @@ contract ConnectFour {
         }
 
         /// @notice finds where chip will land
-        for (uint8 i = 0; i < 6; i++) {
-            uint8 square = game.board[i][column];
-            if (i == 5) {
+        for (uint8 i = 0; i < 7; i++) {
+            if (i > 5) {
                 revert InvalidSelection();
             }
+            uint8 square = game.board[i][column];
             if (square == 0) {
                 row = i++;
                 break;
@@ -256,7 +256,7 @@ contract ConnectFour {
         if (row != 0 && column != 0) {
             uint8 rowIndex = row - 1;
             uint8 columnIndex = column - 1;
-            while (rowIndex >= 0 || columnIndex >= 0) {
+            while (rowIndex >= 0 && columnIndex >= 0) {
                 if (checkSquare(_gameId, columnIndex, rowIndex, teamNum)) {
                     connectedPiecesCount++;
                 } else {
@@ -290,13 +290,13 @@ contract ConnectFour {
         if (row != 0 && column != 0) {
             uint8 rowIndex = row - 1;
             uint8 columnIndex = column + 1;
-            while (rowIndex >= 0 || columnIndex < 7) {
+            while (rowIndex >= 0 && columnIndex < 6) {
                 if (checkSquare(_gameId, columnIndex, rowIndex, teamNum)) {
                     connectedPiecesCount++;
                 } else {
                     break;
                 }
-                if (rowIndex == 0 || columnIndex > 6) {
+                if (rowIndex == 0 || columnIndex >= 6) {
                     break;
                 } else {
                     rowIndex--;
@@ -309,13 +309,13 @@ contract ConnectFour {
         if (row != 0 && column != 0) {
             uint8 rowIndex = row + 1;
             uint8 columnIndex = column - 1;
-            while (rowIndex < 7 || columnIndex >= 0) {
+            while (rowIndex < 6 && columnIndex >= 0) {
                 if (checkSquare(_gameId, columnIndex, rowIndex, teamNum)) {
                     connectedPiecesCount++;
                 } else {
                     break;
                 }
-                if (rowIndex > 6 || columnIndex == 0) {
+                if (rowIndex >= 6 || columnIndex == 0) {
                     break;
                 } else {
                     rowIndex++;
