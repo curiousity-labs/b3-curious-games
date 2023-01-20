@@ -111,7 +111,7 @@ contract ConnectFour {
 
         /// @notice finds where chip will land
         for (uint8 i = 0; i < 6; i++) {
-            uint8 square = game.board[column][i];
+            uint8 square = game.board[i][column];
             if (i == 5) {
                 revert InvalidSelection();
             }
@@ -122,7 +122,7 @@ contract ConnectFour {
         }
 
         /// @notice assigns chip to location onboard
-        game.board[column][row] = teamNum;
+        game.board[row][column] = teamNum;
         /// @notice increments turn
         game.turn++;
 
@@ -147,7 +147,7 @@ contract ConnectFour {
         uint8 teamNum
     ) private view returns (bool) {
         uint8[6][6] storage board = getGame[_gameId].board;
-        return board[column][row] == teamNum;
+        return board[row][column] == teamNum;
     }
 
     /// @notice checks the horizontal win

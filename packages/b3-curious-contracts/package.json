@@ -5,11 +5,11 @@
   "author": "David A Colon",
   "license": "MIT",
   "scripts": {
-    "test": "REPORT_GAS=true npx hardhat test",
-    "compile": "npm run clean && npx hardhat compile",
-    "deploy:battleship:goerli": "npm run package:prep && npx hardhat deploy --network goerli --tags Battleship --export ./minified/deployments.json",
-    "deploy:connectFour:goerli": "npm run package:prep && npx hardhat deploy --network goerli --tags ConnectFour --export ./minified/deployments.json",
-    "verify:goerli": "npx hardhat etherscan-verify --network goerli --solc-input",
+    "test": "hardhat test REPORT_GAS=true",
+    "compile": "npm run clean && hardhat compile",
+    "deploy:battleship:goerli": "pnpm run package:prep && hardhat deploy --network goerli --tags Battleship --export ./minified/deployments.json",
+    "deploy:connectFour:goerli": "pnpm run package:prep && hardhat deploy --network goerli --tags ConnectFour --export ./minified/deployments.json",
+    "verify:goerli": "hardhat etherscan-verify --network goerli --solc-input",
     "clean": "hardhat clean && rimraf dist",
     "package:prep": "pnpm run clean && pnpm run compile && tsc",
     "publish-packages": "pnpm run package:prep && pnpm publish --no-git-checks"
