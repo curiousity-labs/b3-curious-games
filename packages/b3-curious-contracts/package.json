@@ -5,7 +5,7 @@
   "author": "David A Colon",
   "license": "MIT",
   "scripts": {
-    "test": "hardhat test REPORT_GAS=true",
+    "test": "REPORT_GAS=true hardhat test",
     "compile": "npm run clean && hardhat compile",
     "deploy:battleship:goerli": "pnpm run package:prep && hardhat deploy --network goerli --tags Battleship --export ./minified/deployments.json",
     "deploy:connectFour:goerli": "pnpm run package:prep && hardhat deploy --network goerli --tags ConnectFour --export ./minified/deployments.json",
